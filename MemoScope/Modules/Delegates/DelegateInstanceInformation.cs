@@ -22,7 +22,7 @@ namespace MemoScope.Modules.Delegates
         [OLVColumn()]
         public ulong Address { get; }
 
-        [IntColumn]
+        [IntColumn()]
         public long Targets { get; }
 
         [OLVColumn(Title = "Type")]

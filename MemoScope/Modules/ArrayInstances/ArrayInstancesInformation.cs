@@ -18,7 +18,7 @@ namespace MemoScope.Modules.ArrayInstances
 
         [OLVColumn()]
         public ulong Address { get; }
-        [IntColumn]
+        [IntColumn()]
         public int Length { get; }
         [PercentColumn]
         public float? NullRatio { get; }

@@ -17,11 +17,11 @@ namespace MemoScope.Modules.Regions
 
         [AddressColumn()]
         public ulong Start => region.Address;
-        [IntColumn]
+        [IntColumn()]
         public ulong Size => region.Size;
         [OLVColumn()]
         public ClrMemoryRegionType Type => region.Type;
-        [IntColumn]
+        [IntColumn()]
         public int HeapNumber => region.HeapNumber;
         [OLVColumn()]
         public string Module => region.Module;

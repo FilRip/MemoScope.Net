@@ -21,7 +21,7 @@ namespace MemoScope.Modules.Disposables
 
         [OLVColumn()]
         public string TypeName { get; }
-        [IntColumn]
+        [IntColumn()]
         public long Count { get; }
     }
 }
