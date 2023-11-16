@@ -13,7 +13,7 @@ namespace MemoScope
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
-        [STAThread]
+        [STAThread()]
         private static void Main(string[] args)
         {
             UISettingsMgr<MemoScopeSettings>.Init(Application.ProductName);

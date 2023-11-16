@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-using BrightIdeasSoftware;
+﻿using BrightIdeasSoftware;
 
 using MemoScope.Core;
 using MemoScope.Core.Data;
