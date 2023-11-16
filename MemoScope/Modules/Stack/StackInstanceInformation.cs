@@ -1,6 +1,5 @@
 ﻿using BrightIdeasSoftware;
 
-using MemoScope.Core;
 using MemoScope.Core.Data;
 
 using Microsoft.Diagnostics.Runtime;
