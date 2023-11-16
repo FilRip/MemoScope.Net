@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+
 using MemoScopeApi;
 
 namespace MemoDummy

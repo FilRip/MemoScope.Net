@@ -24,19 +24,14 @@ namespace MemoScope.Core.Data
 
     public class TypeAddressContainer : IAddressContainer
     {
-        private ClrDump clrDump;
-        private ClrType clrType;
-
-        AddressContainerList addressList;
+        readonly AddressContainerList addressList;
 
         public TypeAddressContainer(ClrDump clrDump, ClrType clrType)
         {
-            this.clrDump = clrDump;
-            this.clrType = clrType;
             addressList = new AddressContainerList(clrDump.GetInstances(clrType));
         }
 
-        public ulong this[int index] => addressList[index] ;
+        public ulong this[int index] => addressList[index];
         public int Count => addressList.Count;
     }
 }

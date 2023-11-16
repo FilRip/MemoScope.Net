@@ -1,9 +1,10 @@
-﻿using MemoScope.Core;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
 using MemoScope.Core.Helpers;
 using MemoScope.Modules.InstancesMixed;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MemoScope.Modules.Segments
 {
@@ -37,9 +38,9 @@ namespace MemoScope.Modules.Segments
             dlvSegments.Objects = segments;
         }
 
-        private void dlvSegments_CellClick(object sender, BrightIdeasSoftware.CellClickEventArgs e)
+        private void DlvSegments_CellClick(object sender, BrightIdeasSoftware.CellClickEventArgs e)
         {
-            if( e.ClickCount != 2)
+            if (e.ClickCount != 2)
             {
                 return;
             }

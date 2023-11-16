@@ -1,31 +1,33 @@
-﻿using System.Collections.Generic;
-using MemoScope.Core;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
+
 using WinFwk.UIMessages;
 using WinFwk.UIModules;
-using System.Threading;
-using System;
 
 namespace MemoScope.Modules.Arrays
 {
-    public class ArraysAnalysis
+    public static class ArraysAnalysis
     {
         internal static List<ArraysInformation> Analyse(ClrDump clrDump, MessageBus msgBus)
         {
-            CancellationTokenSource token = new CancellationTokenSource();
+            CancellationTokenSource token = new();
             var arrays = new List<ArraysInformation>();
             msgBus.BeginTask("Analyzing arrays...", token);
             int n = 0;
             clrDump.Run(() =>
             {
-                var arrayTypes = clrDump.AllTypes.Where(t => t.IsArray);
+                var arrayTypes = clrDump.AllTypes().Where(t => t.IsArray);
                 int nbArrayType = arrayTypes.Count();
                 foreach (var type in arrayTypes)
                 {
                     string typeName = type.Name;
                     msgBus.Status($"Analyzing array type: {typeName} ({n:###,###,###,##0}/{nbArrayType:###,###,###,##0})");
-                    if ( token.IsCancellationRequested )
+                    if (token.IsCancellationRequested)
                     {
                         return;
                     }
@@ -41,6 +43,7 @@ namespace MemoScope.Modules.Arrays
                         maxLength = Math.Max(maxLength, length);
                         totalSize += type.GetSize(address);
                         totalLength += length;
+#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
                         if (nbInstances % 512 == 0)
                         {
                             msgBus.Status($"Analyzing array: #{nbInstances:###,###,###,##0} for type: {typeName}");
@@ -49,6 +52,7 @@ namespace MemoScope.Modules.Arrays
                                 return;
                             }
                         }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
                     }
                     arrays.Add(new ArraysInformation(new ClrDumpType(clrDump, type), nbInstances, totalLength, maxLength, totalSize));
                 }

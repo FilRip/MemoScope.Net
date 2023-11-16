@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using MemoScope.Core;
-using MemoScope.Core.Helpers;
-using MemoScope.Core.Data;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+
+using MemoScope.Core;
+using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
+
 using WinFwk.UIModules;
-using System;
 
 namespace MemoScope.Modules.InstancesMixed
 {
@@ -18,7 +20,7 @@ namespace MemoScope.Modules.InstancesMixed
             InitializeComponent();
         }
 
-        public void Setup(ClrDump clrDump, IAddressContainer instances, UIClrDumpModule parentModule=null)
+        public void Setup(ClrDump clrDump, IAddressContainer instances, UIClrDumpModule parentModule = null)
         {
             ClrDump = clrDump;
             Instances = instances;
@@ -38,7 +40,7 @@ namespace MemoScope.Modules.InstancesMixed
         {
             base.PostInit();
             dlvInstances.Objects = InstancesInformation;
-            Summary = $"{InstancesInformation.Count:###,###,###,##0} instances" ;
+            Summary = $"{InstancesInformation.Count:###,###,###,##0} instances";
         }
 
         public override void Init()
@@ -60,7 +62,8 @@ namespace MemoScope.Modules.InstancesMixed
                 return;
             }
             UIModuleFactory.CreateModule<InstancesMixedModule>(
-                mod => {
+                mod =>
+                {
                     mod.UIModuleParent = parent; mod.Setup(clrDump, addresses);
                     if (name != null)
                     {

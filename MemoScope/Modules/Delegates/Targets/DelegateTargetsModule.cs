@@ -1,7 +1,8 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Helpers;
+﻿using System.Collections.Generic;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
-using System.Collections.Generic;
+using MemoScope.Core.Helpers;
 
 namespace MemoScope.Modules.Delegates.Targets
 {

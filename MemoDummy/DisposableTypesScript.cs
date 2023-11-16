@@ -14,23 +14,36 @@ namespace MemoDummy
 
         public override void Run()
         {
-            for(int i=0; i < N; i++)
+            for (int i = 0; i < N; i++)
             {
-                MyDisposableType obj = new MyDisposableType();
+                _ = new MyDisposableType();
             }
 
-            System.GC.WaitForFullGCComplete();
+            GC.WaitForFullGCComplete();
         }
     }
 
     public class MyDisposableType : IDisposable
     {
-        IntPtr hglobal = Marshal.AllocHGlobal(100000);
+        readonly IntPtr hglobal = Marshal.AllocHGlobal(100000);
 
-
+        private bool dispoedValue;
+        public bool IsDisposed
+        {
+            get { return dispoedValue; }
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Marshal.FreeHGlobal(hglobal);
+                dispoedValue = true;
+            }
+        }
         public void Dispose()
         {
-            Marshal.FreeHGlobal(hglobal);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using BrightIdeasSoftware;
+
 using MemoScope.Core;
 using MemoScope.Core.Data;
+
 using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.InstancesMixed
@@ -21,7 +23,7 @@ namespace MemoScope.Modules.InstancesMixed
             }
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong Address { get; }
 
         [OLVColumn(Title = "Name")]

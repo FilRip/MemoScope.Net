@@ -1,39 +1,40 @@
-﻿using MemoScope.Core;
-using Microsoft.Diagnostics.Runtime;
+﻿using BrightIdeasSoftware;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
-using BrightIdeasSoftware;
+
+using Microsoft.Diagnostics.Runtime;
+
 using WinFwk.UITools;
 
 namespace MemoScope.Modules.ClrRoots
 {
     public class ClrRootsInformation : IAddressData, ITypeNameData
     {
-        ClrDump ClrDump { get; }
         ClrRoot ClrRoot { get; }
-        public ClrRootsInformation(ClrDump clrDump, ClrRoot clrRoot)
+        public ClrRootsInformation(ClrRoot clrRoot)
         {
-            ClrDump = clrDump;
             ClrRoot = clrRoot;
         }
 
-        [AddressColumn]
+        [AddressColumn()]
         public ulong Address => ClrRoot.Address;
 
-        [BoolColumn]
+        [BoolColumn()]
         public bool IsInterior => ClrRoot.IsInterior;
-        [BoolColumn]
+        [BoolColumn()]
         public bool IsPinned => ClrRoot.IsPinned;
-        [BoolColumn]
+        [BoolColumn()]
         public bool IsPossibleFalsePositive => ClrRoot.IsPossibleFalsePositive;
-        [OLVColumn]
-        public GCRootKind Kind => ClrRoot.Kind ;
-        [AddressColumn]
+        [OLVColumn()]
+        public GCRootKind Kind => ClrRoot.Kind;
+        [AddressColumn()]
         public ulong ObjectAddress => ClrRoot.Object;
 
         [OLVColumn(Title = "Name", Width = 300)]
         public string Name => ClrRoot.Name;
 
-        [OLVColumn(Title="Type", Width = 300)]
+        [OLVColumn(Title = "Type", Width = 300)]
         public string TypeName => ClrRoot.Type?.Name;
 
         public ClrType Type => ClrRoot.Type;

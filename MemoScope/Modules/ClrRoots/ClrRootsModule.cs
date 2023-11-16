@@ -1,10 +1,12 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using WinFwk.UICommands;
-using MemoScope.Core.Data;
 using System.Windows.Forms;
+
+using MemoScope.Core;
+using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
+
+using WinFwk.UICommands;
 
 namespace MemoScope.Modules.ClrRoots
 {
@@ -34,7 +36,7 @@ namespace MemoScope.Modules.ClrRoots
         public override void Init()
         {
             base.Init();
-            ClrRootsQueue = ClrDump.GetClrRoots().Select(clrRoot => new ClrRootsInformation(ClrDump, clrRoot)).ToList();
+            ClrRootsQueue = ClrDump.GetClrRoots().Select(clrRoot => new ClrRootsInformation(clrRoot)).ToList();
         }
 
         public override void PostInit()

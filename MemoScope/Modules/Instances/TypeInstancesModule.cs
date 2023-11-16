@@ -1,6 +1,8 @@
-﻿using MemoScope.Core.Data;
-using System;
+﻿using System;
 using System.Windows.Forms;
+
+using MemoScope.Core.Data;
+
 using WinFwk.UIModules;
 
 namespace MemoScope.Modules.Instances

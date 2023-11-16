@@ -178,7 +178,7 @@
             this.tspApplyfilter.Name = "tspApplyfilter";
             this.tspApplyfilter.Size = new System.Drawing.Size(24, 24);
             this.tspApplyfilter.Text = "Apply Filter";
-            this.tspApplyfilter.Click += new System.EventHandler(this.tspApplyfilter_Click);
+            this.tspApplyfilter.Click += new System.EventHandler(this.TspApplyfilter_Click);
             // 
             // tsbClearFilter
             // 
@@ -188,7 +188,7 @@
             this.tsbClearFilter.Name = "tsbClearFilter";
             this.tsbClearFilter.Size = new System.Drawing.Size(24, 24);
             this.tsbClearFilter.Text = "Clear Filter";
-            this.tsbClearFilter.Click += new System.EventHandler(this.tsbClearFilter_Click);
+            this.tsbClearFilter.Click += new System.EventHandler(this.TsbClearFilter_Click);
             // 
             // splitContainer2
             // 

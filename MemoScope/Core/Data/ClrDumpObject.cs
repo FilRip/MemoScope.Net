@@ -7,14 +7,14 @@ namespace MemoScope.Core.Data
         public ulong Address { get; }
         public object Value => ClrDump.Eval(GetValue);
         public bool IsInterior { get; private set; }
-        public int ArrayLength => ClrDump.Eval( () => ClrType.GetArrayLength(Address));
+        public int ArrayLength => ClrDump.Eval(() => ClrType.GetArrayLength(Address));
 
-        public ClrObject ClrObject => new ClrObject(Address, ClrType, IsInterior);
+        public ClrObject ClrObject => new(Address, ClrType, IsInterior);
 
         private object GetValue()
         {
             var clrObject = new ClrObject(Address, ClrType, IsInterior);
-            if (clrObject.HasSimpleValue && ! clrObject.IsNull)
+            if (clrObject.HasSimpleValue && !clrObject.IsNull)
             {
                 return clrObject.SimpleValue;
             }
@@ -24,7 +24,7 @@ namespace MemoScope.Core.Data
             }
 
         }
-        public ClrDumpObject(ClrDump dump, ClrType type, ulong address, bool isInterior=false) : base(dump, type)
+        public ClrDumpObject(ClrDump dump, ClrType type, ulong address, bool isInterior = false) : base(dump, type)
         {
             Address = address;
             IsInterior = isInterior;

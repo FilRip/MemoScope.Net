@@ -1,24 +1,27 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Helpers;
-using System.Collections.Generic;
-using WinFwk.UIModules;
-using BrightIdeasSoftware;
-using System.Drawing;
-using MemoScope.Core.Data;
-using MemoScope.Modules.Instances;
-using System.Windows.Forms;
+﻿using System;
 using System.Collections;
-using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
+
+using BrightIdeasSoftware;
+
+using MemoScope.Core;
+using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
+using MemoScope.Modules.Instances;
+
+using WinFwk.UIModules;
 
 namespace MemoScope.Modules.DumpDiff
 {
-    
+
     public partial class DumpDiffModule : UIModule
     {
         public enum SortMode { Value, AbsValue }
         private List<ClrDump> ClrDumps { get; set; }
-        HashSet<string> typeNames = new HashSet<string>();
+        readonly HashSet<string> typeNames = new();
 
         public DumpDiffModule()
         {
@@ -37,10 +40,10 @@ namespace MemoScope.Modules.DumpDiff
             colType.Text = "Type";
             colType.AspectGetter = o => (string)o;
             ClrDump prevClrDump = null;
-            foreach(var clrDump in ClrDumps.OrderBy( dump => dump.Id))
+            foreach (var clrDump in ClrDumps.OrderBy(dump => dump.Id))
             {
                 var stats = clrDump.GetTypeStats();
-                DiffColumn diffCol = new DiffColumn(clrDump, stats, prevClrDump?.GetTypeStats());
+                DiffColumn diffCol = new(clrDump, stats, prevClrDump?.GetTypeStats());
                 dlvDumpDiff.AllColumns.Add(diffCol);
                 prevClrDump = clrDump;
                 dlvDumpDiff.RegisterDataProvider(() => SelectedTypeInstancesAddressList(clrDump), this, $"#{clrDump.Id}");
@@ -50,7 +53,7 @@ namespace MemoScope.Modules.DumpDiff
             dlvDumpDiff.FormatCell += OnFormatCell;
             dlvDumpDiff.CellClick += OnCellClick;
             dlvDumpDiff.CustomSorter = DumpDiffSort;
-            
+
             dlvDumpDiff.SetRegexFilter(regexFilterControl, o => (string)o);
         }
 
@@ -61,12 +64,11 @@ namespace MemoScope.Modules.DumpDiff
 
         private void OnCellClick(object sender, CellClickEventArgs e)
         {
-            if(e.ClickCount != 2)
+            if (e.ClickCount != 2)
             {
                 return;
             }
-            var col = e.Column as DiffColumn;
-            if( col == null)
+            if (e.Column is not DiffColumn col)
             {
                 return;
             }
@@ -82,7 +84,7 @@ namespace MemoScope.Modules.DumpDiff
 
         private void OnFormatCell(object sender, FormatCellEventArgs e)
         {
-            if (e.Column == colType || e.ColumnIndex <= 1 || e.CellValue == null || ! (e.CellValue is long))
+            if (e.Column == colType || e.ColumnIndex <= 1 || e.CellValue == null || e.CellValue is not long)
             {
                 return;
             }
@@ -119,11 +121,11 @@ namespace MemoScope.Modules.DumpDiff
             base.PostInit();
             Summary = $"{ClrDumps.Count} dumps, {typeNames.Count} types";
 
-            dlvDumpDiff.Objects= typeNames;
+            dlvDumpDiff.Objects = typeNames;
             dlvDumpDiff.Sort(dlvDumpDiff.AllColumns[2], SortOrder.Descending);
         }
 
-        private void cbSortMode_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbSortMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             dlvDumpDiff.Sort();
         }
@@ -131,9 +133,10 @@ namespace MemoScope.Modules.DumpDiff
 
     public class DumpDiffComparer : IComparer
     {
-        OLVColumn column;
-        SortOrder sortOrder;
-        DumpDiffModule.SortMode sortMode;
+        readonly OLVColumn column;
+        readonly SortOrder sortOrder;
+        readonly DumpDiffModule.SortMode sortMode;
+
         public DumpDiffComparer(OLVColumn column, SortOrder sortOrder, DumpDiffModule.SortMode sortMode)
         {
             this.column = column;
@@ -143,7 +146,7 @@ namespace MemoScope.Modules.DumpDiff
 
         public int Compare(object x, object y)
         {
-            if( sortOrder == SortOrder.None)
+            if (sortOrder == SortOrder.None)
             {
                 return 0;
             }
@@ -162,8 +165,8 @@ namespace MemoScope.Modules.DumpDiff
             {
                 long valueX = objValueX != null ? (long)objValueX : 0;
                 long valueY = objValueY != null ? (long)objValueY : 0;
-                
-                if(sortMode == DumpDiffModule.SortMode.AbsValue)
+
+                if (sortMode == DumpDiffModule.SortMode.AbsValue)
                 {
                     res = Math.Abs(valueX) - Math.Abs(valueY);
                 }
@@ -173,7 +176,7 @@ namespace MemoScope.Modules.DumpDiff
                 }
             }
 
-            return sortOrder== SortOrder.Ascending ? (int)res : -(int)res;
+            return sortOrder == SortOrder.Ascending ? (int)res : -(int)res;
         }
     }
 }

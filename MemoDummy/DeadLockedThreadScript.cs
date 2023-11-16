@@ -8,9 +8,9 @@ namespace MemoDummy
 
         public override void Run()
         {
-            string lockB = "Lock_A";
-            string lockA = "Lock_B";
-            Thread thread = new Thread(() =>
+            object lockB = "Lock_A";
+            object lockA = "Lock_B";
+            Thread thread = new(() =>
             {
                 lock (lockA)
                 {
@@ -23,8 +23,10 @@ namespace MemoDummy
                         }
                     }
                 }
-            });
-            thread.Name = $"thread 1: locks A then B";
+            })
+            {
+                Name = $"thread 1: locks A then B"
+            };
             thread.Start();
 
             thread = new Thread(() =>
@@ -39,8 +41,10 @@ namespace MemoDummy
                         }
                     }
                 }
-            });
-            thread.Name = $"thread 2: locks B then A";
+            })
+            {
+                Name = $"thread 2: locks B then A"
+            };
             thread.Start();
         }
     }

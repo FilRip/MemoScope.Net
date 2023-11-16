@@ -1,9 +1,11 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using WinFwk.UICommands;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
+
+using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Finalizer
 {

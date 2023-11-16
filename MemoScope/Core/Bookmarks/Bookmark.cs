@@ -1,8 +1,10 @@
-﻿using BrightIdeasSoftware;
-using MemoScope.Core.Data;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+
+using BrightIdeasSoftware;
+
+using MemoScope.Core.Data;
 
 namespace MemoScope.Core.Bookmarks
 {
@@ -11,18 +13,18 @@ namespace MemoScope.Core.Bookmarks
         [OLVColumn(IsEditable = false)]
         public ulong Address { get; set; }
 
-        [OLVColumn(IsVisible=false, IsEditable = false)]
+        [OLVColumn(IsVisible = false, IsEditable = false)]
         public string TypeName { get; set; }
 
-        [OLVColumn(IsEditable =true)]
-        public string Comment  { get; set; }
+        [OLVColumn(IsEditable = true)]
+        public string Comment { get; set; }
 
-        [XmlIgnore]
+        [XmlIgnore()]
         [OLVColumn(Width = 75, IsEditable = false)]
         public Color Color { get; set; } = Color.Aquamarine;
 
         [OLVColumn(Title = "Color Pick", TextAlign = HorizontalAlignment.Center, Width = 50, IsEditable = false)]
-        [XmlIgnore]
+        [XmlIgnore()]
         public string ColorPick => "...";
 
         public string ColorRGB

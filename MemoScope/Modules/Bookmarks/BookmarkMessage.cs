@@ -1,9 +1,10 @@
 ﻿using MemoScope.Core.Data;
+
 using WinFwk.UIMessages;
 
 namespace MemoScope.Modules.Bookmarks
 {
-    public enum BookmarkAction {Add, Remove, Update}
+    public enum BookmarkAction { Add, Remove, Update }
 
     public class BookmarkMessage : AbstractUIMessage
     {

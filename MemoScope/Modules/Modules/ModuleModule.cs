@@ -1,6 +1,7 @@
-﻿using MemoScope.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using MemoScope.Core;
 
 namespace MemoScope.Modules.Modules
 {
@@ -24,7 +25,7 @@ namespace MemoScope.Modules.Modules
         public override void Init()
         {
             base.Init();
-            Modules = ClrDump.Modules.Select(mod=> new ModuleInformation(ClrDump, mod)).ToList();
+            Modules = ClrDump.Modules.Select(mod => new ModuleInformation(ClrDump, mod)).ToList();
         }
 
         public override void PostInit()

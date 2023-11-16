@@ -24,20 +24,21 @@ namespace MemoScope.Core.ProcessInfo
         public long PrivateMemory { get; set; } = -1;
         public long HandleCount { get; set; } = -1;
 
-        [XmlIgnore]
+        [XmlIgnore()]
         public TimeSpan TotalProcessorTime { get; set; }
         [Browsable(false)]
-        public string TotalProcessorTimeStr {
+        public string TotalProcessorTimeStr
+        {
             get
             {
                 return TotalProcessorTime.ToString();
             }
             set
             {
-                TotalProcessorTime = TimeSpan.Parse(value);
+                TotalProcessorTime = TimeSpan.Parse(value, CultureInfo.CurrentCulture);
             }
         }
-        [XmlIgnore]
+        [XmlIgnore()]
         public DateTime StartTime { get; set; }
         [Browsable(false)]
         public string StartTimeStr
@@ -54,7 +55,7 @@ namespace MemoScope.Core.ProcessInfo
                 }
             }
         }
-        [XmlIgnore]
+        [XmlIgnore()]
         public DateTime DumpTime { get; set; }
         [Browsable(false)]
         public string DumpTimeStr
@@ -71,7 +72,7 @@ namespace MemoScope.Core.ProcessInfo
                 }
             }
         }
-        [XmlIgnore]
+        [XmlIgnore()]
         public TimeSpan UserProcessorTime { get; set; }
         [Browsable(false)]
         public string UserProcessorTimeStr
@@ -82,7 +83,7 @@ namespace MemoScope.Core.ProcessInfo
             }
             set
             {
-                UserProcessorTime = TimeSpan.Parse(value);
+                UserProcessorTime = TimeSpan.Parse(value, CultureInfo.CurrentCulture);
             }
         }
 

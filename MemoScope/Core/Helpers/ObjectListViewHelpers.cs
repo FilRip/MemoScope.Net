@@ -1,12 +1,16 @@
-﻿using BrightIdeasSoftware;
-using MemoScope.Core.Data;
-using MemoScope.Modules.InstanceDetails;
-using MemoScope.Tools.RegexFilter;
-using Microsoft.Diagnostics.Runtime;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+
+using BrightIdeasSoftware;
+
+using MemoScope.Core.Data;
+using MemoScope.Modules.InstanceDetails;
+using MemoScope.Tools.RegexFilter;
+
+using Microsoft.Diagnostics.Runtime;
+
 using WinFwk;
 using WinFwk.UICommands;
 using WinFwk.UIModules;
@@ -16,35 +20,31 @@ namespace MemoScope.Core.Helpers
 {
     public static class ObjectListViewHelpers
     {
-        public static void SetUpTypeColumn<T>(this ObjectListView listView, UIClrDumpModule dumpModule=null) where T : ITypeNameData
+        public static void SetUpTypeColumn<T>(this ObjectListView listView, UIClrDumpModule dumpModule = null) where T : ITypeNameData
         {
             SetUpTypeColumn(listView, nameof(ITypeNameData.TypeName), dumpModule);
         }
 
-        public static void SetUpTypeColumn(this ObjectListView listView, string colType, UIClrDumpModule dumpModule = null, string suffix=null) 
+        public static void SetUpTypeColumn(this ObjectListView listView, string colType, UIClrDumpModule dumpModule = null, string suffix = null)
         {
             OLVColumn col = listView.AllColumns.First(c => c.Name == colType);
             SetUpTypeColumn(listView, col, dumpModule, suffix);
         }
 
-        public static void SetUpTypeColumn(this ObjectListView listView, OLVColumn col, UIClrDumpModule dumpModule=null, string suffix = null)
+        public static void SetUpTypeColumn(this ObjectListView listView, OLVColumn col, UIClrDumpModule dumpModule = null, string suffix = null)
         {
             listView.FormatCell += (sender, e) =>
             {
-                if (e.Column == col)
+                if (e.Column == col && e.SubItem.ModelValue is string val)
                 {
-                    string val = e.SubItem.ModelValue as string;
-                    if (val != null)
+                    var colors = TypeHelpers.GetAliasColor(val);
+                    if (colors.Item1 != Color.Transparent)
                     {
-                        var colors = TypeHelpers.GetAliasColor(val);
-                        if (colors.Item1 != Color.Transparent)
-                        {
-                            e.SubItem.BackColor = colors.Item1;
-                        }
-                        if (colors.Item2 != Color.Transparent)
-                        {
-                            e.SubItem.ForeColor = colors.Item2;
-                        }
+                        e.SubItem.BackColor = colors.Item1;
+                    }
+                    if (colors.Item2 != Color.Transparent)
+                    {
+                        e.SubItem.ForeColor = colors.Item2;
                     }
                 }
             };
@@ -55,8 +55,7 @@ namespace MemoScope.Core.Helpers
                 listView.RegisterDataProvider(() =>
                 {
                     var cellItem = listView.SelectedItem.SubItems[col.Index];
-                    var subItem = cellItem as OLVListSubItem;
-                    if (subItem == null)
+                    if (cellItem is not OLVListSubItem subItem)
                     {
                         return null;
                     }
@@ -67,12 +66,11 @@ namespace MemoScope.Core.Helpers
                         return new TypeInstancesAddressList(dumpModule.ClrDump, type);
                     }
                     return null;
-                }, dumpModule, suffix != null ? "All" : "All - "+suffix);
+                }, dumpModule, suffix != null ? "All" : "All - " + suffix);
                 listView.RegisterDataProvider(() =>
                 {
                     var cellItem = listView.SelectedItem.SubItems[col.Index];
-                    var subItem = cellItem as OLVListSubItem;
-                    if( subItem == null)
+                    if (cellItem is not OLVListSubItem subItem)
                     {
                         return null;
                     }
@@ -92,7 +90,7 @@ namespace MemoScope.Core.Helpers
 
         public static void AddAddressColumn(this ObjectListView listView, AspectGetterDelegate addressGetter, UIClrDumpModule dumpModule)
         {
-            var col = new OLVColumn("Address", null) {AspectGetter = addressGetter};
+            OLVColumn col = new("Address", null) { AspectGetter = addressGetter };
 
             SetUpAddressColumn(listView, col, dumpModule);
             listView.AllColumns.Add(col);
@@ -104,7 +102,7 @@ namespace MemoScope.Core.Helpers
 
         public static void SetUpAddressColumn(this ObjectListView listView, string colName, UIClrDumpModule dumpModule, string suffix = null)
         {
-            var col = listView.AllColumns.First(c => c.Name == colName);
+            OLVColumn col = listView.AllColumns.First(c => c.Name == colName);
             SetUpAddressColumn(listView, col, dumpModule, suffix);
         }
 
@@ -128,15 +126,14 @@ namespace MemoScope.Core.Helpers
                         return;
                     }
                     var addressObj = cellItem.ModelValue;
-                    if (addressObj is ulong)
+                    if (addressObj is ulong address)
                     {
-                        var address = (ulong)addressObj;
                         if (address == 0)
                         {
                             return;
                         }
                         var type = dumpModule.ClrDump.GetObjectType(address);
-                        if( type == null)
+                        if (type == null)
                         {
                             dumpModule.Log($"Can't find type for instance: {address:X}", LogLevelType.Error);
                             return;
@@ -154,9 +151,8 @@ namespace MemoScope.Core.Helpers
                        return null;
                    }
                    var addressObj = cellItem.ModelValue;
-                   if (addressObj is ulong)
+                   if (addressObj is ulong address)
                    {
-                       var address = (ulong)addressObj;
                        var type = dumpModule.ClrDump.GetObjectType(address);
                        var clrDumpObject = new ClrDumpObject(dumpModule.ClrDump, type, address);
                        return clrDumpObject;
@@ -171,9 +167,8 @@ namespace MemoScope.Core.Helpers
                     return;
                 }
                 var addressObj = e.SubItem.ModelValue;
-                if (addressObj is ulong)
+                if (addressObj is ulong address)
                 {
-                    var address = (ulong)addressObj;
                     var bookmark = dumpModule.ClrDump.ClrDumpInfo.GetBookmark(address);
                     if (bookmark != null)
                     {
@@ -186,13 +181,12 @@ namespace MemoScope.Core.Helpers
             {
                 if (column == col)
                 {
-                    if (modelObject == null || !(modelObject is ulong))
+                    if (modelObject is not ulong)
                     {
                         return null;
                     }
-                    if (modelObject is ulong)
+                    if (modelObject is ulong address)
                     {
-                        var address = (ulong)modelObject;
                         var bookmark = dumpModule.ClrDump.ClrDumpInfo.GetBookmark(address);
                         if (bookmark != null)
                         {
@@ -216,16 +210,14 @@ namespace MemoScope.Core.Helpers
                     return;
                 }
                 var addressObj = cellItem.ModelValue;
-                if (addressObj is ulong)
+                if (addressObj is ulong address)
                 {
-                    var address = (ulong)addressObj;
                     var type = dumpModule.ClrDump.GetObjectType(address);
                     var clrDumpObject = new ClrDumpObject(dumpModule.ClrDump, type, address);
                     dumpModule.MessageBus.SendMessage(new SelectedClrDumpObjectMessage(clrDumpObject));
                 }
             };
-            var menuItem = new ToolStripMenuItem("Copy Address");
-            //            menuItem.Image = command.Icon;
+            ToolStripMenuItem menuItem = new("Copy Address");
             listView.ContextMenuStrip.Items.Add(menuItem);
             menuItem.Click += (o, e) =>
             {
@@ -235,9 +227,8 @@ namespace MemoScope.Core.Helpers
                     return;
                 }
                 var addressObj = cellItem.ModelValue;
-                if (addressObj is ulong)
+                if (addressObj is ulong address)
                 {
-                    var address = (ulong)addressObj;
                     Clipboard.SetText(address.ToString("X"));
                 }
             };
@@ -256,28 +247,28 @@ namespace MemoScope.Core.Helpers
         {
             var col = new OLVColumn("Value", null)
             {
-                Width = 150
-            };
-
-            col.AspectGetter = o =>
-            {
-                ClrType type = typeGetter(o);
-                ulong address = addressGetter(o);
-                object result = dump.Eval(
-                    () => {
-                        if (type.IsPrimitive || type.IsString)
-                            return type.GetValue(address);
-                        return address;
-                    }
-                );
-                return result;
+                Width = 150,
+                AspectGetter = o =>
+                {
+                    ClrType type = typeGetter(o);
+                    ulong address = addressGetter(o);
+                    object result = dump.Eval(
+                        () =>
+                        {
+                            if (type.IsPrimitive || type.IsString)
+                                return type.GetValue(address);
+                            return address;
+                        }
+                    );
+                    return result;
+                }
             };
             listView.AllColumns.Add(col);
             var menuItem = new ToolStripMenuItem("Copy Value");
             listView.ContextMenuStrip.Items.Add(menuItem);
             menuItem.Click += (o, e) =>
             {
-                if(listView.SelectedItem==null)
+                if (listView.SelectedItem == null)
                 {
                     return;
                 }
@@ -286,7 +277,7 @@ namespace MemoScope.Core.Helpers
                 var modelObject = listView.GetModelObject(index);
                 string val = col.GetStringValue(modelObject);
                 string escapeVal = StringHelpers.Escape(val);
-                if( string.IsNullOrEmpty(escapeVal))
+                if (string.IsNullOrEmpty(escapeVal))
                 {
                     Clipboard.SetText("null");
                 }
@@ -305,34 +296,35 @@ namespace MemoScope.Core.Helpers
         {
             var col = new OLVColumn("Size", null)
             {
-                Width = 60, TextAlign = HorizontalAlignment.Right
-            };
-
-            col.AspectGetter = o =>
-            {
-                if( o == null)
+                Width = 60,
+                TextAlign = HorizontalAlignment.Right,
+                AspectGetter = o =>
                 {
-                    return null;
-                }
-
-                ulong address = addressGetter(o);
-                if(address ==0)
-                {
-                    return 0;
-                }
-                object result = dump.Eval(
-                    () => {
-                        var type = clrTypeGetter(o);
-                        if (type != null)
-                        {
-                            return type.GetSize(address);
-                        }
-                        return (ulong)0;
+                    if (o == null)
+                    {
+                        return null;
                     }
-                );
-                return result;
+
+                    ulong address = addressGetter(o);
+                    if (address == 0)
+                    {
+                        return 0;
+                    }
+                    object result = dump.Eval(
+                        () =>
+                        {
+                            var type = clrTypeGetter(o);
+                            if (type != null)
+                            {
+                                return type.GetSize(address);
+                            }
+                            return (ulong)0;
+                        }
+                    );
+                    return result;
+                },
+                AspectToStringFormat = "{0:###,###,###,##0}"
             };
-            col.AspectToStringFormat = "{0:###,###,###,##0}";
             listView.AllColumns.Add(col);
         }
 
@@ -341,34 +333,30 @@ namespace MemoScope.Core.Helpers
             var col = new OLVColumn("RefIn", null)
             {
                 Width = 60,
-                TextAlign = HorizontalAlignment.Right
-            };
-
-            col.AspectGetter = o =>
-            {
-                if (o == null)
+                TextAlign = HorizontalAlignment.Right,
+                AspectGetter = o =>
                 {
-                    return null;
-                }
+                    if (o == null)
+                    {
+                        return null;
+                    }
 
-                ulong address = addressGetter(o);
-                if (address == 0)
-                {
-                    return 0;
-                }
-                object result = dump.CountReferers(address );
-                return result;
+                    ulong address = addressGetter(o);
+                    if (address == 0)
+                    {
+                        return 0;
+                    }
+                    object result = dump.CountReferers(address);
+                    return result;
+                },
+                AspectToStringFormat = "{0:###,###,###,##0}"
             };
-            col.AspectToStringFormat = "{0:###,###,###,##0}";
             listView.AllColumns.Add(col);
         }
 
         public static void RegisterDataProvider<T>(this ObjectListView listView, Func<T> dataProvider, UIModule parentModule, string suffix = null)
         {
-            if (listView.ContextMenuStrip == null)
-            {
-                listView.ContextMenuStrip = new ContextMenuStrip();
-            }
+            listView.ContextMenuStrip ??= new ContextMenuStrip();
             var types = WinFwkHelper.GetDerivedTypes(typeof(AbstractDataUICommand<T>));
             foreach (var type in types)
             {
@@ -377,18 +365,20 @@ namespace MemoScope.Core.Helpers
                 command.SetMasterModule(parentModule);
                 command.InitDataProvider(new UIDataProviderAdapter<T>(dataProvider));
                 string menuItemText = command.ToolTip;
-                if( suffix != null)
+                if (suffix != null)
                 {
-                    menuItemText += " ("+suffix+")";
+                    menuItemText += " (" + suffix + ")";
                 }
-                var menuItem = new ToolStripMenuItem(menuItemText);
-                menuItem.Image = command.Icon;
+                var menuItem = new ToolStripMenuItem(menuItemText)
+                {
+                    Image = command.Icon
+                };
                 listView.ContextMenuStrip.Items.Add(menuItem);
-                menuItem.Click += (o, e) => OnMenuItemClick(command, dataProvider);
+                menuItem.Click += (o, e) => OnMenuItemClick(command);
             }
         }
 
-        private static void OnMenuItemClick<T>(AbstractDataUICommand<T> command, Func<T> dataProvider)
+        private static void OnMenuItemClick<T>(AbstractDataUICommand<T> command)
         {
             try
             {
@@ -407,18 +397,18 @@ namespace MemoScope.Core.Helpers
 
         public static void AddMenuSeparator(this ObjectListView listView)
         {
-            if( listView.ContextMenuStrip != null)
-            {
-                listView.ContextMenuStrip.Items.Add("-");
-            }
+            listView.ContextMenuStrip?.Items.Add("-");
         }
 
         public static void AddRowNumberColumn(this ObjectListView listView)
         {
-            var col = new OLVColumn("#", null);
-            col.TextAlign = HorizontalAlignment.Right;
+            var col = new OLVColumn("#", null)
+            {
+                TextAlign = HorizontalAlignment.Right
+            };
             listView.AllColumns.Add(col);
-            listView.FormatRow += delegate (object sender, FormatRowEventArgs args) {
+            listView.FormatRow += delegate (object sender, FormatRowEventArgs args)
+            {
                 args.Item.Text = args.RowIndex.ToString("###,###,###,###,##0");
             };
         }
@@ -430,7 +420,8 @@ namespace MemoScope.Core.Helpers
 
         public static void SetRegexFilter(this ObjectListView listView, RegexFilterControl regexFilterControl, Func<object, string> typeNameGetter)
         {
-            regexFilterControl.RegexApplied += (regex) => {
+            regexFilterControl.RegexApplied += (regex) =>
+            {
                 listView.ModelFilter = new ModelFilter((o) =>
                 {
                     if (o == null)

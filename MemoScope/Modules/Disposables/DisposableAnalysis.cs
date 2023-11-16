@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
-using MemoScope.Core;
 using System.Threading;
+
+using MemoScope.Core;
+
 using WinFwk.UIModules;
 
 namespace MemoScope.Modules.Disposables
@@ -9,12 +11,12 @@ namespace MemoScope.Modules.Disposables
     {
         internal static List<DisposableTypeInformation> GetDisposableTypeInformations(ClrDump clrDump)
         {
-            CancellationTokenSource token = new CancellationTokenSource();
+            CancellationTokenSource token = new();
             clrDump.MessageBus.BeginTask("Analyzing IDisposable types...", token);
 
-            List<DisposableTypeInformation> result = new List<DisposableTypeInformation>();
+            List<DisposableTypeInformation> result = new();
 
-            foreach (var type in clrDump.AllTypes)
+            foreach (var type in clrDump.AllTypes())
             {
                 clrDump.MessageBus.Status($"Analyzing type: {type.Name}");
                 if (token.IsCancellationRequested)
@@ -25,7 +27,7 @@ namespace MemoScope.Modules.Disposables
 
                 foreach (var interf in type.Interfaces)
                 {
-                    if( interf.Name == typeof(System.IDisposable).FullName)
+                    if (interf.Name == typeof(System.IDisposable).FullName)
                     {
                         clrDump.MessageBus.Status($"Analyzing IDisposable type: counting instances for {type.Name}");
                         int nb = clrDump.CountInstances(type);

@@ -7,13 +7,17 @@ namespace MemoDummy
         public override string Name => "Type Hierarchy";
         public override string Description => "Creates some type to study hierarchy";
 
+#pragma warning disable S4487, IDE0052 // Unread "private" fields should be removed
         private List<object> objects;
+#pragma warning restore S4487, IDE0052 // Unread "private" fields should be removed
 
         public override void Run()
         {
-            objects = new List<object>();
-            objects.Add(new FirstTestClass());
-            objects.Add(new SecondTestClass());
+            objects = new List<object>
+            {
+                new FirstTestClass(),
+                new SecondTestClass()
+            };
         }
     }
 
@@ -23,29 +27,30 @@ namespace MemoDummy
         public abstract void Init();
     }
 
-    public class FirstTestClass : MyAbstractClass, MySecondInterface
+    public class FirstTestClass : MyAbstractClass, IMySecondInterface
     {
         public int Id { get; private set; }
         public override void Init()
         {
         }
     }
-    public class SecondTestClass : FirstTestClass, AnotherInterface
+    public class SecondTestClass : FirstTestClass, IAnotherInterface
     {
         public string Description { get; protected set; }
         public void DoSomething()
         {
+            // Ignore content method
         }
     }
-    public interface MyFirstInterface
+    public interface IMyFirstInterface
     {
 
     }
-    public interface MySecondInterface : MyFirstInterface
+    public interface IMySecondInterface : IMyFirstInterface
     {
 
     }
-    public interface AnotherInterface
+    public interface IAnotherInterface
     {
 
     }

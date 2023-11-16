@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using WinFwk.UITools.Settings;
+
 using MemoScope.Core.Helpers;
 using MemoScope.Tools.CodeTriggers;
+
+using WinFwk.UITools.Settings;
 
 namespace MemoScope
 {

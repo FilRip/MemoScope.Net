@@ -1,16 +1,19 @@
-﻿using BrightIdeasSoftware;
-using MemoScope.Core;
-using Microsoft.Diagnostics.Runtime;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
+
+using BrightIdeasSoftware;
+
+using MemoScope.Core;
+
+using Microsoft.Diagnostics.Runtime;
+
 using WinFwk.UITools;
 
 namespace MemoScope.Modules.Modules
 {
     public class ModuleInformation
     {
-        private ClrModule module;
+        private readonly ClrModule module;
 
         public ModuleInformation(ClrDump clrDump, ClrModule module)
         {
@@ -26,20 +29,20 @@ namespace MemoScope.Modules.Modules
            });
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public string Name => Path.GetFileName(module.AssemblyName);
         [IntColumn]
         public ulong Size => module.Size;
-        [OLVColumn]
+        [OLVColumn()]
         public DebuggableAttribute.DebuggingModes DebuggingMode { get; }
-        [OLVColumn]
+        [OLVColumn()]
         public string FileName => module.FileName;
 
-        [BoolColumn]
+        [BoolColumn()]
         public bool IsDynamic => module.IsDynamic;
-        [BoolColumn]
+        [BoolColumn()]
         public bool IsFile => module.IsFile;
-        [OLVColumn]
+        [OLVColumn()]
         public string Pdb { get; }
     }
 }

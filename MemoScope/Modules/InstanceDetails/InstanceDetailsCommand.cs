@@ -1,13 +1,16 @@
-﻿using MemoScope.Core.Data;
+﻿using System;
+
+using MemoScope.Core.Data;
 using MemoScope.Modules.Instances;
-using System;
+
 using WeifenLuo.WinFormsUI.Docking;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 
 namespace MemoScope.Modules.InstanceDetails
 {
-    public class InstanceDetailsCommand :  AbstractDataUICommand<ClrDumpObject>
+    public class InstanceDetailsCommand : AbstractDataUICommand<ClrDumpObject>
     {
         public InstanceDetailsCommand() : base("Instance", "Display instance details", "Dump", Properties.Resources.elements)
         {
@@ -16,7 +19,7 @@ namespace MemoScope.Modules.InstanceDetails
 
         protected override void HandleData(ClrDumpObject data)
         {
-            if( data == null)
+            if (data == null)
             {
                 throw new InvalidOperationException("Can't show instance details: nothing selected !");
             }

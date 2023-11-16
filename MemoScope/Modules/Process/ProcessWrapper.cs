@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 
 namespace MemoScope.Modules.Process
 {
-    public class ProcessWrapper : IEquatable<ProcessWrapper>
+    public sealed class ProcessWrapper : IEquatable<ProcessWrapper>, IEqualityComparer<ProcessWrapper>
     {
         public long VirtualMemory => Process.VirtualMemorySize64;
         public long PeakVirtualMemory => Process.PeakVirtualMemorySize64;
@@ -35,6 +36,20 @@ namespace MemoScope.Modules.Process
         public override string ToString()
         {
             return string.Format("[{1}] {0}", Process.ProcessName, Process.Id);
+        }
+
+        public bool Equals(ProcessWrapper x, ProcessWrapper y)
+        {
+            if (x == null && y == null)
+                return true;
+            if (x == null)
+                return false;
+            return x.Equals(y);
+        }
+
+        public int GetHashCode(ProcessWrapper obj)
+        {
+            return obj.GetHashCode();
         }
     }
 }

@@ -50,7 +50,7 @@
             this.dlvDelegateInstances.UseCompatibleStateImageBehavior = false;
             this.dlvDelegateInstances.View = System.Windows.Forms.View.Details;
             this.dlvDelegateInstances.VirtualMode = true;
-            this.dlvDelegateInstances.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.dlvDelegateInstances_CellClick);
+            this.dlvDelegateInstances.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.DlvDelegateInstances_CellClick);
             // 
             // DelegateInstancesModule
             // 

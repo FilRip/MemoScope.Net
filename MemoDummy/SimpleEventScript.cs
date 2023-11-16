@@ -12,14 +12,12 @@ namespace MemoDummy
         [Category("Config")]
         public long N { get; set; } = 300;
         [Description("Nb instances that are only referenced by an event/delegate")]
-        public int M  { get; set; } = 10;
-
-        private List<object> objects;
+        public int M { get; set; } = 10;
 
         public override void Run()
         {
-            objects = new List<object>();
-            for(int i=0; i < N; i++)
+            List<object> objects = new();
+            for (int i = 0; i < N; i++)
             {
                 var obj = new ClassWithEventHandlers();
                 var firstCallBack = new FirstCallBacks();
@@ -62,11 +60,11 @@ namespace MemoDummy
 
         public void InvokeFirstEventHandler()
         {
-            if(FirstEventHandler != null) FirstEventHandler(0,1 );
+            FirstEventHandler?.Invoke(0, 1);
         }
         public void InvokeSecondEventHandler()
         {
-            if (SecondEventHandler != null) SecondEventHandler(string.Empty);
+            SecondEventHandler?.Invoke(string.Empty);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MemoScope.Core;
+
 using WinFwk.UIMessages;
 
 namespace MemoScope.Services

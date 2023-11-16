@@ -1,8 +1,9 @@
 ﻿using System;
-using MemoScope.Core;
-using MemoScope.Core.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+
+using MemoScope.Core;
+using MemoScope.Core.Helpers;
 
 namespace MemoScope.Modules.ThreadPool
 {

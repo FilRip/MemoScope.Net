@@ -1,10 +1,11 @@
-﻿using System;
+﻿using System.Linq;
+using System.Windows.Forms;
+
 using MemoScope.Core;
 using MemoScope.Core.Data;
 using MemoScope.Core.Helpers;
+
 using WinFwk.UICommands;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace MemoScope.Modules.Referers
 {
@@ -30,7 +31,7 @@ namespace MemoScope.Modules.Referers
             ClrDump = addressList.ClrDump;
             Icon = Properties.Resources.chart_organisation_small;
             Referers = new ReferersInformation(ClrDump, addressList.ClrType, MessageBus, addressList.Addresses);
-            
+
             Name = $"#{ClrDump.Id} - Referers - {Referers.TypeName}";
         }
 
@@ -46,7 +47,7 @@ namespace MemoScope.Modules.Referers
             get
             {
                 var refInfo = dtlvDistribution.SelectedObject<ReferersInformation>();
-                if(refInfo == null)
+                if (refInfo == null)
                 {
                     return null;
                 }

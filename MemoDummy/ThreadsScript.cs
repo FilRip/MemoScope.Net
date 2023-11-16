@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Threading;
 
 namespace MemoDummy
@@ -15,12 +15,14 @@ namespace MemoDummy
 
         public override void Run()
         {
-            for(int i=0; i < N; i++)
+            for (int i = 0; i < N; i++)
             {
-                Thread t = new Thread(() => DoSomething(i));
-                t.Name = $"Thread #{i}";
+                Thread t = new(() => DoSomething(i))
+                {
+                    Name = $"Thread #{i}"
+                };
                 t.Start();
-                switch(i%8)
+                switch (i % 8)
                 {
                     case 0:
                         t.Abort();
@@ -50,26 +52,34 @@ namespace MemoDummy
             }
         }
 
+#pragma warning disable S1172, IDE0060 // Unused method parameters should be removed
         private void DoSomething(int n)
         {
-            while(true)
+            while (true)
             {
-                try { Thread.Sleep(100); } catch { }
+                try
+                {
+                    Thread.Sleep(100);
+                }
+                catch { /* Ignore errors */ }
                 long j = 0;
                 for (int i = 0; i < 1000; i++)
                 {
                     j = Syracuse(j);
-                    if( j < 0)
+                    if (j < 0)
                     {
+#pragma warning disable S112 // General exceptions should never be thrown
                         throw new Exception();
+#pragma warning restore S112 // General exceptions should never be thrown
                     }
                 }
             }
         }
+#pragma warning restore S1172, IDE0060 // Unused method parameters should be removed
 
         private long Syracuse(long j)
         {
-            if( j % 2 == 0)
+            if (j % 2 == 0)
             {
                 return j / 2;
             }

@@ -1,10 +1,12 @@
-﻿using BrightIdeasSoftware;
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+using BrightIdeasSoftware;
+
 using MemoScope.Core;
 using MemoScope.Core.Bookmarks;
 using MemoScope.Core.Helpers;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+
 using WinFwk.UIMessages;
 
 namespace MemoScope.Modules.Bookmarks
@@ -25,20 +27,20 @@ namespace MemoScope.Modules.Bookmarks
             var col = dlvBookmarks[nameof(Bookmark.Comment)];
             col.CellEditUseWholeCell = true;
             dlvBookmarks.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;
-            dlvBookmarks.CellEditFinished += (o, e) => {
+            dlvBookmarks.CellEditFinished += (o, e) =>
+            {
                 ClrDump.ClrDumpInfo.Save();
             };
 
             var colColor = dlvBookmarks[nameof(Bookmark.Color)];
             dlvBookmarks.FormatCell += (o, e) =>
             {
-                if ( e.Column != colColor)
+                if (e.Column != colColor)
                 {
                     return;
                 }
                 var rowObj = e.Model;
-                var bookmark = rowObj as Bookmark;
-                if (bookmark != null)
+                if (rowObj is Bookmark bookmark)
                 {
                     e.SubItem.BackColor = bookmark.Color;
                     e.SubItem.Text = bookmark.Color != Color.Empty ? null : "Select Color...";
@@ -51,11 +53,12 @@ namespace MemoScope.Modules.Bookmarks
             dlvBookmarks.ButtonClick += (o, e) =>
             {
                 var rowObj = e.Model;
-                var bookmark = rowObj as Bookmark;
-                if (bookmark != null)
+                if (rowObj is Bookmark bookmark)
                 {
-                    ColorDialog colDiag = new ColorDialog();
-                    colDiag.Color = bookmark.Color;
+                    ColorDialog colDiag = new()
+                    {
+                        Color = bookmark.Color
+                    };
                     if (colDiag.ShowDialog() == DialogResult.OK)
                     {
                         bookmark.Color = colDiag.Color;

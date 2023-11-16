@@ -1,18 +1,20 @@
 ﻿using BrightIdeasSoftware;
+
 using MemoScope.Core.Data;
+
 using WinFwk.UITools;
 
 namespace MemoScope.Modules.RootPath
 {
     public class RootPathInformation : ITypeNameData, IAddressData
     {
-        [AddressColumn]
+        [AddressColumn()]
         public ulong Address => ClrDumpObject.Address;
 
-        [OLVColumn]
+        [OLVColumn()]
         public string TypeName => ClrDumpObject.TypeName;
 
-        [OLVColumn]
+        [OLVColumn()]
         public string FieldName { get; }
 
         ClrDumpObject ClrDumpObject { get; }

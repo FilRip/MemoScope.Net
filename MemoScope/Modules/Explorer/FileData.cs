@@ -1,15 +1,16 @@
-using MemoScope.Core.Cache;
-using MemoScope.Core.ProcessInfo;
 using System;
 using System.Collections.Generic;
 using System.IO;
+
+using MemoScope.Core.Cache;
+using MemoScope.Core.ProcessInfo;
 
 namespace MemoScope.Modules.Explorer
 {
     public class FileData : AbstractDumpExplorerData
     {
         public override FileInfo FileInfo { get; }
-        ProcessInfo processInfo;
+        readonly ProcessInfo processInfo;
         public FileData(FileInfo fileInfo)
         {
             FileInfo = fileInfo;
@@ -20,8 +21,6 @@ namespace MemoScope.Modules.Explorer
         }
 
         public override long Size => FileInfo.Length / 1000000;
-        public override bool CanExpand => false;
-        public override List<AbstractDumpExplorerData> Children => null;
         public override string GetCachePath()
         {
             var cachePath = ClrDumpCache.GetCachePath(FileInfo.FullName);
@@ -30,11 +29,11 @@ namespace MemoScope.Modules.Explorer
 
         public override long? HandleCount => processInfo?.HandleCount;
         public override string CommandLine => processInfo?.CommandLine;
-        public override DateTime? DumpTime 
+        public override DateTime? DumpTime
         {
             get
             {
-                if(processInfo == null || processInfo.DumpTime == DateTime.MinValue)
+                if (processInfo == null || processInfo.DumpTime == DateTime.MinValue)
                 {
                     return null;
                 }
@@ -52,7 +51,7 @@ namespace MemoScope.Modules.Explorer
         {
             get
             {
-                if(processInfo == null || processInfo.StartTime == DateTime.MinValue)
+                if (processInfo == null || processInfo.StartTime == DateTime.MinValue)
                 {
                     return null;
                 }
@@ -64,7 +63,7 @@ namespace MemoScope.Modules.Explorer
         {
             get
             {
-                if(processInfo == null || processInfo.TotalProcessorTime == TimeSpan.Zero)
+                if (processInfo == null || processInfo.TotalProcessorTime == TimeSpan.Zero)
                 {
                     return null;
                 }
@@ -77,14 +76,14 @@ namespace MemoScope.Modules.Explorer
         {
             get
             {
-                if (processInfo == null || processInfo.UserProcessorTime == TimeSpan.Zero )
+                if (processInfo == null || processInfo.UserProcessorTime == TimeSpan.Zero)
                 {
                     return null;
                 }
                 return processInfo.UserProcessorTime;
             }
         }
-        
+
         public override long? VirtualMemory => processInfo?.VirtualMemory / 1000000;
         public override long? WorkingSet => processInfo?.WorkingSet / 1000000;
     }

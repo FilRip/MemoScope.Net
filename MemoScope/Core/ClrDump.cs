@@ -1,24 +1,29 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using MemoScope.Core.Dac;
-using Microsoft.Diagnostics.Runtime;
-using System;
-using WinFwk.UITools.Log;
-using WinFwk.UIMessages;
-using MemoScope.Core.Cache;
-using MemoScope.Core.Data;
-using System.Threading;
-using WinFwk.UIModules;
-using NLog;
 using System.Reflection;
+using System.Threading;
+
+using MemoScope.Core.Cache;
+using MemoScope.Core.Dac;
+using MemoScope.Core.Data;
 using MemoScope.Core.ProcessInfo;
+
+using Microsoft.Diagnostics.Runtime;
+
+using NLog;
+
+using WinFwk.UIMessages;
+using WinFwk.UIModules;
+using WinFwk.UITools.Log;
+
 using ClrObject = MemoScope.Core.Data.ClrObject;
 
 namespace MemoScope.Core
 {
-    public class ClrDump : IClrDump
+    public class ClrDump : IClrDump, IDisposable
     {
-        static Logger logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType.FullName);
+        static readonly Logger logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType.FullName);
 
         private static int n = 0;
         public int Id { get; }
@@ -31,15 +36,27 @@ namespace MemoScope.Core
         public ClrDumpInfo ClrDumpInfo { get; }
 
         public IList<ClrSegment> Segments => Runtime.Heap.Segments;
-        public List<ClrMemoryRegion> Regions => Runtime.EnumerateMemoryRegions().ToList();
+        public List<ClrMemoryRegion> Regions()
+        {
+            return Runtime.EnumerateMemoryRegions().ToList();
+        }
         public IList<ClrModule> Modules => Runtime.Modules;
 
-        public List<ClrHandle> Handles => Runtime.EnumerateHandles().ToList();
-        public List<ulong> FinalizerQueueObjectAddresses => Runtime.EnumerateFinalizerQueueObjectAddresses().ToList();
+        public List<ClrHandle> Handles()
+        {
+            return Runtime.EnumerateHandles().ToList();
+        }
+        public List<ulong> FinalizerQueueObjectAddresses()
+        {
+            return Runtime.EnumerateFinalizerQueueObjectAddresses().ToList();
+        }
         public IEnumerable<IGrouping<ClrType, ulong>> FinalizerQueueObjectAddressesByType => Runtime.EnumerateFinalizerQueueObjectAddresses().GroupBy(address => GetObjectType(address));
         public IList<ClrThread> Threads => Runtime.Threads;
         public ClrThreadPool ThreadPool => Runtime.ThreadPool;
-        public List<ClrType> AllTypes => Heap.EnumerateTypes().ToList();
+        public List<ClrType> AllTypes()
+        {
+            return Heap.EnumerateTypes().ToList();
+        }
 
         public Dictionary<int, ThreadProperty> ThreadProperties
         {
@@ -59,9 +76,14 @@ namespace MemoScope.Core
         private readonly SingleThreadWorker worker;
         private ClrDumpCache cache;
 
+        public static int CurrentN()
+        {
+            return n++;
+        }
+
         public ClrDump(DataTarget target, string dumpPath, MessageBus msgBus)
         {
-            Id = n++;
+            Id = CurrentN();
             Target = target;
             DumpPath = dumpPath;
             MessageBus = msgBus;
@@ -85,17 +107,15 @@ namespace MemoScope.Core
         private void InitRuntime()
         {
             MessageBus.Log(this, "InitRuntime: " + DumpPath);
-            using (var locator = DacFinderFactory.CreateDactFinder("DacSymbols"))
-            {
-                var clrVersion = Target.ClrVersions[0];
-                var dacFile = locator.FindDac(clrVersion);
-                Runtime = clrVersion.CreateRuntime(dacFile);
-            }
+            using var locator = DacFinderFactory.CreateDactFinder("DacSymbols");
+            var clrVersion = Target.ClrVersions[0];
+            var dacFile = locator.FindDac(clrVersion);
+            Runtime = clrVersion.CreateRuntime(dacFile);
         }
 
         public List<ClrType> GetTypes()
         {
-            List<ClrType> t = worker.Eval(() => t = AllTypes);
+            List<ClrType> t = worker.Eval(() => t = AllTypes());
             return t;
         }
 
@@ -105,15 +125,30 @@ namespace MemoScope.Core
             cache.Destroy();
         }
 
-        internal void Dispose()
+        private bool disposeValue;
+        public bool IsDisposed
         {
-            MessageBus.Log(this, $"{nameof(Dispose)}: " + DumpPath);
-            logger.Debug("Cache dispose");
-            cache.Dispose();
-            logger.Debug("Runtime.DataTarget.Dispose");
-            Run(() => Runtime?.DataTarget?.Dispose());
-            logger.Debug("Worker.Dispose");
-            worker.Dispose();
+            get { return disposeValue; }
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                MessageBus.Log(this, $"{nameof(Dispose)}: " + DumpPath);
+                logger.Debug("Cache dispose");
+                cache.Dispose();
+                logger.Debug("Runtime.DataTarget.Dispose");
+                Run(() => Runtime?.DataTarget?.Dispose());
+                logger.Debug("Worker.Dispose");
+                worker.Dispose();
+                disposeValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public ClrType GetClrType(string typeName)
@@ -134,16 +169,16 @@ namespace MemoScope.Core
             return GetInstances(typeId);
         }
 
-        public IEnumerable<ulong> EnumerateInstances(ClrType type)
-        {
-            int typeId = cache.GetTypeId(type.Name);
-            return cache.EnumerateInstances(typeId);
-        }
-
         public List<ulong> GetInstances(int typeId)
         {
             var instances = cache.LoadInstances(typeId);
             return instances;
+        }
+
+        public IEnumerable<ulong> EnumerateInstances(ClrType type)
+        {
+            int typeId = cache.GetTypeId(type.Name);
+            return cache.EnumerateInstances(typeId);
         }
 
         public int CountInstances(ClrType type)
@@ -260,7 +295,7 @@ namespace MemoScope.Core
 
         public object GetFieldValueImpl(ulong address, ClrType type, List<ClrInstanceField> fields)
         {
-            ClrObject obj = new ClrObject(address, type);
+            ClrObject obj = new(address, type);
 
             for (int i = 0; i < fields.Count; i++)
             {
@@ -276,13 +311,13 @@ namespace MemoScope.Core
         }
         public object GetFieldValueImpl(ulong address, ClrType type, List<string> fieldNames)
         {
-            ClrObject obj = new ClrObject(address, type);
+            ClrObject obj = new(address, type);
 
             for (int i = 0; i < fieldNames.Count; i++)
             {
                 var fieldName = fieldNames[i];
                 ClrInstanceField field = obj.GetField(fieldName);
-                if( field == null)
+                if (field == null)
                 {
                     return null;
                 }
@@ -299,7 +334,7 @@ namespace MemoScope.Core
 
         public object GetFieldValueImpl(ulong address, ClrType type, ClrInstanceField field)
         {
-            ClrObject obj = new ClrObject(address, type);
+            ClrObject obj = new(address, type);
             var fieldValue = obj[field];
             if (fieldValue.IsNull)
             {
@@ -380,15 +415,13 @@ namespace MemoScope.Core
 
         public ulong ReadHeapPointer(ulong address)
         {
-            ulong value;
-            Heap.ReadPointer(address, out value);
+            Heap.ReadPointer(address, out ulong value);
             return value;
         }
 
         public ulong ReadRuntimePointer(ulong address)
         {
-            ulong value;
-            Runtime.ReadPointer(address, out value);
+            Runtime.ReadPointer(address, out ulong value);
             return value;
         }
 
@@ -412,7 +445,7 @@ namespace MemoScope.Core
                 return "Unknown";
             }
             string fieldName = "???";
-            ClrObject obj = new ClrObject(address, type);
+            ClrObject obj = new(address, type);
             if (type.IsArray)
             {
                 fieldName = "[ ? ]";
@@ -455,23 +488,25 @@ namespace MemoScope.Core
 
         public List<BlockingObject> GetBlockingObjects()
         {
-            List<BlockingObject> blockingObjects = new List<BlockingObject>();
-            CancellationTokenSource source = new CancellationTokenSource();
+            List<BlockingObject> blockingObjects = new();
+            CancellationTokenSource source = new();
             var token = source.Token;
             MessageBus.BeginTask("Looking for blocking objects...", source);
 
-            int n = 0;
+            int currentN = 0;
             foreach (var obj in Runtime.Heap.EnumerateBlockingObjects())
             {
                 if (token.IsCancellationRequested)
                 {
                     break;
                 }
-                n++;
-                if (n % 512 == 0)
+                currentN++;
+#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
+                if (currentN % 512 == 0)
                 {
                     MessageBus.Status($"Looking for blocking objects: {blockingObjects.Count:###,###,###,##0}");
                 }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
                 blockingObjects.Add(obj);
             }
             if (token.IsCancellationRequested)
@@ -487,23 +522,25 @@ namespace MemoScope.Core
 
         public List<ClrRoot> GetClrRoots()
         {
-            List<ClrRoot> clrRoots = new List<ClrRoot>();
-            CancellationTokenSource source = new CancellationTokenSource();
+            List<ClrRoot> clrRoots = new();
+            CancellationTokenSource source = new();
             var token = source.Token;
             MessageBus.BeginTask("Looking for ClrRoots...", source);
 
-            int n = 0;
+            int currentN = 0;
             foreach (var obj in Runtime.Heap.EnumerateRoots())
             {
                 if (token.IsCancellationRequested)
                 {
                     break;
                 }
-                n++;
-                if (n % 512 == 0)
+                currentN++;
+#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
+                if (currentN % 512 == 0)
                 {
                     MessageBus.Status($"Looking for ClrRoots: {clrRoots.Count:###,###,###,##0}");
                 }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
                 clrRoots.Add(obj);
             }
             if (token.IsCancellationRequested)
@@ -547,7 +584,7 @@ namespace MemoScope.Core
         public int ManagedId { get; set; }
     }
 
-    public class FieldInfo : IEquatable<FieldInfo>
+    public sealed class FieldInfo : IEquatable<FieldInfo>, IEqualityComparer<FieldInfo>
     {
         public string Name { get; }
         public ClrType FieldType { get; }
@@ -560,13 +597,27 @@ namespace MemoScope.Core
         {
             return fieldInfo.Name == Name && fieldInfo.FieldType.Name == FieldType.Name;
         }
-        public override bool Equals(object o )
+        public override bool Equals(object obj)
         {
-            return ((IEquatable<FieldInfo>)this).Equals((FieldInfo)o);
+            return ((IEquatable<FieldInfo>)this).Equals((FieldInfo)obj);
         }
         public override int GetHashCode()
         {
             return Name.GetHashCode() * 37 + FieldType.Name.GetHashCode();
+        }
+
+        public bool Equals(FieldInfo x, FieldInfo y)
+        {
+            if (x == null && y == null)
+                return true;
+            if (x == null)
+                return false;
+            return x.Equals(y);
+        }
+
+        public int GetHashCode(FieldInfo obj)
+        {
+            return obj.GetHashCode();
         }
     }
 }

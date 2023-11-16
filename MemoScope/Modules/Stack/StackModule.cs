@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+
 using MemoScope.Core;
-using Microsoft.Diagnostics.Runtime;
 using MemoScope.Core.Helpers;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.Stack
 {
@@ -16,7 +18,7 @@ namespace MemoScope.Modules.Stack
             InitializeComponent();
         }
 
-        public void Setup(ClrDump clrDump, ClrThread thread, UIClrDumpModule parentModule=null)
+        public void Setup(ClrDump clrDump, ClrThread thread, UIClrDumpModule parentModule = null)
         {
             ClrDump = clrDump;
             Thread = thread;
@@ -34,7 +36,7 @@ namespace MemoScope.Modules.Stack
         public override void PostInit()
         {
             base.PostInit();
-            Summary = $"{StackInstances.Count:###,###,###,##0} instances" ;
+            Summary = $"{StackInstances.Count:###,###,###,##0} instances";
         }
 
         public override void Init()
@@ -45,7 +47,7 @@ namespace MemoScope.Modules.Stack
             }
             else
             {
-                StackInstances = ClrDump.Eval(() => Thread.EnumerateStackObjects().GroupBy(clrRoot => clrRoot.Object).Select(clrRootGroup => new StackInstanceInformation(ClrDump, clrRootGroup.First())).ToList());
+                StackInstances = ClrDump.Eval(() => Thread.EnumerateStackObjects().GroupBy(clrRoot => clrRoot.Object).Select(clrRootGroup => new StackInstanceInformation(clrRootGroup.First())).ToList());
             }
             dlvStack.Objects = StackInstances;
         }

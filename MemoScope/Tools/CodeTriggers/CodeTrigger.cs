@@ -2,7 +2,7 @@
 
 namespace MemoScope.Tools.CodeTriggers
 {
-    public class CodeTrigger 
+    public class CodeTrigger
     {
         public bool Active { get; set; }
 
@@ -17,7 +17,7 @@ namespace MemoScope.Tools.CodeTriggers
 
         public CodeTrigger Clone()
         {
-            return (CodeTrigger) MemberwiseClone();
+            return (CodeTrigger)MemberwiseClone();
         }
     }
 }

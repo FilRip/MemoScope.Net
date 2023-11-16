@@ -1,11 +1,13 @@
-﻿using MemoScope.Core;
+﻿using System.Collections.Generic;
+
+using MemoScope.Core;
 using MemoScope.Modules.RootPath;
+
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace UnitTestProject
 {
-    [TestFixture]
+    [TestFixture()]
     public class RootPathAnalysisTests
     {
         MockClrDump clrDump;
@@ -20,15 +22,15 @@ namespace UnitTestProject
             shortestPath = null;
         }
 
-        [Test]
+        [Test()]
         public void RootPathAnalysisTest_1()
         {
-            clrDump.Add(1, 2, 3 );
-            ulong[] shortestPath = new ulong[] { 1, 2 };
-            Run(1, shortestPath );
+            clrDump.Add(1, 2, 3);
+            ulong[] shortestPathl = new ulong[] { 1, 2 };
+            Run(1, shortestPathl);
         }
 
-        [Test]
+        [Test()]
         public void RootPathAnalysisTest_2()
         {
             /* 
@@ -39,15 +41,15 @@ namespace UnitTestProject
                 |_ 3
             */
 
-            clrDump.Add(1, 2, 3 );
-            clrDump.Add(2, 4 );
-            clrDump.Add(4, 5 );
+            clrDump.Add(1, 2, 3);
+            clrDump.Add(2, 4);
+            clrDump.Add(4, 5);
 
-            ulong[] shortestPath = new ulong[] { 1, 3};
-            Run(1, shortestPath);
+            ulong[] shortestPathl = new ulong[] { 1, 3 };
+            Run(1, shortestPathl);
         }
 
-        [Test]
+        [Test()]
         public void RootPathAnalysisTest_3()
         {
             /* 
@@ -68,11 +70,11 @@ namespace UnitTestProject
             clrDump.Add(4, 5);
             clrDump.Add(7, 8);
 
-            ulong[] shortestPath = new ulong[] { 1, 7, 8 };
-            Run(1, shortestPath);
+            ulong[] shortestPathl = new ulong[] { 1, 7, 8 };
+            Run(1, shortestPathl);
         }
 
-        [Test]
+        [Test()]
         public void RootPathAnalysisTest_4()
         {
             /* 
@@ -93,22 +95,22 @@ namespace UnitTestProject
             clrDump.Add(3, 6);
             clrDump.Add(4, 5);
 
-            ulong[] shortestPath = new ulong[] { 1, 7, 8};
-            Run(1, shortestPath);
+            ulong[] shortestPathl = new ulong[] { 1, 7, 8 };
+            Run(1, shortestPathl);
         }
 
-        [Test]
+        [Test()]
         public void RootPathAnalysisTest_5()
         {
             /* 
                 1 
             */
 
-            ulong[] shortestPath = null;
-            Run(1, shortestPath, false);
+            ulong[] shortestPathl = null;
+            Run(1, shortestPathl, false);
         }
 
-        [Test]
+        [Test()]
         public void RootPathAnalysisTest_6()
         {
             /* 
@@ -123,11 +125,11 @@ namespace UnitTestProject
             clrDump.Add(2, 2);
             clrDump.Add(2, 3);
 
-            ulong[] shortestPath = new ulong[] { 1, 2, 3 };
-            Run(1, shortestPath);
+            ulong[] shortestPathl = new ulong[] { 1, 2, 3 };
+            Run(1, shortestPathl);
         }
 
-        [Test]
+        [Test()]
         public void RootPathAnalysisTest_7()
         {
             /* 
@@ -142,39 +144,17 @@ namespace UnitTestProject
             clrDump.Add(2, 3);
             clrDump.Add(3, 4);
 
-            ulong[] shortestPath = new ulong[] { 1, 3, 4 };
-            Run(1, shortestPath);
+            ulong[] shortestPathl = new ulong[] { 1, 3, 4 };
+            Run(1, shortestPathl);
         }
 
-        private void Run(ulong address, ulong[] expectedPath, bool result=true)
+        private void Run(ulong address, ulong[] expectedPath, bool result = true)
         {
             currentPath.Add(address);
             var res = RootPathAnalysis.FindShortestPath(currentPath, ref shortestPath, clrDump);
             Assert.That(res, Is.EqualTo(result));
             Assert.That(shortestPath, Is.EqualTo(expectedPath));
         }
-
-        private HashSet<ulong> BuildRoots(ulong[] v)
-        {
-            var roots = new HashSet<ulong>();
-            foreach(var address in v)
-            {
-                roots.Add(address);
-            }
-            return roots;
-        }
-
-
-#if False
-        [Test]
-        public void RootPathAnalysisTest_xxx()
-        {
-            clrDump.Add(1, new ulong[] { x, y });
-            ulong[] roots = new ulong[] { x };
-            ulong[] shortestPath = new ulong[] { z, t };
-            Run(w, roots, shortestPath );
-        }
-#endif
     }
 
     public class MockClrDump : IClrDump
@@ -183,11 +163,10 @@ namespace UnitTestProject
         {
             this.referers[address] = referers;
         }
-        Dictionary<ulong, ulong[]> referers = new Dictionary<ulong, ulong[]>();
+        readonly Dictionary<ulong, ulong[]> referers = new();
         public IEnumerable<ulong> EnumerateReferers(ulong address)
         {
-            ulong[] refs;
-            if( referers.TryGetValue(address, out refs))
+            if (referers.TryGetValue(address, out ulong[] refs))
             {
                 return refs;
             }

@@ -1,7 +1,8 @@
-﻿using MemoScope.Core;
+﻿using System.Collections.Generic;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
 using MemoScope.Core.Helpers;
-using System.Collections.Generic;
 
 namespace MemoScope.Modules.RootPath
 {

@@ -1,6 +1,8 @@
-﻿using MemoScope.Core.Data;
-using System;
+﻿using System;
 using System.Windows.Forms;
+
+using MemoScope.Core.Data;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 
@@ -15,7 +17,7 @@ namespace MemoScope.Modules.RootPath
 
         protected override void HandleData(ClrDumpObject clrDumpObject)
         {
-            if( clrDumpObject == null)
+            if (clrDumpObject == null)
             {
                 throw new InvalidOperationException("No object selected !");
             }

@@ -26,15 +26,14 @@ namespace MemoDummy
 
         const int N = 1024;
 
-        private object[] objects = new object[N];
-        Timer timer;
-        long nbObjects=0;
+        private readonly object[] objects = new object[N];
+        long nbObjects = 0;
         public override void Run()
         {
-            timer = new Timer(RunGC);
+            Timer timer = new(RunGC);
             timer.Change(TimeSpan.Zero, TimeSpan.FromMilliseconds(GCCallPeriodInMs));
-            Random r = new Random();
-            while(! stopRequested)
+            Random r = new();
+            while (!stopRequested)
             {
                 int idx = r.Next(N);
                 nbObjects++;
@@ -46,7 +45,9 @@ namespace MemoDummy
 
         private void RunGC(object state)
         {
+#pragma warning disable S1215 // "GC.Collect" should not be called
             GC.Collect();
+#pragma warning restore S1215 // "GC.Collect" should not be called
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿using BrightIdeasSoftware;
+﻿using System.Collections.Generic;
+
+using BrightIdeasSoftware;
+
 using MemoScope.Core;
 using MemoScope.Core.Data;
+
 using Microsoft.Diagnostics.Runtime;
-using System.Collections.Generic;
+
 using WinFwk.UIMessages;
 using WinFwk.UITools;
 
@@ -10,7 +14,7 @@ namespace MemoScope.Modules.Referers
 {
     public class ReferersInformation : TreeNodeInformationAdapter<ReferersInformation>, ITypeNameData
     {
-        [OLVColumn]
+        [OLVColumn()]
         public string TypeName => ClrType.Name;
 
         [IntColumn(Title = "# Instances")]
@@ -22,7 +26,7 @@ namespace MemoScope.Modules.Referers
         [PercentColumn(Title = "References %")]
         public double ReferencesPercent => References.Count != 0 ? (double)References.Count / parentCount : 0;
 
-        [OLVColumn]
+        [OLVColumn()]
         public string FieldName { get; }
 
         public HashSet<ulong> Instances { get; }
@@ -32,7 +36,7 @@ namespace MemoScope.Modules.Referers
         ClrDump ClrDump { get; }
         MessageBus MessageBus { get; }
 
-        private int parentCount;
+        private readonly int parentCount;
 
         public ReferersInformation(ClrDump clrDump, ClrType clrType, string fieldName, MessageBus messageBus, int parentCount)
         {
@@ -56,10 +60,10 @@ namespace MemoScope.Modules.Referers
 
         public void Init()
         {
-            CanExpand = ReferersAnalysis.HasReferers(MessageBus, ClrDump, Instances);
+            CanExpand = ReferersAnalysis.HasReferers(ClrDump, Instances);
         }
 
-        public override bool CanExpand {get ; set;}
+        public override bool CanExpand { get; set; }
 
         public override List<ReferersInformation> Children
         {

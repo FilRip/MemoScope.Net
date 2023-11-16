@@ -1,6 +1,8 @@
-﻿using MemoScope.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+using MemoScope.Core;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 
@@ -15,7 +17,7 @@ namespace MemoScope.Modules.DumpDiff
 
         protected override void HandleData(List<ClrDump> clrDumps)
         {
-            if( clrDumps == null || clrDumps.Count < 2)
+            if (clrDumps == null || clrDumps.Count < 2)
             {
                 throw new InvalidOperationException("Please, select two or more dumps in the workplace module !");
             }

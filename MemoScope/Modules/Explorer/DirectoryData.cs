@@ -14,7 +14,7 @@ namespace MemoScope.Modules.Explorer
             Icon = Properties.Resources.folder;
         }
 
-        public override long Size => Children.Count();
+        public override long Size => Children.Count;
 
         public override FileInfo FileInfo => null;
 
@@ -27,12 +27,12 @@ namespace MemoScope.Modules.Explorer
                 {
                     var files = DirInfo.GetFiles("*.dmp");
                     return files.Length > 0;
-                } 
+                }
                 else
                 {
                     return false;
                 }
-            } 
+            }
         }
 
         public override List<AbstractDumpExplorerData> Children => GetItems(DirInfo.FullName);

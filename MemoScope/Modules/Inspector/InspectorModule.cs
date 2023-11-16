@@ -1,6 +1,7 @@
 ﻿using MemoScope.Core;
 using MemoScope.Core.Data;
 using MemoScope.Modules.InstanceDetails;
+
 using WinFwk.UIMessages;
 
 namespace MemoScope.Modules.Inspector
@@ -9,7 +10,7 @@ namespace MemoScope.Modules.Inspector
     {
         public void HandleMessage(SelectedClrDumpObjectMessage message)
         {
-            if(message.SelectedInstance.ClrDump.Id != ClrDump.Id)
+            if (message.SelectedInstance.ClrDump.Id != ClrDump.Id)
             {
                 return;
             }

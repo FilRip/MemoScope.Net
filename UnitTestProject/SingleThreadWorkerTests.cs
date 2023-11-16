@@ -1,33 +1,34 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
+
 using MemoScope.Core;
+
 using NUnit.Framework;
 
 namespace UnitTestProject
 {
-    [TestFixture]
+    [TestFixture()]
     public class SingleThreadWorkerTests
     {
-        [Test]
-        public void RunAsyncTest()
+        [Test()]
+        public async Task RunAsyncTest()
         {
-            using (SingleThreadWorker worker = new SingleThreadWorker("Test"))
-            {
-                string msg = null;
-                bool done = false;
+            using SingleThreadWorker worker = new("Test");
+            string msg = null;
+            bool done = false;
 
-                worker.RunAsync(() => { msg = "Yo !"; }, () => { done = true; });
+            worker.RunAsync(() => { msg = "Yo !"; }, () => { done = true; });
 
-                Thread.Sleep(100);
+            await Task.Delay(100);
 
-                Assert.That(msg, Is.EqualTo("Yo !"));
-                Assert.That(done, Is.True);
-            }
+            Assert.That(msg, Is.EqualTo("Yo !"));
+            Assert.That(done, Is.True);
         }
 
-        [Test]
+        [Test()]
         public void RunTest()
         {
-            SingleThreadWorker worker = new SingleThreadWorker("Test");
+            SingleThreadWorker worker = new("Test");
             string msg = null;
             worker.Run(() => msg = "Yo !");
             Assert.That(msg, Is.EqualTo("Yo !"));

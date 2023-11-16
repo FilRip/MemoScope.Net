@@ -57,7 +57,7 @@
             this.linkGitHub.TabIndex = 1;
             this.linkGitHub.TabStop = true;
             this.linkGitHub.Text = "https://github.com/fremag/MemoScope.Net";
-            this.linkGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkGitHub_LinkClicked);
+            this.linkGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkGitHub_LinkClicked);
             // 
             // lblGitHubUrl
             // 
@@ -106,7 +106,7 @@
             this.linkWiki.TabIndex = 5;
             this.linkWiki.TabStop = true;
             this.linkWiki.Text = "https://github.com/fremag/MemoScope.Net/wiki";
-            this.linkWiki.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkWiki_LinkClicked);
+            this.linkWiki.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkWiki_LinkClicked);
             // 
             // AboutModule
             // 

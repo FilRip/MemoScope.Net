@@ -1,6 +1,7 @@
-﻿using MemoScope.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using MemoScope.Core;
 
 namespace MemoScope.Modules.Regions
 {
@@ -24,7 +25,7 @@ namespace MemoScope.Modules.Regions
         public override void Init()
         {
             base.Init();
-            Regions = ClrDump.Regions.Select(reg=> new RegionInformation(reg)).ToList();
+            Regions = ClrDump.Regions().Select(reg => new RegionInformation(reg)).ToList();
         }
 
         public override void PostInit()

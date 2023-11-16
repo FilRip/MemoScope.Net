@@ -20,10 +20,11 @@ namespace MemoDummy
             objectsArray = new object[NbObjects];
             objectsSet = new HashSet<object>();
 
-            for(int i=0; i < NbObjects; i++)
+            for (int i = 0; i < NbObjects; i++)
             {
                 var o = new ComplexObject();
-                switch (i%3)
+#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
+                switch (i % 3)
                 {
                     case 0:
                         objectsList.Add(o);
@@ -35,6 +36,7 @@ namespace MemoDummy
                         objectsSet.Add(o);
                         break;
                 }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
             }
         }
     }

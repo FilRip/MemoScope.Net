@@ -1,6 +1,7 @@
-﻿using Microsoft.Diagnostics.Runtime;
-using System;
+﻿using System;
 using System.Collections.Generic;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core
 {
@@ -33,12 +34,10 @@ namespace MemoScope.Core
 
         public override void EnumerateRefsOfObject(ulong objRef, Action<ulong, int> action)
         {
-            return;
         }
 
         public override void EnumerateRefsOfObjectCarefully(ulong objRef, Action<ulong, int> action)
         {
-            return;
         }
 
         public override ulong GetArrayElementAddress(ulong objRef, int index) => 0;

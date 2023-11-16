@@ -1,11 +1,12 @@
-﻿using Microsoft.Diagnostics.Runtime;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.Data
 {
-    public class ClrDumpType 
+    public class ClrDumpType
     {
-        public ClrDump ClrDump {get;}
+        public ClrDump ClrDump { get; }
         public ClrType ClrType { get; }
         public List<ulong> Instances => ClrDump.GetInstances(ClrType);
 
@@ -16,13 +17,13 @@ namespace MemoScope.Core.Data
         public bool IsArray => ClrDump.Eval(() => ClrType.IsArray);
 
         public bool IsFinalizable => ClrDump.Eval(() => ClrType.IsFinalizable);
-        public string BaseTypeName => ClrDump.Eval(() => ClrType.BaseType == null ? null : ClrType.BaseType.Name);
+        public string BaseTypeName => ClrDump.Eval(() => ClrType.BaseType?.Name);
 
         public IList<ClrInstanceField> Fields => ClrDump.Eval(() => ClrType.Fields);
         public IList<ClrMethod> Methods => ClrDump.Eval(() => ClrType.Methods);
 
         public ClrElementType ElementType => ClrDump.Eval(() => ClrType.ElementType);
-        
+
         public ClrDumpType BaseType => ClrDump.Eval(() => ClrType.BaseType == null ? null : new ClrDumpType(ClrDump, ClrType.BaseType));
 
         public string TypeName => ClrType == null ? null : ClrDump.Eval(() => ClrType.Name);

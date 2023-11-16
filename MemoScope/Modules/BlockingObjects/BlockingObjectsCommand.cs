@@ -1,5 +1,7 @@
-﻿using MemoScope.Core;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+
+using MemoScope.Core;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 
@@ -7,7 +9,7 @@ namespace MemoScope.Modules.BlockingObjects
 {
     public class BlockingObjectsCommand : AbstractDataUICommand<ClrDump>
     {
-        public BlockingObjectsCommand() : base("Blocking Objects", "Display BlockingObjects", "Threads", Properties.Resources._lock, Keys.Control|Keys.B)
+        public BlockingObjectsCommand() : base("Blocking Objects", "Display BlockingObjects", "Threads", Properties.Resources._lock, Keys.Control | Keys.B)
         {
 
         }

@@ -1,10 +1,14 @@
-﻿using MemoScope.Core;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
 using MemoScope.Core.Helpers;
+
 using NLog;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+
 using WinFwk.UIMessages;
 using WinFwk.UIModules;
 
@@ -12,15 +16,15 @@ namespace MemoScope.Modules.RootPath
 {
     public static class RootPathAnalysis
     {
-        static Logger logger = LogManager.GetLogger(typeof(RootPathAnalysis).FullName);
+        static readonly Logger logger = LogManager.GetLogger(typeof(RootPathAnalysis).FullName);
 
         public static List<RootPathInformation> AnalyzeRootPath(MessageBus msgBus, ClrDumpObject clrDumpObject)
         {
             ClrDump clrDump = clrDumpObject.ClrDump;
             ulong address = clrDumpObject.Address;
-            CancellationTokenSource token = new CancellationTokenSource();
+            CancellationTokenSource token = new();
             msgBus.BeginTask("Analysing Root Path...", token);
-            if( token.IsCancellationRequested)
+            if (token.IsCancellationRequested)
             {
                 msgBus.EndTask("Root Path analysis: cancelled.");
                 return null;
@@ -33,11 +37,13 @@ namespace MemoScope.Modules.RootPath
                 logger.Debug("Roots: " + Str(roots));
             }
             List<ulong> bestPath = null;
-            var currentPath = new List<ulong>();
-            currentPath.Add(address);
-            bool result = FindShortestPath(currentPath, ref bestPath, clrDump);
+            var currentPath = new List<ulong>
+            {
+                address
+            };
+            _ = FindShortestPath(currentPath, ref bestPath, clrDump);
 
-            List<RootPathInformation> path = new List<RootPathInformation>();
+            List<RootPathInformation> path = new();
             ulong prevAddress = address;
             if (bestPath != null)
             {
@@ -60,24 +66,24 @@ namespace MemoScope.Modules.RootPath
 
         public static bool FindShortestPath(List<ulong> currentPath, ref List<ulong> bestPath, IClrDump clrDump)
         {
-            if(logger.IsDebugEnabled) logger.Debug("FindShortestPath: currentPath: " + Str(currentPath)+", best: "+Str(bestPath));
-            if( bestPath != null && currentPath.Count >= bestPath.Count)
+            if (logger.IsDebugEnabled) logger.Debug("FindShortestPath: currentPath: " + Str(currentPath) + ", best: " + Str(bestPath));
+            if (bestPath != null && currentPath.Count >= bestPath.Count)
             {
                 return false;
             }
             bool res = false;
-            foreach (var refAddress in clrDump.EnumerateReferers(currentPath[currentPath.Count-1]))
+            foreach (var refAddress in clrDump.EnumerateReferers(currentPath[currentPath.Count - 1]))
             {
-                if(currentPath.Contains(refAddress))
+                if (currentPath.Contains(refAddress))
                 {
                     continue;
                 }
                 if (logger.IsDebugEnabled) logger.Debug($"Visiting: {refAddress:X}");
                 currentPath.Add(refAddress);
-                if (! clrDump.HasReferers(refAddress))
+                if (!clrDump.HasReferers(refAddress))
                 {
                     bestPath = new List<ulong>(currentPath);
-                    if (logger.IsDebugEnabled) logger.Debug("Root found !, best path: "+Str(bestPath));
+                    if (logger.IsDebugEnabled) logger.Debug("Root found !, best path: " + Str(bestPath));
                     currentPath.RemoveAt(currentPath.Count - 1);
                     return true;
                 }
@@ -91,22 +97,24 @@ namespace MemoScope.Modules.RootPath
 
         private static string Str(IEnumerable<ulong> ulongEnum)
         {
-            if ( ulongEnum == null || ! ulongEnum.Any()) 
+            if (ulongEnum == null || !ulongEnum.Any())
             {
                 return "[]";
             }
-            var s = "[";
+            StringBuilder s = new("[");
             int n = 0;
-            foreach(var u in ulongEnum)
+            foreach (var u in ulongEnum)
             {
-                s += u.ToString("X") + ", ";
-                if( ++n % 128 == 0)
+                s.Append(u.ToString("X") + ", ");
+#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
+                if (++n % 128 == 0)
                 {
-                    s += "..., ";
+                    s.Append("..., ");
                     break;
                 }
+#pragma warning restore S2583 // Conditionally executed code should be reachable
             }
-            return s.Substring(0, s.Length-2)+"]";
+            return s.ToString().Substring(0, s.Length - 2) + "]";
         }
     }
 }
