@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using MemoScope.Core.Helpers;
+using MemoScope.Helpers;
 using MemoScope.Modules.Explorer;
 using MemoScope.Modules.TypeStats;
 using MemoScope.Modules.Workplace;
@@ -26,6 +27,8 @@ namespace MemoScope
         public MemoScopeForm()
         {
             InitializeComponent();
+            if (WindowsSettings.IsWindowsApplicationInDarkMode())
+                WindowsSettings.UseImmersiveDarkMode(Handle, true);
         }
 
         private void MemoScope_Load(object sender, System.EventArgs e)

@@ -17,7 +17,7 @@ namespace MemoScope.Modules.Segments
 
         [AddressColumn()]
         public ulong Start => segment.Start;
-        [IntColumn]
+        [IntColumn()]
         public ulong Length => segment.Length;
         [BoolColumn()]
         public bool IsLarge => segment.IsLarge;

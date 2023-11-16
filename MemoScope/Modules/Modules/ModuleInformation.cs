@@ -31,7 +31,7 @@ namespace MemoScope.Modules.Modules
 
         [OLVColumn()]
         public string Name => Path.GetFileName(module.AssemblyName);
-        [IntColumn]
+        [IntColumn()]
         public ulong Size => module.Size;
         [OLVColumn()]
         public DebuggableAttribute.DebuggingModes DebuggingMode { get; }

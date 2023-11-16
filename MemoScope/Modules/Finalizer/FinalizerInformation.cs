@@ -23,7 +23,7 @@ namespace MemoScope.Modules.Finalizer
         [OLVColumn()]
         public string TypeName => AddressList.ClrType.Name;
 
-        [IntColumn]
+        [IntColumn()]
         public int Count => AddressList.Addresses.Count;
     }
 }

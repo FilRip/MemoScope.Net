@@ -25,13 +25,13 @@ namespace MemoScope.Modules.Arrays
 
         [OLVColumn()]
         public string TypeName { get; }
-        [IntColumn]
+        [IntColumn()]
         public ulong NbInstances { get; }
-        [IntColumn]
+        [IntColumn()]
         public ulong TotalLength { get; }
-        [IntColumn]
+        [IntColumn()]
         public ulong MaxLength { get; }
-        [IntColumn]
+        [IntColumn()]
         public ulong TotalSize { get; }
     }
 }
