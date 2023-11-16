@@ -26,8 +26,8 @@ namespace MemoScope.Modules.Stack
             Name = $"#{clrDump.Id} - Stack - Id: {Thread?.ManagedThreadId}";
 
             dlvStack.InitColumns<StackInstanceInformation>();
-            dlvStack.SetUpAddressColumn<StackInstanceInformation>(parentModule ?? this);
-            dlvStack.SetUpTypeColumn<StackInstanceInformation>(parentModule ?? this);
+            dlvStack.SetUpAddressColumn(parentModule ?? this);
+            dlvStack.SetUpTypeColumn(parentModule ?? this);
             dlvStack.AddSimpleValueColumn(o => ((StackInstanceInformation)o).Address, ClrDump, o => ((StackInstanceInformation)o).Type);
             dlvStack.RebuildColumns();
             dlvStack.SetTypeNameFilter<StackInstanceInformation>(regexFilterControl);

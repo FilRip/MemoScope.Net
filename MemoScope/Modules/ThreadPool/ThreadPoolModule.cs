@@ -28,7 +28,7 @@ namespace MemoScope.Modules.ThreadPool
             dlvNativeWorkItem.SetUpAddressColumn(nameof(NativeWorkItemInformation.Data), this);
             dlvManagedWorkItem.InitColumns<ManagedWorkItemInformation>();
             dlvManagedWorkItem.SetUpAddressColumn(nameof(ManagedWorkItemInformation.Object), this);
-            dlvManagedWorkItem.SetUpTypeColumn<ManagedWorkItemInformation>(this);
+            dlvManagedWorkItem.SetUpTypeColumn(this);
         }
 
         public override void Init()

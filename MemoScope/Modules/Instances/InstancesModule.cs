@@ -95,7 +95,7 @@ namespace MemoScope.Modules.Instances
             dlvAdresses.RebuildColumns();
 
             dtlvFields.InitData<FieldNode>();
-            dtlvFields.SetUpTypeColumn<FieldNode>(this);
+            dtlvFields.SetUpTypeColumn(this);
             dtlvFields.CheckBoxes = true;
             dtlvFields.CheckStatePutter += OnCheckStateChanged;
             dtlvFields.IsSimpleDragSource = true;

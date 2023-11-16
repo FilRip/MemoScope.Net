@@ -26,7 +26,7 @@ namespace MemoScope.Modules.Disposables
             Name = $"#{clrDump.Id} - Disposable Types";
 
             dlvDisposableTypes.InitColumns<DisposableTypeInformation>();
-            dlvDisposableTypes.SetUpTypeColumn<DisposableTypeInformation>(this);
+            dlvDisposableTypes.SetUpTypeColumn(this);
             dlvDisposableTypes.SetTypeNameFilter<DisposableTypeInformation>(regexFilterControl);
         }
 

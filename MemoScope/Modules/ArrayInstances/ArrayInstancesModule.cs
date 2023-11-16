@@ -31,7 +31,7 @@ namespace MemoScope.Modules.ArrayInstances
             Name = $"#{ArrayAddressList.ClrDump.Id} - Arrays: {ArrayAddressList.ClrType.Name}";
 
             dlvArrays.InitColumns<ArrayInstanceInformation>();
-            dlvArrays.SetUpAddressColumn<ArrayInstanceInformation>(this);
+            dlvArrays.SetUpAddressColumn(this);
             dlvArrays.CellClick += OnCellClick;
         }
 

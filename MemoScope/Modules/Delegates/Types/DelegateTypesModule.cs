@@ -26,7 +26,7 @@ namespace MemoScope.Modules.Delegates.Types
             Name = $"#{clrDump.Id} - Delegate Types";
 
             dlvDelegateTypes.InitColumns<DelegateTypeInformation>();
-            dlvDelegateTypes.SetUpTypeColumn<DelegateTypeInformation>(this);
+            dlvDelegateTypes.SetUpTypeColumn(this);
             dlvDelegateTypes.SetTypeNameFilter<DelegateTypeInformation>(regexFilterControl);
         }
 
