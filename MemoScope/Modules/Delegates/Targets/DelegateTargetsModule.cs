@@ -24,8 +24,8 @@ namespace MemoScope.Modules.Delegates.Targets
             Name = $"#{ClrDump.Id} - {clrDumpObject.Address:X} - Targets";
 
             dlvDelegateTargets.InitColumns<DelegateTargetInformation>();
-            dlvDelegateTargets.SetUpAddressColumn<DelegateTargetInformation>(this);
-            dlvDelegateTargets.SetUpTypeColumn<DelegateTargetInformation>(this);
+            dlvDelegateTargets.SetUpAddressColumn(this);
+            dlvDelegateTargets.SetUpTypeColumn(this);
         }
 
         public override void Init()

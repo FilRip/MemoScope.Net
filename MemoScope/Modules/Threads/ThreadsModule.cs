@@ -28,7 +28,7 @@ namespace MemoScope.Modules.Threads
             Name = $"#{clrDump.Id} - Threads";
 
             dlvThreads.InitColumns<ThreadInformation>();
-            dlvThreads.SetUpAddressColumn<ThreadInformation>(this);
+            dlvThreads.SetUpAddressColumn(this);
             dlvThreads.RegisterDataProvider(() => Data, this);
             dlvThreads.SelectedIndexChanged += (s, e) =>
             {

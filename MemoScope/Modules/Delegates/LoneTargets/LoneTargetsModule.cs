@@ -21,8 +21,8 @@ namespace MemoScope.Modules.Delegates.LoneHandlers
             Name = $"#{ClrDump.Id} - Lone Targets";
 
             dlvLoneHandlers.InitColumns<LoneTargetInformation>();
-            dlvLoneHandlers.SetUpAddressColumn<LoneTargetInformation>(this);
-            dlvLoneHandlers.SetUpTypeColumn<LoneTargetInformation>(this);
+            dlvLoneHandlers.SetUpAddressColumn(this);
+            dlvLoneHandlers.SetUpTypeColumn(this);
             dlvLoneHandlers.SetUpAddressColumn(nameof(LoneTargetInformation.OwnerAddress), this, "Owner");
             dlvLoneHandlers.SetUpTypeColumn(nameof(LoneTargetInformation.OwnerType), this, "Owner");
 

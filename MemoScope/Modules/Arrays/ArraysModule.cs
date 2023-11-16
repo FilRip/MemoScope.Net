@@ -27,7 +27,7 @@ namespace MemoScope.Modules.Arrays
             Name = $"#{clrDump.Id} - Arrays";
 
             dlvArrays.InitColumns<ArraysInformation>();
-            dlvArrays.SetUpTypeColumn<ArraysInformation>();
+            dlvArrays.SetUpTypeColumn();
             dlvArrays.RegisterDataProvider(() => Data, this);
             dlvArrays.CellClick += OnCellClick;
             dlvArrays.SetTypeNameFilter<ArraysInformation>(regexFilterControl);

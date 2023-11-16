@@ -20,7 +20,7 @@ namespace MemoScope.Core.Helpers
 {
     public static class ObjectListViewHelpers
     {
-        public static void SetUpTypeColumn<T>(this ObjectListView listView, UIClrDumpModule dumpModule = null) where T : ITypeNameData
+        public static void SetUpTypeColumn(this ObjectListView listView, UIClrDumpModule dumpModule = null)
         {
             SetUpTypeColumn(listView, nameof(ITypeNameData.TypeName), dumpModule);
         }
@@ -95,7 +95,7 @@ namespace MemoScope.Core.Helpers
             SetUpAddressColumn(listView, col, dumpModule);
             listView.AllColumns.Add(col);
         }
-        public static void SetUpAddressColumn<T>(this ObjectListView listView, UIClrDumpModule dumpModule, string suffix = null) where T : IAddressData
+        public static void SetUpAddressColumn(this ObjectListView listView, UIClrDumpModule dumpModule, string suffix = null)
         {
             SetUpAddressColumn(listView, nameof(IAddressData.Address), dumpModule, suffix);
         }

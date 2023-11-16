@@ -23,8 +23,8 @@ namespace MemoScope.Modules.BlockingObjects
             Icon = Properties.Resources._lock_small;
             Name = $"#{clrDump.Id} - BlockingObjects";
             dlvBlockingObjects.InitColumns<BlockingObjectInformation>();
-            dlvBlockingObjects.SetUpAddressColumn<BlockingObjectInformation>(this);
-            dlvBlockingObjects.SetUpTypeColumn<BlockingObjectInformation>(this);
+            dlvBlockingObjects.SetUpAddressColumn(this);
+            dlvBlockingObjects.SetUpTypeColumn(this);
             dlvBlockingObjects.SetTypeNameFilter<BlockingObjectInformation>(regexFilterControl);
         }
 

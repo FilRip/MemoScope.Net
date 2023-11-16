@@ -25,7 +25,7 @@ namespace MemoScope.Modules.Finalizer
             Name = $"#{clrDump.Id} - Finalizer";
 
             dlvFinalizer.InitColumns<FinalizerInformation>();
-            dlvFinalizer.SetUpTypeColumn<FinalizerInformation>(this);
+            dlvFinalizer.SetUpTypeColumn(this);
             dlvFinalizer.RegisterDataProvider(() => ((UIDataProvider<AddressList>)this).Data, this, "Finalizer");
         }
 

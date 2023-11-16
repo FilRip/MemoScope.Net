@@ -27,8 +27,8 @@ namespace MemoScope.Modules.Delegates.Instances
             Name = $"#{ClrDump.Id} - Delegates - {clrDumpType.TypeName}";
 
             dlvDelegateInstances.InitColumns<DelegateInstanceInformation>();
-            dlvDelegateInstances.SetUpAddressColumn<DelegateInstanceInformation>(this);
-            dlvDelegateInstances.SetUpTypeColumn<DelegateInstanceInformation>(this);
+            dlvDelegateInstances.SetUpAddressColumn(this);
+            dlvDelegateInstances.SetUpTypeColumn(this);
         }
 
         public override void Init()

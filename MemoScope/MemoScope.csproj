@@ -163,6 +163,7 @@
     <Compile Include="Core\ProcessInfo\ProcessInfo.cs" />
     <Compile Include="Core\ProcessInfo\ClrDumpInfo.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\WindowsSettings.cs" />
     <Compile Include="Modules\ArrayInstances\ArrayInstanceAnalysis.cs" />
     <Compile Include="Modules\ArrayInstances\ArrayInstancesCommand.cs" />
     <Compile Include="Modules\ArrayInstances\ArrayInstancesInformation.cs" />

@@ -20,8 +20,8 @@ namespace MemoScope.Modules.RootPath
             RootPath = RootPathAnalysis.AnalyzeRootPath(MessageBus, ClrDumpObject);
 
             dlvRootPath.InitColumns<RootPathInformation>();
-            dlvRootPath.SetUpTypeColumn<RootPathInformation>(this);
-            dlvRootPath.SetUpAddressColumn<RootPathInformation>(this);
+            dlvRootPath.SetUpTypeColumn(this);
+            dlvRootPath.SetUpAddressColumn(this);
         }
 
         internal void Setup(ClrDumpObject clrDumpObject)

@@ -21,7 +21,7 @@ namespace MemoScope.Modules.Referers
         public override void Init()
         {
             dtlvDistribution.InitData<ReferersInformation>();
-            dtlvDistribution.SetUpTypeColumn<ReferersInformation>(this);
+            dtlvDistribution.SetUpTypeColumn(this);
             dtlvDistribution.RegisterDataProvider(() => Data, this, "Instances");
             dtlvDistribution.RegisterDataProvider(GetReferences, this, "References");
         }

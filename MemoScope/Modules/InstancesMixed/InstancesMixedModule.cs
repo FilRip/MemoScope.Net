@@ -28,8 +28,8 @@ namespace MemoScope.Modules.InstancesMixed
             Name = $"#{ClrDump.Id}";
 
             dlvInstances.InitColumns<InstanceInformation>();
-            dlvInstances.SetUpAddressColumn<InstanceInformation>(parentModule ?? this);
-            dlvInstances.SetUpTypeColumn<InstanceInformation>(parentModule ?? this);
+            dlvInstances.SetUpAddressColumn(parentModule ?? this);
+            dlvInstances.SetUpTypeColumn(parentModule ?? this);
             dlvInstances.AddSizeColumn(o => ((InstanceInformation)o).Address, ClrDump, o => ((InstanceInformation)o).ClrType);
             dlvInstances.AddSimpleValueColumn(o => ((InstanceInformation)o).Address, ClrDump, o => ((InstanceInformation)o).ClrType);
             dlvInstances.RebuildColumns();

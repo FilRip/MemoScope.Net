@@ -22,8 +22,8 @@ namespace MemoScope.Modules.Bookmarks
         {
             ClrDump = clrDump;
             dlvBookmarks.InitColumns<Bookmark>();
-            dlvBookmarks.SetUpAddressColumn<Bookmark>(this);
-            dlvBookmarks.SetUpTypeColumn<Bookmark>(this);
+            dlvBookmarks.SetUpAddressColumn(this);
+            dlvBookmarks.SetUpTypeColumn(this);
             var col = dlvBookmarks[nameof(Bookmark.Comment)];
             col.CellEditUseWholeCell = true;
             dlvBookmarks.CellEditActivation = ObjectListView.CellEditActivateMode.DoubleClick;

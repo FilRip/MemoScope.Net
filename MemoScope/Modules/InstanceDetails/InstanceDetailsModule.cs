@@ -30,13 +30,13 @@ namespace MemoScope.Modules.InstanceDetails
         {
             // Fields
             dtlvFieldsValues.InitData<FieldValueInformation>();
-            dtlvFieldsValues.SetUpTypeColumn<FieldValueInformation>(this);
-            dtlvFieldsValues.SetUpAddressColumn<FieldValueInformation>(this);
+            dtlvFieldsValues.SetUpTypeColumn(this);
+            dtlvFieldsValues.SetUpAddressColumn(this);
 
             // References
             dtlvReferences.InitData<ReferenceInformation>();
-            dtlvReferences.SetUpTypeColumn<ReferenceInformation>(this);
-            dtlvReferences.SetUpAddressColumn<ReferenceInformation>(this);
+            dtlvReferences.SetUpTypeColumn(this);
+            dtlvReferences.SetUpAddressColumn(this);
         }
 
         public void Init(ClrDumpObject clrDumpObject)
