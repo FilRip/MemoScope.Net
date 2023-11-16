@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,50 +13,47 @@ namespace MemoDummy
             InitializeComponent();
         }
 
-        private void MemoDummyForm_Load(object sender, System.EventArgs e)
+        private void MemoDummyForm_Load(object sender, EventArgs e)
         {
             var types = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (var type in types)
+            foreach (Type type in types.Where(t => t.IsSubclassOf(typeof(AbstractMemoScript))))
             {
-                if (type.IsSubclassOf(typeof (AbstractMemoScript)))
-                {
-                    var script = Activator.CreateInstance(type);
-                    lbScripts.Items.Add(script);
-                }
+                object obj = Activator.CreateInstance(type);
+                lbScripts.Items.Add(obj);
             }
         }
 
         private AbstractMemoScript script;
-        private void lbScripts_SelectedIndexChanged(object sender, EventArgs e)
+        private void LbScripts_SelectedIndexChanged(object sender, EventArgs e)
         {
             script = lbScripts.SelectedItem as AbstractMemoScript;
-            propertyGrid1.SelectedObject = script ;
+            propertyGrid1.SelectedObject = script;
             btnRun.Enabled = script != null;
         }
 
-        private void btnRun_Click(object sender, EventArgs e)
+        private void BtnRun_Click(object sender, EventArgs e)
         {
             if (script != null)
             {
                 timer1.Enabled = true;
                 var sched = TaskScheduler.FromCurrentSynchronizationContext();
-                Task.Factory.StartNew(() => script.Run()).ContinueWith(task => {
+                Task.Factory.StartNew(() => script.Run()).ContinueWith(task =>
+                {
                     timer1.Enabled = false;
                     propertyGrid1.Refresh();
-                    }, sched);
+                }, sched);
             }
         }
 
-        private void btnStop_Click(object sender, EventArgs e)
+        private void BtnStop_Click(object sender, EventArgs e)
         {
             timer1.Enabled = false;
-            if (script != null)
-                script.Stop();
+            script?.Stop();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
-            propertyGrid1.Refresh(); 
+            propertyGrid1.Refresh();
         }
     }
 }

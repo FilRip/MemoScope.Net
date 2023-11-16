@@ -17,15 +17,13 @@ namespace MemoDummy
         [Category("Config")]
         public int DuplicatePeriod { get; set; } = 4;
 
-        private List<object> objects;
-
         public override void Run()
         {
-            objects = new List<object>();
+            List<object> objects = new();
 
-            for(int i=0; i< Count; i++)
+            for (int i = 0; i < Count; i++)
             {
-                if(stopRequested)
+                if (stopRequested)
                 {
                     break;
                 }
@@ -35,7 +33,7 @@ namespace MemoDummy
 
                 for (int j = 0; j < Size; j++)
                 {
-                    stringArray[j] = $"#{i}_{j%DuplicatePeriod}";
+                    stringArray[j] = $"#{i}_{j % DuplicatePeriod}";
                 }
             }
         }

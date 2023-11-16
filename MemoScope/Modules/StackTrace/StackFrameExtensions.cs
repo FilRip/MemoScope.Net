@@ -1,14 +1,15 @@
-﻿using Microsoft.Diagnostics.Runtime;
+﻿using System;
+using System.Collections.Generic;
+
+using Microsoft.Diagnostics.Runtime;
 using Microsoft.Diagnostics.Runtime.Utilities;
 using Microsoft.Diagnostics.Runtime.Utilities.Pdb;
-using System;
-using System.Collections.Generic;
 
 namespace MemoScope.Modules.StackTrace
 {
     static class StackFrameExtensions
     {
-        static Dictionary<PdbInfo, PdbReader> s_pdbReaders = new Dictionary<PdbInfo, PdbReader>();
+        static readonly Dictionary<PdbInfo, PdbReader> s_pdbReaders = new();
         public static FileAndLineNumber FileAndLineNumber(this ClrStackFrame frame)
         {
             PdbReader reader = GetReaderForFrame(frame);
@@ -24,7 +25,7 @@ namespace MemoScope.Modules.StackTrace
         private static FileAndLineNumber FindNearestLine(PdbFunction function, int ilOffset)
         {
             int distance = int.MaxValue;
-            FileAndLineNumber nearest = new FileAndLineNumber();
+            FileAndLineNumber nearest = new();
 
             foreach (PdbSequencePointCollection sequenceCollection in function.SequencePoints)
             {
@@ -67,17 +68,14 @@ namespace MemoScope.Modules.StackTrace
             PdbInfo info = module?.Pdb;
 
             PdbReader reader = null;
-            if (info != null)
+            if (info != null && !s_pdbReaders.TryGetValue(info, out reader))
             {
-                if (!s_pdbReaders.TryGetValue(info, out reader))
-                {
-                    SymbolLocator locator = GetSymbolLocator(module);
-                    string pdbPath = locator.FindPdb(info);
-                    if (pdbPath != null)
-                        reader = new PdbReader(pdbPath);
+                SymbolLocator locator = GetSymbolLocator(module);
+                string pdbPath = locator.FindPdb(info);
+                if (pdbPath != null)
+                    reader = new PdbReader(pdbPath);
 
-                    s_pdbReaders[info] = reader;
-                }
+                s_pdbReaders[info] = reader;
             }
 
             return reader;

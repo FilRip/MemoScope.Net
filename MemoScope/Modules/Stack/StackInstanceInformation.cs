@@ -1,6 +1,8 @@
 ﻿using BrightIdeasSoftware;
+
 using MemoScope.Core;
 using MemoScope.Core.Data;
+
 using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.Stack
@@ -8,15 +10,13 @@ namespace MemoScope.Modules.Stack
 
     public class StackInstanceInformation : IAddressData, ITypeNameData
     {
-        ClrDump ClrDump { get; }
         ClrRoot ClrRoot { get; }
-        public StackInstanceInformation(ClrDump clrDump, ClrRoot clrRoot)
+        public StackInstanceInformation(ClrRoot clrRoot)
         {
-            ClrDump = clrDump;
             ClrRoot = clrRoot;
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong Address => ClrRoot.Object;
 
         [OLVColumn(Title = "Name")]

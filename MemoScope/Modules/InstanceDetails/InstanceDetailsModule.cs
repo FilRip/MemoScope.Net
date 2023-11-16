@@ -1,8 +1,10 @@
-﻿using BrightIdeasSoftware;
+﻿using System.Collections.Generic;
+
+using BrightIdeasSoftware;
+
 using MemoScope.Core;
 using MemoScope.Core.Data;
 using MemoScope.Core.Helpers;
-using System.Collections.Generic;
 
 namespace MemoScope.Modules.InstanceDetails
 {
@@ -45,9 +47,9 @@ namespace MemoScope.Modules.InstanceDetails
             tbType.Text = clrDumpObject.ClrType?.Name;
         }
 
-        public override void Init( )
+        public override void Init()
         {
-            if( ClrDumpObject == null)
+            if (ClrDumpObject == null)
             {
                 return;
             }
@@ -83,6 +85,6 @@ namespace MemoScope.Modules.InstanceDetails
                 Summary = ClrDumpObject.ClrType == null ? "Unkown" : ClrDumpObject.ClrType.Name;
             }
         }
-        public override IEnumerable<ObjectListView> ListViews => new ObjectListView[] { dtlvFieldsValues, dtlvReferences};
+        public override IEnumerable<ObjectListView> ListViews => new ObjectListView[] { dtlvFieldsValues, dtlvReferences };
     }
 }

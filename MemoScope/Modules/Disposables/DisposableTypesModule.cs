@@ -1,10 +1,12 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Helpers;
-using WinFwk.UICommands;
-using MemoScope.Core.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+
+using MemoScope.Core;
+using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
 using MemoScope.Modules.Instances;
+
+using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Disposables
 {
@@ -53,7 +55,7 @@ namespace MemoScope.Modules.Disposables
             }
         }
 
-        private void dlvDelegates_CellClick(object sender, BrightIdeasSoftware.CellClickEventArgs e)
+        private void DlvDelegates_CellClick(object sender, BrightIdeasSoftware.CellClickEventArgs e)
         {
             if (e.ClickCount != 2)
             {
@@ -61,7 +63,7 @@ namespace MemoScope.Modules.Disposables
             }
 
             var selectedDelegateType = Data;
-            if(selectedDelegateType == null)
+            if (selectedDelegateType == null)
             {
                 return;
             }

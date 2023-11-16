@@ -1,6 +1,7 @@
-﻿using Microsoft.Diagnostics.Runtime;
-using System;
+﻿using System;
 using System.Net;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.Data
 {
@@ -13,33 +14,28 @@ namespace MemoScope.Core.Data
 
         public static bool IsSimpleValue(ClrType type)
         {
-            if( type == null)
+            if (type == null)
             {
                 return false;
             }
             if (type.IsPrimitive || type.IsString)
                 return true;
 
-            switch (type.Name)
+            return type.Name switch
             {
-                case GuidTypeName:
-                case TimeSpanTypeName:
-                case DateTimeTypeName:
-                case IPAddressTypeName:
-                    return true;
-            }
-
-            return false;
+                GuidTypeName or TimeSpanTypeName or DateTimeTypeName or IPAddressTypeName => true,
+                _ => false,
+            };
         }
         public static object GetSimpleValue(ClrObject obj)
         {
             return GetSimpleValue(obj.Address, obj.Type, obj.IsInterior);
         }
 
-        public static object GetSimpleValue(ulong objAddress, ClrType clrType, bool isInterior=false)
+        public static object GetSimpleValue(ulong objAddress, ClrType clrType, bool isInterior = false)
         {
             if (objAddress == 0)
-                throw new NullReferenceException("ClrObject at is pointing to null address.");
+                throw new ArgumentNullException(nameof(objAddress));
 
             ClrHeap heap = clrType.Heap;
             if (clrType.IsEnum)
@@ -123,17 +119,12 @@ namespace MemoScope.Core.Data
             long ticks = (long)(dateData & DateTimeTicksMask);
             ulong internalKind = dateData & DateTimeKindMask;
 
-            switch (internalKind)
+            return internalKind switch
             {
-                case KindUnspecified:
-                    return new DateTime(ticks, DateTimeKind.Unspecified);
-
-                case KindUtc:
-                    return new DateTime(ticks, DateTimeKind.Utc);
-
-                default:
-                    return new DateTime(ticks, DateTimeKind.Local);
-            }
+                KindUnspecified => new DateTime(ticks, DateTimeKind.Unspecified),
+                KindUtc => new DateTime(ticks, DateTimeKind.Utc),
+                _ => new DateTime(ticks, DateTimeKind.Local),
+            };
         }
 
         private static IPAddress GetIPAddress(ClrObject ipAddress)
@@ -180,15 +171,12 @@ namespace MemoScope.Core.Data
 
         private static string GetDateTimeKindString(DateTimeKind kind)
         {
-            switch (kind)
+            return kind switch
             {
-                case DateTimeKind.Unspecified:
-                    return " (Unspecified)";
-                case DateTimeKind.Utc:
-                    return " (Utc)";
-                default:
-                    return " (Local)";
-            }
+                DateTimeKind.Unspecified => " (Unspecified)",
+                DateTimeKind.Utc => " (Utc)",
+                _ => " (Local)",
+            };
         }
     }
 }

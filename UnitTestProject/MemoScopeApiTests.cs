@@ -1,21 +1,23 @@
 ﻿using System.Diagnostics;
 using System.ServiceModel;
+
 using MemoScopeApi;
+
 using NUnit.Framework;
 
 namespace UnitTestProject
 {
-    [TestFixture]
+    [TestFixture()]
     public class MemoScopeApiTests
     {
-        [Test]
+        [Test()]
         public void DumpRequestTest()
         {
             var myService = new MockService();
             var processId = 1234;
-            MemoScopeServer server = new MemoScopeServer(myService);
+            MemoScopeServer server = new(myService);
 
-            MemoScopeClient client = new MemoScopeClient();
+            MemoScopeClient client = new();
             Debug.WriteLine(server.State);
             client.DumpProcess(processId);
 
@@ -30,7 +32,7 @@ namespace UnitTestProject
 
         public void DumpMe(int processId)
         {
-            DumpMeReceived ++;
+            DumpMeReceived++;
         }
     }
 }

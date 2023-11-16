@@ -51,7 +51,7 @@
             this.dlvSegments.UseCompatibleStateImageBehavior = false;
             this.dlvSegments.View = System.Windows.Forms.View.Details;
             this.dlvSegments.VirtualMode = true;
-            this.dlvSegments.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.dlvSegments_CellClick);
+            this.dlvSegments.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.DlvSegments_CellClick);
             // 
             // SegmentsModule
             // 

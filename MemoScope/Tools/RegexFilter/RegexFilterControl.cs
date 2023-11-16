@@ -16,7 +16,7 @@ namespace MemoScope.Tools.RegexFilter
             InitializeComponent();
         }
 
-        private void tbRegex_KeyUp(object sender, KeyEventArgs e)
+        private void TbRegex_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -31,10 +31,7 @@ namespace MemoScope.Tools.RegexFilter
 
         private void Cancel()
         {
-            if( RegexCancelled != null)
-            {
-                RegexCancelled();
-            }
+            RegexCancelled?.Invoke();
             tbRegex.BackColor = Color.LightGray;
         }
 
@@ -51,10 +48,7 @@ namespace MemoScope.Tools.RegexFilter
                     regex = new Regex(tbRegex.Text, RegexOptions.IgnoreCase);
                 }
 
-                if ( RegexApplied != null)
-                {
-                    RegexApplied(regex);
-                }
+                RegexApplied?.Invoke(regex);
                 tbRegex.BackColor = Color.LightGreen;
             }
             catch (ArgumentException)
@@ -64,17 +58,17 @@ namespace MemoScope.Tools.RegexFilter
             }
         }
 
-        private void btnApply_Click(object sender, EventArgs e)
+        private void BtnApply_Click(object sender, EventArgs e)
         {
             Apply();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             Cancel();
         }
 
-        private void cbIgnoreCase_CheckedChanged(object sender, EventArgs e)
+        private void CbIgnoreCase_CheckedChanged(object sender, EventArgs e)
         {
             Apply();
         }

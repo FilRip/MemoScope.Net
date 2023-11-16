@@ -1,9 +1,12 @@
 ﻿using System.Linq;
-using MemoScope.Core;
-using Microsoft.Diagnostics.Runtime;
+
 using BrightIdeasSoftware;
-using System.Windows.Forms;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
+
+using Microsoft.Diagnostics.Runtime;
+
 using WinFwk.UITools;
 
 namespace MemoScope.Modules.Threads
@@ -48,72 +51,72 @@ namespace MemoScope.Modules.Threads
                IsUserSuspended = thread.IsUserSuspended;
                LockCount = thread.LockCount;
                var gcThreads = clrDump.Runtime.EnumerateGCThreads().ToList();
-               IsGCThread = gcThreads.Any(gcThreadId => gcThreadId == OSThreadId);
+               IsGCThread = gcThreads.Exists(gcThreadId => gcThreadId == OSThreadId);
            });
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong Address { get; set; }
 
-        [IntColumn(Title = "OS Id", Width=50)]
-        public uint OSThreadId { get;  private set;}
-        [IntColumn(Title="Thread Id", Width = 50)]
-        public int ManagedThreadId { get;  private set;}
+        [IntColumn(Title = "OS Id", Width = 50)]
+        public uint OSThreadId { get; private set; }
+        [IntColumn(Title = "Thread Id", Width = 50)]
+        public int ManagedThreadId { get; private set; }
 
-        [BoolColumn(Width=50, IsEditable =false)]
+        [BoolColumn(Width = 50, IsEditable = false)]
         public bool IsAlive { get; private set; }
-        [OLVColumn]
+        [OLVColumn()]
         public string Name { get; internal set; }
         [IntColumn(Width = 50)]
         public int Priority { get; internal set; }
         [IntColumn(Width = 50)]
         public uint LockCount { get; private set; }
-        [OLVColumn]
-        public string CurrentException { get;  private set;}
+        [OLVColumn()]
+        public string CurrentException { get; private set; }
 
-        [OLVColumn]
-        public GcMode GcMode { get;  private set;}
+        [OLVColumn()]
+        public GcMode GcMode { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
         public bool IsGCThread { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsAborted { get;  private set;}
+        public bool IsAborted { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsAbortRequested { get;  private set;}
+        public bool IsAbortRequested { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsBackground { get;  private set;}
+        public bool IsBackground { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsCoInitialized { get;  private set;}
+        public bool IsCoInitialized { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsDebuggerHelper { get;  private set;}
+        public bool IsDebuggerHelper { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsDebugSuspended { get;  private set;}
+        public bool IsDebugSuspended { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsFinalizer { get;  private set;}
+        public bool IsFinalizer { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsGC { get;  private set;}
+        public bool IsGC { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsGCSuspendPending { get;  private set;}
+        public bool IsGCSuspendPending { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsMTA { get;  private set;}
+        public bool IsMTA { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsShutdownHelper { get;  private set;}
+        public bool IsShutdownHelper { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsSTA { get;  private set;}
+        public bool IsSTA { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsSuspendingEE { get;  private set;}
+        public bool IsSuspendingEE { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsThreadpoolCompletionPort { get;  private set;}
+        public bool IsThreadpoolCompletionPort { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsThreadpoolGate { get;  private set;}
+        public bool IsThreadpoolGate { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsThreadpoolTimer { get;  private set;}
+        public bool IsThreadpoolTimer { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsThreadpoolWait { get;  private set;}
+        public bool IsThreadpoolWait { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsThreadpoolWorker { get;  private set;}
+        public bool IsThreadpoolWorker { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsUnstarted { get;  private set;}
+        public bool IsUnstarted { get; private set; }
         [BoolColumn(Width = 50, IsEditable = false)]
-        public bool IsUserSuspended { get;  private set;}
+        public bool IsUserSuspended { get; private set; }
     }
 }

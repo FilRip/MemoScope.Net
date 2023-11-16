@@ -82,8 +82,8 @@ namespace MemoScope.Modules.Process
             this.cbProcess.Name = "cbProcess";
             this.cbProcess.Size = new System.Drawing.Size(493, 24);
             this.cbProcess.TabIndex = 1;
-            this.cbProcess.DropDown += new System.EventHandler(this.cbProcess_DropDown);
-            this.cbProcess.SelectedValueChanged += new System.EventHandler(this.cbProcess_SelectedValueChanged);
+            this.cbProcess.DropDown += new System.EventHandler(this.CbProcess_DropDown);
+            this.cbProcess.SelectedValueChanged += new System.EventHandler(this.CbProcess_SelectedValueChanged);
             // 
             // lblRootDir
             // 
@@ -115,7 +115,7 @@ namespace MemoScope.Modules.Process
             this.btnDump.TabIndex = 7;
             this.toolTip1.SetToolTip(this.btnDump, "Dump Process Now !");
             this.btnDump.UseVisualStyleBackColor = true;
-            this.btnDump.Click += new System.EventHandler(this.btnDump_Click);
+            this.btnDump.Click += new System.EventHandler(this.BtnDump_Click);
             // 
             // cbClock
             // 
@@ -129,7 +129,7 @@ namespace MemoScope.Modules.Process
             this.cbClock.TabIndex = 10;
             this.toolTip1.SetToolTip(this.cbClock, "Start timer");
             this.cbClock.UseVisualStyleBackColor = true;
-            this.cbClock.CheckedChanged += new System.EventHandler(this.cbClock_CheckedChanged);
+            this.cbClock.CheckedChanged += new System.EventHandler(this.CbClock_CheckedChanged);
             // 
             // btnFindProcess
             // 
@@ -140,8 +140,8 @@ namespace MemoScope.Modules.Process
             this.btnFindProcess.TabIndex = 8;
             this.toolTip1.SetToolTip(this.btnFindProcess, "Drag button and drop it on process window...");
             this.btnFindProcess.UseVisualStyleBackColor = true;
-            this.btnFindProcess.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnFindProcess_MouseDown);
-            this.btnFindProcess.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnFindProcess_MouseUp);
+            this.btnFindProcess.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnFindProcess_MouseDown);
+            this.btnFindProcess.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnFindProcess_MouseUp);
             // 
             // splitContainer2
             // 
@@ -243,7 +243,7 @@ namespace MemoScope.Modules.Process
             // 
             // timer
             // 
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            this.timer.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // splitContainer1
             // 

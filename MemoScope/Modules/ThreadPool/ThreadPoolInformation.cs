@@ -1,4 +1,5 @@
 ﻿using MemoScope.Core;
+
 using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.ThreadPool

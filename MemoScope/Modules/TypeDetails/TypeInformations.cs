@@ -1,12 +1,14 @@
-﻿using MemoScope.Core.Data;
+﻿using System.ComponentModel;
+
+using MemoScope.Core.Data;
+
 using Microsoft.Diagnostics.Runtime;
-using System.ComponentModel;
 
 namespace MemoScope.Modules.TypeDetails
 {
     internal class TypeInformations
     {
-        private ClrDumpType dumpType;
+        private readonly ClrDumpType dumpType;
 
         public TypeInformations(ClrDumpType dumpType)
         {

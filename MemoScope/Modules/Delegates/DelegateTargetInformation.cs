@@ -1,12 +1,14 @@
 ﻿using BrightIdeasSoftware;
+
 using MemoScope.Core.Data;
+
 using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.Delegates
 {
     public class DelegateTargetInformation : IAddressData, ITypeNameData
     {
-        private ClrMethod methInfo;
+        private readonly ClrMethod methInfo;
 
         ClrDumpType ClrDumpType { get; }
 
@@ -21,13 +23,13 @@ namespace MemoScope.Modules.Delegates
             this.methInfo = methInfo;
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong Address { get; }
 
-        [OLVColumn(Title="Type")]
+        [OLVColumn(Title = "Type")]
         public string TypeName => ClrDumpType?.TypeName;
 
-        [OLVColumn(Width=500)]
+        [OLVColumn(Width = 500)]
         public string Method => methInfo?.GetFullSignature();
     }
 }

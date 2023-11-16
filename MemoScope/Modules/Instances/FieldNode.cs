@@ -1,10 +1,14 @@
-﻿using BrightIdeasSoftware;
+﻿using System.Collections.Generic;
+using System.Linq;
+
+using BrightIdeasSoftware;
+
 using MemoScope.Core;
 using MemoScope.Core.Data;
 using MemoScope.Core.Helpers;
+
 using Microsoft.Diagnostics.Runtime;
-using System.Collections.Generic;
-using System.Linq;
+
 using WinFwk.UITools;
 
 namespace MemoScope.Modules.Instances
@@ -35,16 +39,6 @@ namespace MemoScope.Modules.Instances
         public string TypeName => ClrType.Name;
 
         public override bool CanExpand { get; set; }
-
-        public override List<FieldNode> Children
-        {
-            get
-            {
-                var fieldInfos = ClrDump.GetFieldInfos(ClrType);
-                var fieldNodes = fieldInfos.Select(fieldInfo => new FieldNode(fieldInfo.Name, fieldInfo.FieldType, ClrDump, this));
-                return fieldNodes.ToList();
-            }
-        }
 
         public string FullName
         {

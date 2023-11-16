@@ -54,7 +54,7 @@
             this.dlvDisposableTypes.UseCompatibleStateImageBehavior = false;
             this.dlvDisposableTypes.View = System.Windows.Forms.View.Details;
             this.dlvDisposableTypes.VirtualMode = true;
-            this.dlvDisposableTypes.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.dlvDelegates_CellClick);
+            this.dlvDisposableTypes.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.DlvDelegates_CellClick);
             // 
             // regexFilterControl
             // 

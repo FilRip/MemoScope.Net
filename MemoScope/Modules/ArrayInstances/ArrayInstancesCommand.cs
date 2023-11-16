@@ -1,7 +1,9 @@
-﻿using WinFwk.UICommands;
-using WinFwk.UIModules;
+﻿using System;
+
 using MemoScope.Modules.Arrays;
-using System;
+
+using WinFwk.UICommands;
+using WinFwk.UIModules;
 
 namespace MemoScope.Modules.ArrayInstances
 {

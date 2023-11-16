@@ -1,14 +1,14 @@
-﻿using MemoScope.Core;
+﻿using BrightIdeasSoftware;
+
 using MemoScope.Core.Data;
-using Microsoft.Diagnostics.Runtime;
-using BrightIdeasSoftware;
+
 using WinFwk.UITools;
 
 namespace MemoScope.Modules.ArrayInstances
 {
     public class ArrayInstanceInformation : IAddressData
     {
-        public ArrayInstanceInformation(ClrDump clrDump, ClrType clrType, ulong address, int length, float? nullRatio, float? uniqueRatio)
+        public ArrayInstanceInformation(ulong address, int length, float? nullRatio, float? uniqueRatio)
         {
             Address = address;
             Length = length;
@@ -16,7 +16,7 @@ namespace MemoScope.Modules.ArrayInstances
             UniqueRatio = uniqueRatio;
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong Address { get; }
         [IntColumn]
         public int Length { get; }

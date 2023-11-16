@@ -80,7 +80,7 @@ namespace MemoScope.Modules.DumpDiff
             this.cbSortMode.Name = "cbSortMode";
             this.cbSortMode.Size = new System.Drawing.Size(86, 24);
             this.cbSortMode.TabIndex = 4;
-            this.cbSortMode.SelectedIndexChanged += new System.EventHandler(this.cbSortMode_SelectedIndexChanged);
+            this.cbSortMode.SelectedIndexChanged += new System.EventHandler(this.CbSortMode_SelectedIndexChanged);
             // 
             // regexFilterControl
             // 

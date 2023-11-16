@@ -58,7 +58,7 @@ namespace MemoScope.Modules.Explorer
             this.tbRootDir.Name = "tbRootDir";
             this.tbRootDir.Size = new System.Drawing.Size(241, 22);
             this.tbRootDir.TabIndex = 2;
-            this.tbRootDir.TextChanged += new System.EventHandler(this.tbRootDir_TextChanged);
+            this.tbRootDir.TextChanged += new System.EventHandler(this.TbRootDir_TextChanged);
             // 
             // dtlvExplorer
             // 
@@ -81,7 +81,7 @@ namespace MemoScope.Modules.Explorer
             this.dtlvExplorer.UseCompatibleStateImageBehavior = false;
             this.dtlvExplorer.View = System.Windows.Forms.View.Details;
             this.dtlvExplorer.VirtualMode = true;
-            this.dtlvExplorer.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.dtlvExplorer_CellClick);
+            this.dtlvExplorer.CellClick += new System.EventHandler<BrightIdeasSoftware.CellClickEventArgs>(this.DtlvExplorer_CellClick);
             // 
             // btnRootDir
             // 
@@ -93,7 +93,7 @@ namespace MemoScope.Modules.Explorer
             this.btnRootDir.TabIndex = 1;
             this.toolTip1.SetToolTip(this.btnRootDir, "Select Root Directory...");
             this.btnRootDir.UseVisualStyleBackColor = true;
-            this.btnRootDir.Click += new System.EventHandler(this.btnRootDir_Click);
+            this.btnRootDir.Click += new System.EventHandler(this.BtnRootDir_Click);
             // 
             // btnLoad
             // 
@@ -105,7 +105,7 @@ namespace MemoScope.Modules.Explorer
             this.btnLoad.TabIndex = 4;
             this.toolTip1.SetToolTip(this.btnLoad, "Load checked files...");
             this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            this.btnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
             // 
             // btnRefresh
             // 
@@ -117,7 +117,7 @@ namespace MemoScope.Modules.Explorer
             this.btnRefresh.TabIndex = 5;
             this.toolTip1.SetToolTip(this.btnRefresh, "Refresh Directory...");
             this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            this.btnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
             // 
             // ExplorerModule
             // 

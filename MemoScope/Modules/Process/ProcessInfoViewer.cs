@@ -11,25 +11,22 @@ namespace MemoScope.Modules.Process
         public List<ProcessInfoValue> ProcessInfoValues { get; } = new List<ProcessInfoValue>();
         private ProcessWrapper processWrapper;
 
-        public ProcessWrapper ProcessWrapper
+        public void SetProcessWrapper(ProcessWrapper value)
         {
-            set
+            processWrapper = value;
+            foreach (var processInfoValue in ProcessInfoValues)
             {
-                processWrapper = value;
-                foreach (var processInfoValue in ProcessInfoValues)
-                {
-                    processInfoValue.Reset();
-                }
-                dlvProcessInfoValues.SetObjects(ProcessInfoValues);
-                dlvProcessInfoValues.BuildGroups(colGroup, SortOrder.Ascending);
-                dlvProcessInfoValues.IsSimpleDragSource = true;
+                processInfoValue.Reset();
             }
+            dlvProcessInfoValues.SetObjects(ProcessInfoValues);
+            dlvProcessInfoValues.BuildGroups(colGroup, SortOrder.Ascending);
+            dlvProcessInfoValues.IsSimpleDragSource = true;
         }
 
         public ProcessInfoViewer()
         {
             InitializeComponent();
-            colName.AspectGetter = rowObject => ((ProcessInfoValue) rowObject).Name;
+            colName.AspectGetter = rowObject => ((ProcessInfoValue)rowObject).Name;
             colValue.AspectGetter = rowObject =>
             {
                 try
@@ -38,7 +35,7 @@ namespace MemoScope.Modules.Process
                     {
                         return null;
                     }
-                    var val = ((ProcessInfoValue) rowObject).GetValue(processWrapper);
+                    var val = ((ProcessInfoValue)rowObject).GetValue(processWrapper);
                     return val;
                 }
                 catch
@@ -46,10 +43,10 @@ namespace MemoScope.Modules.Process
                     return null;
                 }
             };
-            colGroup.AspectGetter = rowObject => ((ProcessInfoValue) rowObject).GroupName;
+            colGroup.AspectGetter = rowObject => ((ProcessInfoValue)rowObject).GroupName;
             dlvProcessInfoValues.CheckStateGetter = rowObject =>
             {
-                var x = ((ProcessInfoValue) rowObject);
+                var x = ((ProcessInfoValue)rowObject);
                 if (x.Series != null)
                 {
                     return x.Series.Enabled ? CheckState.Checked : CheckState.Unchecked;
@@ -58,7 +55,7 @@ namespace MemoScope.Modules.Process
             };
             dlvProcessInfoValues.CheckStatePutter = (rowObject, value) =>
             {
-                var series = ((ProcessInfoValue) rowObject).Series;
+                var series = ((ProcessInfoValue)rowObject).Series;
                 if (series == null)
                 {
                     return CheckState.Indeterminate;
@@ -79,7 +76,7 @@ namespace MemoScope.Modules.Process
             AddValue("Private", "Private", proc => proc.PrivateMemory);
             AddValue("HandleCount", "Handles", proc => proc.HandleCount);
 
-            AddValue("Start Time", "StartTime",  "_Time_", proc => proc.StartTime, false, "{0}", false);
+            AddValue("Start Time", "StartTime", "_Time_", proc => proc.StartTime, false, "{0}", false);
             AddValue("User Processor Time", "UserTime", "_Time_", proc => proc.UserProcessorTime, false, "{0}", false);
             AddValue("Total Processor Time", "totaltime", "_Time_", proc => proc.TotalProcessorTime, false, "{0}", false);
 
@@ -100,14 +97,14 @@ namespace MemoScope.Modules.Process
             ProcessInfoValues.Add(x);
             if (addSeries)
             {
-                var series = new Series(name) {XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.FastLine};
+                var series = new Series(name) { XValueType = ChartValueType.DateTime, ChartType = SeriesChartType.FastLine };
                 x.Series = series;
                 series.Enabled = visible;
                 chart.Series.Add(x.Series);
             }
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             try
             {

@@ -1,7 +1,9 @@
-﻿using BrightIdeasSoftware;
+﻿using System.Linq;
+
+using BrightIdeasSoftware;
+
 using MemoScope.Core.Data;
-using System.Collections.Generic;
-using System.Linq;
+
 using WinFwk.UITools;
 
 namespace MemoScope.Modules.Delegates
@@ -17,16 +19,16 @@ namespace MemoScope.Modules.Delegates
             Targets = targetCount;
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong Address { get; }
 
         [IntColumn]
         public long Targets { get; }
 
-        [OLVColumn(Title="Type")]
+        [OLVColumn(Title = "Type")]
         public string TypeName => ClrDumpType.TypeName;
 
-        [OLVColumn(Width=250)] 
+        [OLVColumn(Width = 250)]
         public string FieldName
         {
             get

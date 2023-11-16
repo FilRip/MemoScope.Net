@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+
 using BrightIdeasSoftware;
+
 using MemoScope.Core.Data;
 using MemoScope.Core.Helpers;
+
 using Microsoft.Diagnostics.Runtime;
+
 using WinFwk.UITools;
-using System;
+
 using ClrObject = MemoScope.Core.Data.ClrObject;
 
 namespace MemoScope.Modules.InstanceDetails
 {
     internal class FieldValueInformation : TreeNodeInformationAdapter<FieldValueInformation>, IAddressData, ITypeNameData
     {
-        private ClrDumpObject clrDumpObject;
-        private string name;
+        private readonly ClrDumpObject clrDumpObject;
+        private readonly string name;
 
         public FieldValueInformation(string name, ClrDumpObject clrDumpObject)
         {
@@ -33,13 +38,13 @@ namespace MemoScope.Modules.InstanceDetails
         public string TypeName => clrDumpObject.TypeName;
 
         public ClrType ClrType => clrDumpObject.ClrType;
-        
-        public override bool CanExpand => ! (clrDumpObject.IsPrimitiveOrString || clrDumpObject.Address == 0);
+
+        public override bool CanExpand => !(clrDumpObject.IsPrimitiveOrString || clrDumpObject.Address == 0);
         public override List<FieldValueInformation> Children => GetChildren(clrDumpObject);
 
         internal static List<FieldValueInformation> GetValues(ClrDumpObject clrDumpObject)
         {
-            List<FieldValueInformation> values= clrDumpObject.ClrDump.Eval(() =>
+            List<FieldValueInformation> values = clrDumpObject.ClrDump.Eval(() =>
             {
                 var clrObject = new ClrObject(clrDumpObject.Address, clrDumpObject.ClrType, clrDumpObject.IsInterior);
                 var l = new List<FieldValueInformation>();
@@ -65,7 +70,7 @@ namespace MemoScope.Modules.InstanceDetails
                 var l = new List<FieldValueInformation>();
                 int length = clrDumpObject.ClrType.GetArrayLength(clrDumpObject.Address);
                 var n = Math.Min(length, 1024);
-                for (int i=0; i < n; i++)
+                for (int i = 0; i < n; i++)
                 {
                     var fieldValue = clrObject[i];
                     var fieldValueInfo = new FieldValueInformation($"[{i}]", new ClrDumpObject(clrDumpObject.ClrDump, fieldValue.Type, fieldValue.Address, fieldValue.IsInterior));
@@ -78,7 +83,7 @@ namespace MemoScope.Modules.InstanceDetails
 
         public static List<FieldValueInformation> GetChildren(ClrDumpObject clrDumpObject)
         {
-            if(clrDumpObject.ClrType != null && clrDumpObject.ClrType.IsArray)
+            if (clrDumpObject.ClrType != null && clrDumpObject.ClrType.IsArray)
             {
                 var elems = GetElements(clrDumpObject);
                 return elems;

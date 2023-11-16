@@ -1,7 +1,9 @@
-﻿using BrightIdeasSoftware;
-using MemoScope.Core.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using BrightIdeasSoftware;
+
+using MemoScope.Core.Data;
 
 namespace MemoScope.Modules.Instances
 {
@@ -11,8 +13,8 @@ namespace MemoScope.Modules.Instances
     // we don't need to update anything so we don't need a cache
     public class InstanceVirtualSource : AbstractVirtualListDataSource
     {
-        AddressList addressList;
-        private HashSet<ulong> filteredAddresses;
+        readonly AddressList addressList;
+        private readonly HashSet<ulong> filteredAddresses;
         ulong[] filtered;
 
         public InstanceVirtualSource(VirtualObjectListView listView, AddressList addressList, HashSet<ulong> filteredAddresses) : base(listView)

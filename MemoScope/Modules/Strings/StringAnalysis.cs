@@ -1,46 +1,46 @@
 ﻿using System.Collections.Generic;
-using MemoScope.Core;
 using System.Linq;
+using System.Threading;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
+
 using WinFwk.UIMessages;
 using WinFwk.UIModules;
-using System.Threading;
 
 namespace MemoScope.Modules.Strings
 {
-    public class StringAnalysis
+    public static class StringAnalysis
     {
         internal static List<StringInformation> Analyse(ClrDump clrDump, MessageBus msgBus)
         {
             var stringType = clrDump.GetClrType(typeof(string).FullName);
             var stringInstances = clrDump.EnumerateInstances(stringType);
             int nbStrings = clrDump.CountInstances(stringType);
-            Dictionary <string, List<ulong>> result = new Dictionary<string, List<ulong>>();
-            CancellationTokenSource token = new CancellationTokenSource();
+            Dictionary<string, List<ulong>> result = new();
+            CancellationTokenSource token = new();
             msgBus.BeginTask("Analyzing strings...", token);
             int n = 0;
             clrDump.Run(() =>
             {
                 foreach (var address in stringInstances)
                 {
-                    if( token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         return;
                     }
                     n++;
-                    var value = SimpleValueHelper.GetSimpleValue(address, stringType, false) as string;
-                    if (value == null)
+                    if (SimpleValueHelper.GetSimpleValue(address, stringType, false) is not string value)
                     {
                         continue;
                     }
-                    List<ulong> addresses;
-                    if( ! result.TryGetValue(value, out addresses))
+                    if (!result.TryGetValue(value, out List<ulong> addresses))
                     {
                         addresses = new List<ulong>();
                         result[value] = addresses;
                     }
                     addresses.Add(address);
-                    if( n  % 1024 == 0)
+                    if (n % 1024 == 0)
                     {
                         float pct = (float)n / nbStrings;
                         msgBus.Status($"Analyzing strings: {pct:p2}, n= {n:###,###,###,##0} / {nbStrings:###,###,###,##0}");

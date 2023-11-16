@@ -1,7 +1,8 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using MemoScope.Core;
+using MemoScope.Core.Helpers;
 
 namespace MemoScope.Modules.Handles
 {
@@ -25,7 +26,7 @@ namespace MemoScope.Modules.Handles
         public override void Init()
         {
             base.Init();
-            Handles = ClrDump.Handles.Select(handle=> new HandleInformation(ClrDump, handle)).ToList();
+            Handles = ClrDump.Handles().Select(handle => new HandleInformation(handle)).ToList();
             dlvHandles.SetUpAddressColumn(nameof(HandleInformation.Object), this);
             dlvHandles.SetUpTypeColumn<HandleInformation>(this);
         }

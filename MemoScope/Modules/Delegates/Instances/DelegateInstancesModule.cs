@@ -1,9 +1,11 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Helpers;
+﻿using System.Collections.Generic;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
-using System.Collections.Generic;
-using WinFwk.UICommands;
+using MemoScope.Core.Helpers;
 using MemoScope.Modules.Delegates.Targets;
+
+using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Delegates.Instances
 {
@@ -49,13 +51,13 @@ namespace MemoScope.Modules.Delegates.Instances
             }
         }
 
-        private void dlvDelegateInstances_CellClick(object sender, BrightIdeasSoftware.CellClickEventArgs e)
+        private void DlvDelegateInstances_CellClick(object sender, BrightIdeasSoftware.CellClickEventArgs e)
         {
             if (e.ClickCount != 2)
             {
                 return;
             }
-            if (e.Column == dlvDelegateInstances[nameof(DelegateInstanceInformation.Address)] )
+            if (e.Column == dlvDelegateInstances[nameof(DelegateInstanceInformation.Address)])
             {
                 return;
             }

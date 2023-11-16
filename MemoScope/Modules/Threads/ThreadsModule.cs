@@ -1,11 +1,14 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Helpers;
-using System.Collections.Generic;
-using System.Linq;
-using WinFwk.UICommands;
-using MemoScope.Core.Data;
-using BrightIdeasSoftware;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+
+using BrightIdeasSoftware;
+
+using MemoScope.Core;
+using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
+
+using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Threads
 {
@@ -45,8 +48,7 @@ namespace MemoScope.Modules.Threads
 
             dlvThreads.FormatCell += (o, e) =>
             {
-                var threadInfo = e.Model as ThreadInformation;
-                if (threadInfo == null)
+                if (e.Model is not ThreadInformation threadInfo)
                 {
                     return;
                 }
@@ -73,8 +75,7 @@ namespace MemoScope.Modules.Threads
             Threads = ClrDump.Threads.Select(thread =>
             {
                 var threadInfo = new ThreadInformation(ClrDump, thread);
-                ThreadProperty threadProp;
-                if (ClrDump.ThreadProperties.TryGetValue(thread.ManagedThreadId, out threadProp))
+                if (ClrDump.ThreadProperties.TryGetValue(thread.ManagedThreadId, out ThreadProperty threadProp))
                 {
                     threadInfo.Address = threadProp.Address;
                     threadInfo.Name = threadProp.Name;
@@ -103,8 +104,10 @@ namespace MemoScope.Modules.Threads
             dlvThreads.Objects = Threads;
         }
 
-        public override IEnumerable<ObjectListView> ListViews {
-            get {
+        public override IEnumerable<ObjectListView> ListViews
+        {
+            get
+            {
                 yield return dlvThreads;
                 foreach (var lv in stackModule.ListViews)
                 {

@@ -23,11 +23,15 @@ namespace MemoScope.Core.Dac
 
         protected override bool SymCleanup(IntPtr hProcess)
         {
+            if (hProcess == IntPtr.Zero)
+                return false;
             return SymCleanup32(hProcess);
         }
 
         protected override bool SymInitialize(IntPtr hProcess, string symPath, bool fInvadeProcess)
         {
+            if (hProcess == IntPtr.Zero)
+                return false;
             return SymInitialize32(hProcess, symPath, fInvadeProcess);
         }
 
@@ -38,6 +42,8 @@ namespace MemoScope.Core.Dac
 
         protected override bool SymFindFileInPath(IntPtr hProcess, string searchPath, string filename, uint id, uint two, uint three, uint flags, StringBuilder filePath, IntPtr callback, IntPtr context)
         {
+            if (hProcess == IntPtr.Zero)
+                return false;
             return SymFindFileInPath32(hProcess, searchPath, filename, id, two, three, flags, filePath, callback, context);
         }
     }

@@ -1,11 +1,14 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using WinFwk.UICommands;
-using MemoScope.Core.Helpers;
+
 using BrightIdeasSoftware;
+
+using MemoScope.Core;
+using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
 using MemoScope.Modules.Instances;
+
+using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Strings
 {
@@ -48,7 +51,7 @@ namespace MemoScope.Modules.Strings
             {
                 var stringType = ClrDump.GetClrType(typeof(string).FullName);
                 var stringInfo = dlvStrings.SelectedObject<StringInformation>();
-                if(stringInfo ==null)
+                if (stringInfo == null)
                 {
                     return null;
                 }

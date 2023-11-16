@@ -10,10 +10,10 @@ namespace MemoScope.Core.Helpers
         public string OldTypeName { get; set; }
         public string NewTypeName { get; set; }
 
-        [XmlIgnore]
+        [XmlIgnore()]
         public Color BackColor
         {
-            get;set;
+            get; set;
         }
 
         [Browsable(false)]
@@ -21,7 +21,7 @@ namespace MemoScope.Core.Helpers
         {
             get
             {
-                return BackColor.R +","+BackColor.G+","+BackColor.B;
+                return BackColor.R + "," + BackColor.G + "," + BackColor.B;
             }
             set
             {
@@ -29,7 +29,7 @@ namespace MemoScope.Core.Helpers
                 BackColor = Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
             }
         }
-        [XmlIgnore]
+        [XmlIgnore()]
         public Color ForeColor
         {
             get; set;
@@ -53,10 +53,9 @@ namespace MemoScope.Core.Helpers
         {
             return (OldTypeName == null ? 0 : OldTypeName.GetHashCode()) + 37 * (NewTypeName == null ? 0 : NewTypeName.GetHashCode());
         }
-        public override bool Equals(object o)
+        public override bool Equals(object obj)
         {
-            var other = o as TypeAlias;
-            if (other == null)
+            if (obj is not TypeAlias other)
             {
                 return false;
             }
@@ -66,7 +65,7 @@ namespace MemoScope.Core.Helpers
         }
         public override string ToString()
         {
-            return "["+(Active ? "+": "-")+"] "+ OldTypeName + " => " + NewTypeName;
+            return "[" + (Active ? "+" : "-") + "] " + OldTypeName + " => " + NewTypeName;
         }
     }
 }

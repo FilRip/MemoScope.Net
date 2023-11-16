@@ -143,7 +143,7 @@
             this.dlvExceptions.UseCompatibleStateImageBehavior = false;
             this.dlvExceptions.View = System.Windows.Forms.View.Details;
             this.dlvExceptions.VirtualMode = true;
-            this.dlvExceptions.SelectedIndexChanged += new System.EventHandler(this.dlvExceptions_SelectedIndexChanged);
+            this.dlvExceptions.SelectedIndexChanged += new System.EventHandler(this.DlvExceptions_SelectedIndexChanged);
             // 
             // ThreadExceptionModule
             // 

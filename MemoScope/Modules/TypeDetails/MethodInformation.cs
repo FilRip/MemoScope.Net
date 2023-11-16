@@ -1,17 +1,17 @@
 ﻿using BrightIdeasSoftware;
+
 using MemoScope.Core.Data;
+
 using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.TypeDetails
 {
     internal class MethodInformation : ITypeNameData
     {
-        private ClrMethod clrMethod;
-        private ClrDumpType dumpType;
+        private readonly ClrMethod clrMethod;
 
-        public MethodInformation(ClrDumpType dumpType, ClrMethod clrMethod)
+        public MethodInformation(ClrMethod clrMethod)
         {
-            this.dumpType = dumpType;
             this.clrMethod = clrMethod;
         }
 
@@ -46,6 +46,6 @@ namespace MemoScope.Modules.TypeDetails
         [OLVColumn(Title = "IsVirtual", Width = 100)]
         public bool IsVirtual => clrMethod.IsVirtual;
 
-        public ClrType ClrType=> clrMethod.Type;
+        public ClrType ClrType => clrMethod.Type;
     }
 }

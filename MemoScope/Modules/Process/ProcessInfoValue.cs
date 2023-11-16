@@ -5,8 +5,8 @@ namespace MemoScope.Modules.Process
 {
     public class ProcessInfoValue
     {
-        public string Name { get; private set; } 
-        public string Alias{ get; private set; } 
+        public string Name { get; private set; }
+        public string Alias { get; private set; }
         public string GroupName { get; private set; }
         public string Format { get; }
         public Func<ProcessWrapper, object> ValueGetter { get; }

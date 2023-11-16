@@ -54,7 +54,7 @@
             this.lbScripts.Name = "lbScripts";
             this.lbScripts.Size = new System.Drawing.Size(261, 463);
             this.lbScripts.TabIndex = 0;
-            this.lbScripts.SelectedIndexChanged += new System.EventHandler(this.lbScripts_SelectedIndexChanged);
+            this.lbScripts.SelectedIndexChanged += new System.EventHandler(this.LbScripts_SelectedIndexChanged);
             // 
             // splitContainer1
             // 
@@ -116,7 +116,7 @@
             this.btnRun.TabIndex = 1;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
-            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            this.btnRun.Click += new System.EventHandler(this.BtnRun_Click);
             // 
             // btnStop
             // 
@@ -126,12 +126,12 @@
             this.btnStop.TabIndex = 2;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            this.btnStop.Click += new System.EventHandler(this.BtnStop_Click);
             // 
             // timer1
             // 
             this.timer1.Enabled = false;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
             // MemoDummyForm
             // 

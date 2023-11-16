@@ -1,12 +1,14 @@
-﻿using BrightIdeasSoftware;
+﻿using System.Windows.Forms;
+
+using BrightIdeasSoftware;
+
 using MemoScope.Core;
-using System.Windows.Forms;
 
 namespace MemoScope.Modules.BlockingObjects
 {
     internal class ThreadColumn : OLVColumn
     {
-        private ThreadProperty thread;
+        private readonly ThreadProperty thread;
 
         public ThreadColumn(ThreadProperty thread)
         {
@@ -20,8 +22,7 @@ namespace MemoScope.Modules.BlockingObjects
 
         private object GetData(object rowObject)
         {
-            var blockingObjectInfo = rowObject as BlockingObjectInformation;
-            if( blockingObjectInfo == null)
+            if (rowObject is not BlockingObjectInformation blockingObjectInfo)
             {
                 return null;
             }

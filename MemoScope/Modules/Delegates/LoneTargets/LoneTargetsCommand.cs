@@ -1,6 +1,8 @@
-﻿using MemoScope.Core;
-using System;
+﻿using System;
 using System.Windows.Forms;
+
+using MemoScope.Core;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 
@@ -15,7 +17,7 @@ namespace MemoScope.Modules.Delegates.LoneHandlers
 
         protected override void HandleData(ClrDump clrDump)
         {
-            if( clrDump == null )
+            if (clrDump == null)
             {
                 throw new InvalidOperationException("No dump selected !");
             }

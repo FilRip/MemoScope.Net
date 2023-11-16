@@ -4,11 +4,9 @@ namespace MemoScope.Core.Data
 {
     public class ArrayElementsAddressContainer : IAddressContainer
     {
-        ClrDumpObject clrDumpObject;
-        private ClrObject clrObject;
+        private readonly ClrObject clrObject;
         public ArrayElementsAddressContainer(ClrDumpObject clrDumpObject)
         {
-            this.clrDumpObject = clrDumpObject;
             if (!clrDumpObject.ClrType.IsArray)
             {
                 throw new ArgumentException($"{clrDumpObject.TypeName} is not an array !");

@@ -1,9 +1,10 @@
-﻿using MemoScope.Core;
-using MemoScope.Core.Data;
-using Microsoft.Diagnostics.Runtime;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using MemoScope.Core;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.Instances
 {
@@ -21,7 +22,8 @@ namespace MemoScope.Modules.Instances
         string lastArg = null;
         List<string> lastFields;
 
-        Dictionary<string, List<string>> cacheField = new Dictionary<string, List<string>>();
+        private readonly Dictionary<string, List<string>> cacheField = new();
+
         private object Eval(string arg)
         {
             List<string> fields;
@@ -29,7 +31,8 @@ namespace MemoScope.Modules.Instances
             {
                 fields = lastFields;
             }
-            else {
+            else
+            {
                 if (!cacheField.TryGetValue(arg, out fields))
                 {
                     fields = arg.Split('.').ToList();
@@ -44,56 +47,40 @@ namespace MemoScope.Modules.Instances
 
         internal static string GetFuncName(ClrElementType elementType)
         {
-            switch(elementType)
+            return elementType switch
             {
-                case ClrElementType.Boolean:
-                    return nameof(_bool);
-                case ClrElementType.Double:
-                    return nameof(_double);
-                case ClrElementType.Float:
-                    return nameof(_float);
-                case ClrElementType.Char:
-                    return nameof(_char);
-                case ClrElementType.Int16:
-                    return nameof(_short);
-                case ClrElementType.Int32:
-                    return nameof(_int);
-                case ClrElementType.Int64:
-                    return nameof(_long);
-                case ClrElementType.Int8:
-                    return nameof(_byte);
-                case ClrElementType.String:
-                    return nameof(_string);
-                case ClrElementType.UInt16:
-                    return nameof(_ushort);
-                case ClrElementType.UInt32:
-                    return nameof(_uint);
-                case ClrElementType.UInt64:
-                    return nameof(_ulong);
-                case ClrElementType.Pointer:
-                case ClrElementType.NativeInt:
-                case ClrElementType.NativeUInt:
-                    return nameof(_ptr);
-                default:
-                    return nameof(_obj);
-            }
+                ClrElementType.Boolean => nameof(Bool),
+                ClrElementType.Double => nameof(Double),
+                ClrElementType.Float => nameof(Float),
+                ClrElementType.Char => nameof(Char),
+                ClrElementType.Int16 => nameof(Short),
+                ClrElementType.Int32 => nameof(Int),
+                ClrElementType.Int64 => nameof(Long),
+                ClrElementType.Int8 => nameof(Byte),
+                ClrElementType.String => nameof(String),
+                ClrElementType.UInt16 => nameof(Ushort),
+                ClrElementType.UInt32 => nameof(Uint),
+                ClrElementType.UInt64 => nameof(Ulong),
+                ClrElementType.Pointer or ClrElementType.NativeInt or ClrElementType.NativeUInt => nameof(Ptr),
+                _ => nameof(Obj),
+            };
         }
 
-        public char _char(string arg)
+        public char Char(string arg)
         {
             return (char)Eval(arg);
         }
 
-        public short _short(string arg)
+        public short Short(string arg)
         {
             return (short)Eval(arg);
         }
 
-        public ushort _ushort(string arg)
+        public ushort Ushort(string arg)
         {
             return (ushort)Eval(arg);
         }
-        public double _double(string arg)
+        public double Double(string arg)
         {
             var val = Eval(arg);
             if (val != null)
@@ -102,51 +89,51 @@ namespace MemoScope.Modules.Instances
             }
             return double.NaN;
         }
-        public bool _bool(string arg)
+        public bool Bool(string arg)
         {
             return (bool)Eval(arg);
         }
-        public int _int(string arg)
+        public int Int(string arg)
         {
             return (int)Eval(arg);
         }
-        public long _long(string arg)
+        public long Long(string arg)
         {
             return (long)Eval(arg);
         }
-        public string _string(string arg)
+        public string String(string arg)
         {
             return (string)Eval(arg);
         }
-        public float _float(string arg)
+        public float Float(string arg)
         {
             return (float)Eval(arg);
         }
-        public byte _byte(string arg)
+        public byte Byte(string arg)
         {
             return (byte)Eval(arg);
         }
-        public uint _uint(string arg)
+        public uint Uint(string arg)
         {
             return (uint)Eval(arg);
         }
-        public ulong _ulong(string arg)
+        public ulong Ulong(string arg)
         {
             return (ulong)Eval(arg);
         }
-        public DateTime _datetime(string arg)
+        public DateTime Datetime(string arg)
         {
             return (DateTime)Eval(arg);
         }
-        public decimal _decimal(string arg)
+        public decimal Decimal(string arg)
         {
             return (decimal)Eval(arg);
         }
-        public object _obj(string arg)
+        public object Obj(string arg)
         {
             return Eval(arg);
         }
-        public long _ptr (string arg)
+        public long Ptr(string arg)
         {
             var ptr = Eval(arg);
             var val = (long)ptr;

@@ -1,15 +1,17 @@
-﻿using Microsoft.Diagnostics.Runtime;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using WinFwk.UITools.Log;
-using System;
-using WinFwk.UIModules;
 using System.Threading;
+
+using Microsoft.Diagnostics.Runtime;
+
+using WinFwk.UIModules;
+using WinFwk.UITools.Log;
 
 namespace MemoScope.Core.Cache
 {
-    public class ClrDumpCache
+    public class ClrDumpCache : IDisposable
     {
         ClrDump ClrDump { get; }
         public bool DataExists { get; private set; }
@@ -43,7 +45,7 @@ namespace MemoScope.Core.Cache
         }
 
         long n = 0;
-        DateTime startTime ;
+        DateTime startTime;
 
         public void Init(CancellationToken token)
         {
@@ -63,7 +65,7 @@ namespace MemoScope.Core.Cache
             CreateTables();
             ClrDump.MessageBus.Status($"Storing data...");
             StoreData(token);
-            if( token.IsCancellationRequested)
+            if (token.IsCancellationRequested)
             {
                 ClrDump.MessageBus.EndTask("Cache Initialization cancelled.");
                 return;
@@ -84,18 +86,32 @@ namespace MemoScope.Core.Cache
             }
         }
 
-        internal void Dispose()
+        private bool disposedValue;
+        public bool IsDisposed
         {
-            cmdInsertInstance?.Dispose();
-            cmdInsertReference?.Dispose();
-            cmdInsertType?.Dispose();
-            cxion.Dispose();
+            get { return disposedValue; }
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                cmdInsertInstance?.Dispose();
+                cmdInsertReference?.Dispose();
+                cmdInsertType?.Dispose();
+                cxion.Dispose();
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         private void StoreData(CancellationToken token)
         {
             BeginUpdate();
-            Dictionary<ClrType, ClrTypeStats> stats = new Dictionary<ClrType, ClrTypeStats>();
+            Dictionary<ClrType, ClrTypeStats> stats = new();
             foreach (var address in ClrDump.Heap.EnumerateObjectAddresses())
             {
                 ClrType type = ClrDump.Heap.GetObjectType(address);
@@ -105,8 +121,7 @@ namespace MemoScope.Core.Cache
                 }
                 ulong size = type.GetSize(address);
 
-                ClrTypeStats stat;
-                if (!stats.TryGetValue(type, out stat))
+                if (!stats.TryGetValue(type, out ClrTypeStats stat))
                 {
                     stat = new ClrTypeStats(stats.Count, type);
                     stats[type] = stat;
@@ -121,9 +136,9 @@ namespace MemoScope.Core.Cache
                 });
 
                 n++;
-                if( n % 1024*64==0)
+                if (n % 1024 * 64 == 0)
                 {
-                    if( token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         return;
                     }
@@ -163,9 +178,11 @@ namespace MemoScope.Core.Cache
         public List<ClrTypeStats> LoadTypeStat()
         {
             var list = new List<ClrTypeStats>();
-            SQLiteCommand cmd = new SQLiteCommand();
-            cmd.Connection = cxion;
-            cmd.CommandText = "SELECT Id, Name, MethodTable, Count, TotalSize FROM Types";
+            SQLiteCommand cmd = new()
+            {
+                Connection = cxion,
+                CommandText = "SELECT Id, Name, MethodTable, Count, TotalSize FROM Types"
+            };
             SQLiteDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
@@ -176,28 +193,24 @@ namespace MemoScope.Core.Cache
                 var totalSize = (ulong)dr.GetInt64(4);
 
                 ClrType type = ClrDump.GetType(methodTable);
-                if (type == null)
-                {
-                    type = ClrDump.GetType(name);
-                }
-                if ( type == null)
-                {
-                    type = new ClrTypeError(name);
-                }
+                type ??= ClrDump.GetType(name);
+                type ??= new ClrTypeError(name);
                 var clrTypeStats = new ClrTypeStats(id, type, count, totalSize);
                 list.Add(clrTypeStats);
             }
-            
+
             return list;
         }
 
         public int GetTypeId(string name)
         {
-            SQLiteCommand cmd = new SQLiteCommand();
-            cmd.Connection = cxion;
-            cmd.CommandText = $"SELECT Id FROM Types WHERE name='{name}'";
+            SQLiteCommand cmd = new()
+            {
+                Connection = cxion,
+                CommandText = $"SELECT Id FROM Types WHERE name='{name}'"
+            };
             SQLiteDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
+            if (dr.Read())
             {
                 int id = dr.GetInt32(0);
                 return id;
@@ -207,11 +220,13 @@ namespace MemoScope.Core.Cache
 
         public string GetTypeName(int id)
         {
-            SQLiteCommand cmd = new SQLiteCommand();
-            cmd.Connection = cxion;
-            cmd.CommandText = $"SELECT Name FROM Types WHERE id='{id}'";
+            SQLiteCommand cmd = new()
+            {
+                Connection = cxion,
+                CommandText = $"SELECT Name FROM Types WHERE id='{id}'"
+            };
             SQLiteDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
+            if (dr.Read())
             {
                 string name = dr.GetString(0);
                 return name;
@@ -231,9 +246,9 @@ namespace MemoScope.Core.Cache
 
         public List<ulong> LoadInstances(int typeId)
         {
-            int nb = 0;
-            string name = null;
-            CancellationTokenSource token = null;
+            int nb;
+            string name;
+            CancellationTokenSource token;
 
             name = GetTypeName(typeId);
             token = new CancellationTokenSource();
@@ -243,18 +258,18 @@ namespace MemoScope.Core.Cache
             int max = 10 * 1000 * 1000;
             var list = new List<ulong>();
             n = 0;
-            foreach(ulong address in EnumerateInstances(typeId))
+            foreach (ulong address in EnumerateInstances(typeId))
             {
                 list.Add(address);
                 n++;
-                if(n==max)
+                if (n == max)
                 {
                     break;
                 }
-                if( n % 1024 == 0)
+                if (n % 1024 == 0)
                 {
                     ClrDump.MessageBus.Status($"Loading instances: {name}: {n:###,###,###,###} / {nb:###,###,###,###}...");
-                    if( token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         ClrDump.MessageBus.EndTask($"Loading instances: {name}: Cancelled !");
                         return list;
@@ -267,11 +282,13 @@ namespace MemoScope.Core.Cache
 
         public IEnumerable<ulong> EnumerateInstances(int typeId)
         {
-            SQLiteCommand cmd = new SQLiteCommand();
-            cmd.Connection = cxion;
-            cmd.CommandText = "SELECT Address FROM Instances WHERE TypeId=" + typeId;
+            SQLiteCommand cmd = new()
+            {
+                Connection = cxion,
+                CommandText = "SELECT Address FROM Instances WHERE TypeId=" + typeId
+            };
             SQLiteDataReader dr = cmd.ExecuteReader();
-            while (dr.Read() )
+            while (dr.Read())
             {
                 var address = (ulong)dr.GetInt64(0);
                 yield return address;
@@ -280,11 +297,13 @@ namespace MemoScope.Core.Cache
 
         public int CountInstances(int typeId)
         {
-            SQLiteCommand cmd = new SQLiteCommand();
-            cmd.Connection = cxion;
-            cmd.CommandText = "SELECT count(*) FROM Instances WHERE TypeId=" + typeId;
+            SQLiteCommand cmd = new()
+            {
+                Connection = cxion,
+                CommandText = "SELECT count(*) FROM Instances WHERE TypeId=" + typeId
+            };
             SQLiteDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
+            if (dr.Read())
             {
                 var count = (int)dr.GetInt64(0);
                 return count;
@@ -304,16 +323,14 @@ namespace MemoScope.Core.Cache
 
         public IEnumerable<ulong> EnumerateReferers(ulong instanceAddress)
         {
-            using (SQLiteCommand cmd = new SQLiteCommand())
+            using SQLiteCommand cmd = new();
+            cmd.Connection = cxion;
+            cmd.CommandText = "SELECT RefByAddress FROM InstanceReferences WHERE InstanceAddress=" + instanceAddress;
+            SQLiteDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
             {
-                cmd.Connection = cxion;
-                cmd.CommandText = "SELECT RefByAddress FROM InstanceReferences WHERE InstanceAddress=" + instanceAddress;
-                SQLiteDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    var address = (ulong)dr.GetInt64(0);
-                    yield return address;
-                }
+                var address = (ulong)dr.GetInt64(0);
+                yield return address;
             }
         }
 
@@ -323,18 +340,17 @@ namespace MemoScope.Core.Cache
             return list;
         }
 
+        private readonly object _lock = new();
         public int CountReferers(ulong instanceAddress)
         {
-            lock (cmdCountReferences)
+            lock (_lock)
             {
                 paramInstanceAddress_CountReferences.Value = instanceAddress;
-                using (SQLiteDataReader dr = cmdCountReferences.ExecuteReader())
+                using SQLiteDataReader dr = cmdCountReferences.ExecuteReader();
+                if (dr.Read())
                 {
-                    while (dr.Read())
-                    {
-                        var count = dr.GetInt32(0);
-                        return count;
-                    }
+                    var count = dr.GetInt32(0);
+                    return count;
                 }
                 return 0;
             }
@@ -372,7 +388,7 @@ namespace MemoScope.Core.Cache
             cmdInsertReference = cxion.PrepareCommand("INSERT INTO InstanceReferences(InstanceAddress, RefByAddress ) VALUES (@InstanceAddress, @RefByAddress)");
             paramInstanceAddress_InsertReference = cmdInsertReference.CreateParameter("InstanceAddress");
             paramRefByAddress_InsertReference = cmdInsertReference.CreateParameter("RefByAddress");
-    }
+        }
 
         #region SQL 
         private void Open(string dbPath)

@@ -1,5 +1,7 @@
-﻿using MemoScope.Core.Data;
-using System;
+﻿using System;
+
+using MemoScope.Core.Data;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 
@@ -14,12 +16,13 @@ namespace MemoScope.Modules.StackTrace
 
         protected override void HandleData(ClrDumpThread clrDumpThread)
         {
-            if( clrDumpThread == null)
+            if (clrDumpThread == null)
             {
                 throw new InvalidOperationException("No thread selected !");
             }
 
-            UIModuleFactory.CreateModule<StackTraceModule>(module => {
+            UIModuleFactory.CreateModule<StackTraceModule>(module =>
+            {
                 module.UIModuleParent = selectedModule;
                 module.Setup(clrDumpThread.ClrDump, clrDumpThread.ClrThread);
                 module.Init();

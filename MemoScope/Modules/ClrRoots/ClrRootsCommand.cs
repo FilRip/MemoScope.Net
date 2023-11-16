@@ -1,4 +1,5 @@
 ﻿using MemoScope.Core;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 

@@ -10,7 +10,9 @@ namespace MemoDummy
         [Category("Config")]
         public long NbThreads { get; set; } = 4;
 
-        string[] locks;
+#pragma warning disable S1450 // Private fields only used as local variables in methods should become local variables
+        private object[] locks;
+#pragma warning restore S1450 // Private fields only used as local variables in methods should become local variables
         public override void Run()
         {
             locks = new string[NbThreads];
@@ -21,8 +23,8 @@ namespace MemoDummy
 
             for (int i = 0; i < NbThreads; i++)
             {
-                string myLock = locks[i];
-                Thread thread = new Thread(() =>
+                object myLock = locks[i];
+                Thread thread = new(() =>
                 {
                     lock (myLock)
                     {
@@ -31,8 +33,10 @@ namespace MemoDummy
                             Thread.Sleep(100);
                         }
                     }
-                });
-                thread.Name = $"thread #{i} LOCK";
+                })
+                {
+                    Name = $"thread #{i} LOCK"
+                };
                 thread.Start();
                 Thread.Sleep(100);
                 thread = new Thread(() =>
@@ -44,8 +48,10 @@ namespace MemoDummy
                             Thread.Sleep(100);
                         }
                     }
-                });
-                thread.Name = $"thread #{i} WAIT";
+                })
+                {
+                    Name = $"thread #{i} WAIT"
+                };
                 thread.Start();
             }
         }

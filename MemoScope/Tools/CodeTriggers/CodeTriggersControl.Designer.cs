@@ -98,7 +98,7 @@
             this.dlvTriggers.UseCompatibleStateImageBehavior = false;
             this.dlvTriggers.View = System.Windows.Forms.View.Details;
             this.dlvTriggers.VirtualMode = true;
-            this.dlvTriggers.SelectedIndexChanged += new System.EventHandler(this.dlvTriggers_SelectedIndexChanged);
+            this.dlvTriggers.SelectedIndexChanged += new System.EventHandler(this.DlvTriggers_SelectedIndexChanged);
             // 
             // tbCode
             // 
@@ -111,8 +111,8 @@
             this.tbCode.Size = new System.Drawing.Size(383, 284);
             this.tbCode.TabIndex = 7;
             this.tbCode.UseTabs = false;
-            this.tbCode.DragDrop += new System.Windows.Forms.DragEventHandler(this.tbCode_DragDrop);
-            this.tbCode.DragEnter += new System.Windows.Forms.DragEventHandler(this.tbCode_DragEnter);
+            this.tbCode.DragDrop += new System.Windows.Forms.DragEventHandler(this.TbCode_DragDrop);
+            this.tbCode.DragEnter += new System.Windows.Forms.DragEventHandler(this.TbCode_DragEnter);
             // 
             // lblCode
             // 
@@ -210,7 +210,7 @@
             this.tsbNewTrigger.Size = new System.Drawing.Size(24, 24);
             this.tsbNewTrigger.Text = "tsbNewTrigger";
             this.tsbNewTrigger.ToolTipText = "New Trigger";
-            this.tsbNewTrigger.Click += new System.EventHandler(this.tsbNewTrigger_Click);
+            this.tsbNewTrigger.Click += new System.EventHandler(this.TsbNewTrigger_Click);
             // 
             // tsbSaveAllTriggers
             // 
@@ -220,7 +220,7 @@
             this.tsbSaveAllTriggers.Name = "tsbSaveAllTriggers";
             this.tsbSaveAllTriggers.Size = new System.Drawing.Size(24, 24);
             this.tsbSaveAllTriggers.ToolTipText = "Save All Triggers";
-            this.tsbSaveAllTriggers.Click += new System.EventHandler(this.tsbSaveAllTriggers_Click);
+            this.tsbSaveAllTriggers.Click += new System.EventHandler(this.TsbSaveAllTriggers_Click);
             // 
             // tsbCloneTrigger
             // 
@@ -230,7 +230,7 @@
             this.tsbCloneTrigger.Name = "tsbCloneTrigger";
             this.tsbCloneTrigger.Size = new System.Drawing.Size(24, 24);
             this.tsbCloneTrigger.ToolTipText = "Clone Trigger";
-            this.tsbCloneTrigger.Click += new System.EventHandler(this.tsbCloneTrigger_Click);
+            this.tsbCloneTrigger.Click += new System.EventHandler(this.TsbCloneTrigger_Click);
             // 
             // tsbDeleteTrigger
             // 
@@ -240,7 +240,7 @@
             this.tsbDeleteTrigger.Name = "tsbDeleteTrigger";
             this.tsbDeleteTrigger.Size = new System.Drawing.Size(24, 24);
             this.tsbDeleteTrigger.ToolTipText = "Delete Trigger";
-            this.tsbDeleteTrigger.Click += new System.EventHandler(this.tsbDeleteTrigger_Click);
+            this.tsbDeleteTrigger.Click += new System.EventHandler(this.TsbDeleteTrigger_Click);
             // 
             // CodeTriggersControl
             // 

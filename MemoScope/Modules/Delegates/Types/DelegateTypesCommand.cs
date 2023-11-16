@@ -1,5 +1,7 @@
-﻿using MemoScope.Core;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+
+using MemoScope.Core;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 

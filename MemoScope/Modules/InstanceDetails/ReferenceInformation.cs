@@ -1,11 +1,15 @@
-﻿using BrightIdeasSoftware;
-using MemoScope.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Diagnostics.Runtime;
-using WinFwk.UITools;
+
+using BrightIdeasSoftware;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
 using MemoScope.Core.Helpers;
+
+using Microsoft.Diagnostics.Runtime;
+
+using WinFwk.UITools;
 
 namespace MemoScope.Modules.InstanceDetails
 {
@@ -16,7 +20,7 @@ namespace MemoScope.Modules.InstanceDetails
         [OLVColumn(Title = "Address")]
         public ulong Address { get; }
 
-        [OLVColumn]
+        [OLVColumn()]
         public string FieldName { get; }
 
         [OLVColumn(Title = "Type")]
@@ -28,7 +32,7 @@ namespace MemoScope.Modules.InstanceDetails
         {
             FieldName = ClrDump.GetFieldNameReference(refAddress, address);
             FieldName = TypeHelpers.RealName(FieldName);
-       }
+        }
 
         public ReferenceInformation(ClrDump clrDump, ulong address)
         {
@@ -37,6 +41,5 @@ namespace MemoScope.Modules.InstanceDetails
         }
 
         public override bool CanExpand => ClrDump.HasReferers(Address);
-        public override List<ReferenceInformation> Children => ClrDump.GetReferers(Address).Select(address => new ReferenceInformation(ClrDump, address, Address)).ToList();
     }
 }

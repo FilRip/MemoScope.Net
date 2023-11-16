@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+
 using BrightIdeasSoftware;
-using WinFwk.UIModules;
-using System;
-using WinFwk.UIMessages;
-using MemoScope.Services;
+
 using MemoScope.Modules.Process;
+using MemoScope.Services;
+
+using WinFwk.UIMessages;
+using WinFwk.UIModules;
 using WinFwk.UITools.Settings;
 
 namespace MemoScope.Modules.Explorer
 {
-    public partial class ExplorerModule : UIModule, 
+    public partial class ExplorerModule : UIModule,
         IMessageListener<ClrDumpLoadedMessage>,
         IMessageListener<ProcessDumpedMessage>
     {
@@ -34,8 +37,10 @@ namespace MemoScope.Modules.Explorer
                 var rowObj = e.Model;
                 var data = rowObj as AbstractDumpExplorerData;
                 var cachePath = data.GetCachePath();
-                if(cachePath != null && File.Exists(cachePath) ) {
-                    try {
+                if (cachePath != null && File.Exists(cachePath))
+                {
+                    try
+                    {
                         File.Delete(cachePath);
                     }
                     catch (Exception ex)
@@ -55,7 +60,7 @@ namespace MemoScope.Modules.Explorer
 
             if (rootDirOk)
             {
-                dtlvExplorer.Roots= AbstractDumpExplorerData.GetItems(tbRootDir.Text);
+                dtlvExplorer.Roots = AbstractDumpExplorerData.GetItems(tbRootDir.Text);
                 dtlvExplorer.Refresh();
                 MemoScopeSettings.Instance.RootDir = tbRootDir.Text;
                 MemoScopeSettings.Instance.Save();
@@ -63,12 +68,12 @@ namespace MemoScope.Modules.Explorer
             }
         }
 
-        private void tbRootDir_TextChanged(object sender, System.EventArgs e)
+        private void TbRootDir_TextChanged(object sender, EventArgs e)
         {
-           RefreshRootDir();
+            RefreshRootDir();
         }
 
-        private void ExplorerModule_Load(object sender, System.EventArgs e)
+        private void ExplorerModule_Load(object sender, EventArgs e)
         {
             if (MemoScopeSettings.Instance != null)
             {
@@ -78,23 +83,22 @@ namespace MemoScope.Modules.Explorer
             RefreshRootDir();
         }
 
-        private void dtlvExplorer_CellClick(object sender, CellClickEventArgs e)
+        private void DtlvExplorer_CellClick(object sender, CellClickEventArgs e)
         {
             if (e.ClickCount != 2)
             {
                 return;
             }
-            var data = e.Model as AbstractDumpExplorerData;
-            if (data == null)
+            if (e.Model is not AbstractDumpExplorerData data)
             {
                 return;
             }
-            OpenFilesFromData(new[] {data});
+            OpenFilesFromData(new[] { data });
         }
 
         private void OpenFilesFromData(IEnumerable<AbstractDumpExplorerData> datas)
         {
-            List<FileInfo> fileInfos = new List<FileInfo>();
+            List<FileInfo> fileInfos = new();
             foreach (var data in datas)
             {
                 var children = data.Children;
@@ -116,15 +120,15 @@ namespace MemoScope.Modules.Explorer
             RefreshRootDir();
         }
 
-        private void btnLoad_Click(object sender, System.EventArgs e)
+        private void BtnLoad_Click(object sender, EventArgs e)
         {
             var fileInfos = dtlvExplorer.CheckedObjects.OfType<AbstractDumpExplorerData>().Where(data => data.FileInfo != null).Select(data => data.FileInfo).ToList();
             MessageBus.SendMessage(new OpenDumpRequest(fileInfos));
         }
 
-        private void btnRootDir_Click(object sender, System.EventArgs e)
+        private void BtnRootDir_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog {ShowNewFolderButton = true, SelectedPath = tbRootDir.Text};
+            FolderBrowserDialog dialog = new() { ShowNewFolderButton = true, SelectedPath = tbRootDir.Text };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -135,16 +139,16 @@ namespace MemoScope.Modules.Explorer
         void IMessageListener<ClrDumpLoadedMessage>.HandleMessage(ClrDumpLoadedMessage message)
         {
             var path = message.ClrDump.DumpPath;
-            foreach(AbstractDumpExplorerData data in dtlvExplorer.Objects)
+            foreach (AbstractDumpExplorerData data in dtlvExplorer.Objects)
             {
-                if( data.FileInfo != null && data.FileInfo.FullName == path)
+                if (data.FileInfo != null && data.FileInfo.FullName == path)
                 {
                     dtlvExplorer.RefreshObject(data);
                 }
             }
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void BtnRefresh_Click(object sender, EventArgs e)
         {
             RefreshRootDir();
         }

@@ -1,5 +1,7 @@
-﻿using MemoScope.Core.Data;
-using System;
+﻿using System;
+
+using MemoScope.Core.Data;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 
@@ -14,18 +16,14 @@ namespace MemoScope.Modules.ThreadException
 
         protected override void HandleData(ClrDumpThread clrDumpThread)
         {
-            if( clrDumpThread == null)
+            if (clrDumpThread == null)
             {
                 throw new InvalidOperationException("No thread selected !");
             }
 
-            var ex = clrDumpThread.ClrDump.Eval(() => clrDumpThread.ClrThread.CurrentException);
-            if( ex == null)
+            _ = clrDumpThread.ClrDump.Eval(() => clrDumpThread.ClrThread.CurrentException) ?? throw new InvalidOperationException("No exception for this thread !");
+            UIModuleFactory.CreateModule<ThreadExceptionModule>(module =>
             {
-                throw new InvalidOperationException("No exception for this thread !");
-            }
-
-            UIModuleFactory.CreateModule<ThreadExceptionModule>(module => {
                 module.UIModuleParent = selectedModule;
                 module.Setup(clrDumpThread.ClrDump, clrDumpThread.ClrThread);
                 module.Init();

@@ -1,8 +1,10 @@
-﻿using MemoScope.Core;
-using MemoScope.Modules.StackTrace;
-using Microsoft.Diagnostics.Runtime;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using MemoScope.Core;
 using MemoScope.Core.Helpers;
+using MemoScope.Modules.StackTrace;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.ThreadException
 {
@@ -10,8 +12,6 @@ namespace MemoScope.Modules.ThreadException
     {
         public List<ClrExceptionInformation> Exceptions { get; private set; }
         private ClrThread ClrThread { get; set; }
-        private string Message { get; set; }
-        private List<StackFrameInformation> StackFrames { get; set; }
 
         public ThreadExceptionModule()
         {
@@ -37,8 +37,8 @@ namespace MemoScope.Modules.ThreadException
         public override void Init()
         {
             Exceptions = new List<ClrExceptionInformation>();
-            ClrException exception =  ClrDump.Eval(() => ClrThread.CurrentException);
-            while(exception != null)
+            ClrException exception = ClrDump.Eval(() => ClrThread.CurrentException);
+            while (exception != null)
             {
                 Exceptions.Add(new ClrExceptionInformation(ClrDump, exception));
                 exception = ClrDump.Eval(() => exception.Inner);
@@ -47,10 +47,10 @@ namespace MemoScope.Modules.ThreadException
             dlvExceptions.Objects = Exceptions;
         }
 
-        private void dlvExceptions_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void DlvExceptions_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             var exception = dlvExceptions.SelectedObject<ClrExceptionInformation>();
-            if( exception != null)
+            if (exception != null)
             {
                 Init(exception);
             }

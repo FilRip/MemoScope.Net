@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+
 using MemoScopeApi;
 
 namespace MemoScope.Modules.Process
@@ -18,7 +19,7 @@ namespace MemoScope.Modules.Process
 
         private MemoScopeService()
         {
-            
+
         }
         public void DumpMe(int processId)
         {

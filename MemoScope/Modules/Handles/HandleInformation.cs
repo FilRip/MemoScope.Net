@@ -1,26 +1,28 @@
 ﻿using BrightIdeasSoftware;
+
 using MemoScope.Core;
 using MemoScope.Core.Data;
+
 using Microsoft.Diagnostics.Runtime;
-using System.Windows.Forms;
+
 using WinFwk.UITools;
 
 namespace MemoScope.Modules.Handles
 {
     public class HandleInformation : ITypeNameData
     {
-        private ClrHandle clrHandle;
+        private readonly ClrHandle clrHandle;
 
-        public HandleInformation(ClrDump clrDump, ClrHandle clrHandle)
+        public HandleInformation(ClrHandle clrHandle)
         {
             this.clrHandle = clrHandle;
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong Object => clrHandle.Object;
-        [OLVColumn(Title="Name")]
+        [OLVColumn(Title = "Name")]
         public string TypeName => clrHandle.Type.Name;
-        [OLVColumn]
+        [OLVColumn()]
         public HandleType HandleType => clrHandle.HandleType;
         [BoolColumn(Width = 50)]
         public bool IsPinned => clrHandle.IsPinned;

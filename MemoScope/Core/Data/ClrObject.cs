@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.Data
@@ -6,7 +7,7 @@ namespace MemoScope.Core.Data
     // This code was extracted from https://github.com/JeffCyr/ClrMD.Extensions
     // Thanks a lot to Jeff Cyr !
     // TODO: remove this code when ClrMd merges 'clrobject' branches into master and releases a new version.
-    public struct ClrObject 
+    public struct ClrObject
     {
         public ulong Address { get; }
         public ClrType Type { get; }
@@ -19,18 +20,14 @@ namespace MemoScope.Core.Data
         {
             get
             {
-                ClrInstanceField field = GetField(fieldName);
-
-                if (field == null)
-                    throw new ArgumentException($"Field '{fieldName}' not found in Type '{Type.Name}'");
-
+                ClrInstanceField field = GetField(fieldName) ?? throw new ArgumentException($"Field '{fieldName}' not found in Type '{Type.Name}'");
                 return this[field];
             }
         }
 
         public ClrObject this[ClrInstanceField field] => GetInnerObject(field.GetAddress(Address, IsInterior), field.Type);
         public ClrObject this[int arrayIndex] => GetInnerObject(Type.GetArrayElementAddress(Address, arrayIndex), Type.ComponentType);
-        public bool HasSimpleValue => SimpleValueHelper.IsSimpleValue(Type); 
+        public bool HasSimpleValue => SimpleValueHelper.IsSimpleValue(Type);
         public object SimpleValue => SimpleValueHelper.GetSimpleValue(this);
 
         public ClrObject(ulong address, ClrType type, bool isInterior = false)
@@ -42,14 +39,12 @@ namespace MemoScope.Core.Data
 
         public ClrInstanceField GetField(string fieldName)
         {
-            ClrInstanceField field = null;
+            ClrInstanceField field;
             string backingFieldName = GetAutomaticPropertyField(fieldName);
 
-            if (field == null)
-                field = Type.GetFieldByName(fieldName);
+            field = Type.GetFieldByName(fieldName);
 
-            if (field == null)
-                field = Type.GetFieldByName(backingFieldName);
+            field ??= Type.GetFieldByName(backingFieldName);
 
             return field;
         }
@@ -95,11 +90,11 @@ namespace MemoScope.Core.Data
             return Address.GetHashCode();
         }
 
-        public override bool Equals(object o)
+        public override bool Equals(object obj)
         {
-            if( o is ClrObject)
+            if (obj is ClrObject @object)
             {
-                return Address == ((ClrObject)o).Address;
+                return Address == @object.Address;
             }
             return false;
         }

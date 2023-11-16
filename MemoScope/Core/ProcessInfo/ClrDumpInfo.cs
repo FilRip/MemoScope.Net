@@ -1,18 +1,20 @@
-﻿using MemoScope.Core.Bookmarks;
-using System.IO;
-using System.Xml.Serialization;
-using Microsoft.Diagnostics.Runtime;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
+
+using MemoScope.Core.Bookmarks;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.ProcessInfo
 {
     public class ClrDumpInfo
     {
-        private readonly static XmlSerializer XML = new XmlSerializer(typeof(ClrDumpInfo));
+        private readonly static XmlSerializer XML = new(typeof(ClrDumpInfo));
 
-        [XmlIgnore]
+        [XmlIgnore()]
         public string DumpPath { get; private set; }
         private Dictionary<ulong, Bookmark> dicoBookmarks;
 
@@ -37,20 +39,20 @@ namespace MemoScope.Core.ProcessInfo
             {
                 if (File.Exists(clrDumpInfoPath))
                 {
-                    using (var reader = new StreamReader(clrDumpInfoPath))
-                    {
-                        var processInfoObj = XML.Deserialize(reader);
-                        clrDumpInfo = processInfoObj as ClrDumpInfo;
-                        clrDumpInfo.Init(dumpPath);
-                    }
+                    using var reader = new StreamReader(clrDumpInfoPath);
+                    var processInfoObj = XML.Deserialize(reader);
+                    clrDumpInfo = processInfoObj as ClrDumpInfo;
+                    clrDumpInfo.Init(dumpPath);
                 }
             }
             finally
             {
                 if (clrDumpInfo == null)
                 {
-                    clrDumpInfo = new ClrDumpInfo(dumpPath);
-                    clrDumpInfo.ProcessInfo = new ProcessInfo();
+                    clrDumpInfo = new ClrDumpInfo(dumpPath)
+                    {
+                        ProcessInfo = new ProcessInfo()
+                    };
                     clrDumpInfo.Init();
                     clrDumpInfo.Save();
                 }
@@ -76,7 +78,7 @@ namespace MemoScope.Core.ProcessInfo
             return clrDumpInfoPath;
         }
 
-        public void  Save()
+        public void Save()
         {
             var dir = Path.GetDirectoryName(DumpPath);
             if (dir != null && !Directory.Exists(dir))
@@ -84,16 +86,13 @@ namespace MemoScope.Core.ProcessInfo
                 Directory.CreateDirectory(dir);
             }
             string clrDumpInfoPath = GetClrDumpInfoPath(DumpPath);
-            using (var writer = new StreamWriter(clrDumpInfoPath))
-            {
-                XML.Serialize(writer, this);
-            }
+            using var writer = new StreamWriter(clrDumpInfoPath);
+            XML.Serialize(writer, this);
         }
 
         internal void RemoveBookmark(ulong address)
         {
-            Bookmark bookmark;
-            if( dicoBookmarks.TryGetValue(address, out bookmark) )
+            if (dicoBookmarks.TryGetValue(address, out Bookmark bookmark))
             {
                 dicoBookmarks.Remove(address);
                 Bookmarks.Remove(bookmark);
@@ -114,8 +113,7 @@ namespace MemoScope.Core.ProcessInfo
 
         public Bookmark GetBookmark(ulong address)
         {
-            Bookmark bookmark;
-            dicoBookmarks.TryGetValue(address, out bookmark);
+            dicoBookmarks.TryGetValue(address, out Bookmark bookmark);
             return bookmark;
         }
 

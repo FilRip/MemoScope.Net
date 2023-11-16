@@ -1,10 +1,13 @@
-﻿using MemoScope.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using WinFwk.UICommands;
-using MemoScope.Core.Helpers;
+
 using BrightIdeasSoftware;
+
+using MemoScope.Core;
+using MemoScope.Core.Helpers;
 using MemoScope.Modules.ArrayInstances;
+
+using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Arrays
 {
@@ -32,7 +35,7 @@ namespace MemoScope.Modules.Arrays
 
         private void OnCellClick(object sender, CellClickEventArgs e)
         {
-            if( e.ClickCount == 2 && e.Model != null)
+            if (e.ClickCount == 2 && e.Model != null)
             {
                 ArrayInstancesCommand.Display(Data, this);
             }
@@ -57,7 +60,7 @@ namespace MemoScope.Modules.Arrays
             get
             {
                 var arraysInfo = dlvArrays.SelectedObject<ArraysInformation>();
-                if(arraysInfo ==null)
+                if (arraysInfo == null)
                 {
                     return null;
                 }

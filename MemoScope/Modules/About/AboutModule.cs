@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+
 using WinFwk.UIModules;
 
 namespace MemoScope.Modules.About
@@ -14,14 +15,14 @@ namespace MemoScope.Modules.About
             tbVersion.Text = string.Format("v {0}", Application.ProductVersion);
         }
 
-        private void linkGitHub_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
+        private void LinkGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/fremag/MemoScope.Net");
+            System.Diagnostics.Process.Start($"https://github.com/fremag/MemoScope.Net");
         }
 
-        private void linkWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkWiki_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/fremag/MemoScope.Net/wiki");
+            System.Diagnostics.Process.Start($"https://github.com/fremag/MemoScope.Net/wiki");
         }
     }
 }

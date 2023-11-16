@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Schedulers;
+
 using MemoScope.Core;
 using MemoScope.Modules.Explorer;
+
 using Microsoft.Diagnostics.Runtime;
+
 using WinFwk.UIMessages;
 using WinFwk.UIServices;
-using System.Threading;
 using WinFwk.UITools.Log;
-using System.Linq;
 
 namespace MemoScope.Services
 {
@@ -24,39 +27,40 @@ namespace MemoScope.Services
 
         public void HandleMessage(OpenDumpRequest openDumpRequest)
         {
-            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationTokenSource source = new();
             var token = source.Token;
-            foreach (var fileInfo in openDumpRequest.FileInfos.Where(fi => fi != null))
+            foreach (string fileInfo in openDumpRequest.FileInfos.Where(fi => fi != null).Select(f => f.FullName))
             {
                 fact.StartNew(() =>
                 {
-                    BeginTask("Loading file: " + fileInfo.FullName, source);
+                    BeginTask("Loading file: " + fileInfo, source);
                     DataTarget target = null;
                     try
                     {
-                        target = DataTarget.LoadCrashDump(fileInfo.FullName);
+                        target = DataTarget.LoadCrashDump(fileInfo);
 
-                        if ( (  Environment.Is64BitProcess && target.PointerSize != 8 )
-                        || (! Environment.Is64BitProcess && target.PointerSize != 4) )                        { 
-                            throw new InvalidOperationException($"Wrong architecture ! Dumpfile : {target.PointerSize*8} bits, Environment.Is64BitProcess : {Environment.Is64BitProcess}");
+                        if ((Environment.Is64BitProcess && target.PointerSize != 8)
+                        || (!Environment.Is64BitProcess && target.PointerSize != 4))
+                        {
+                            throw new InvalidOperationException($"Wrong architecture ! Dumpfile : {target.PointerSize * 8} bits, Environment.Is64BitProcess : {Environment.Is64BitProcess}");
                         }
 
-                        var clrDump = new ClrDump(target, fileInfo.FullName, MessageBus);
+                        var clrDump = new ClrDump(target, fileInfo, MessageBus);
                         clrDump.InitCache(token);
                         if (token.IsCancellationRequested)
                         {
                             clrDump.Destroy();
-                            EndTask($"File NOT loaded: {fileInfo.FullName}");
+                            EndTask($"File NOT loaded: {fileInfo}");
                         }
                         else
                         {
                             MessageBus.SendMessage(new ClrDumpLoadedMessage(clrDump));
-                            EndTask($"File loaded: {fileInfo.FullName}");
+                            EndTask($"File loaded: {fileInfo}");
                         }
                     }
-                    catch(Exception ex) 
+                    catch (Exception ex)
                     {
-                        string msg = $"Failed to load dump file: {fileInfo.FullName}";
+                        string msg = $"Failed to load dump file: {fileInfo}";
                         EndTask(msg);
                         MessageBus.Log(this, msg, ex);
                         target?.Dispose();

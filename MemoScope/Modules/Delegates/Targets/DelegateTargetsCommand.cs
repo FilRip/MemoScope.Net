@@ -1,6 +1,8 @@
-﻿using MemoScope.Core.Data;
-using System;
+﻿using System;
 using System.Windows.Forms;
+
+using MemoScope.Core.Data;
+
 using WinFwk.UICommands;
 using WinFwk.UIModules;
 
@@ -15,12 +17,12 @@ namespace MemoScope.Modules.Delegates.Targets
 
         protected override void HandleData(ClrDumpObject clrDumpObject)
         {
-            if(clrDumpObject == null || clrDumpObject.ClrType == null)
+            if (clrDumpObject == null || clrDumpObject.ClrType == null)
             {
                 throw new InvalidOperationException("No instance selected !");
             }
 
-            if( ! DelegatesAnalysis.IsDelegateType(clrDumpObject))
+            if (!DelegatesAnalysis.IsDelegateType(clrDumpObject))
             {
                 throw new InvalidOperationException("Selected instance's type is not a delegate !");
             }

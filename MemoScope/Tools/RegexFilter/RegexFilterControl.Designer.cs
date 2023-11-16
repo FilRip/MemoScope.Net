@@ -54,7 +54,7 @@
             this.tbRegex.Name = "tbRegex";
             this.tbRegex.Size = new System.Drawing.Size(489, 22);
             this.tbRegex.TabIndex = 1;
-            this.tbRegex.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tbRegex_KeyUp);
+            this.tbRegex.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TbRegex_KeyUp);
             // 
             // cbIgnoreCase
             // 
@@ -68,7 +68,7 @@
             this.cbIgnoreCase.TabIndex = 4;
             this.toolTip1.SetToolTip(this.cbIgnoreCase, "Check to filter case sensitive");
             this.cbIgnoreCase.UseVisualStyleBackColor = true;
-            this.cbIgnoreCase.CheckedChanged += new System.EventHandler(this.cbIgnoreCase_CheckedChanged);
+            this.cbIgnoreCase.CheckedChanged += new System.EventHandler(this.CbIgnoreCase_CheckedChanged);
             // 
             // btnCancel
             // 
@@ -80,7 +80,7 @@
             this.btnCancel.TabIndex = 3;
             this.toolTip1.SetToolTip(this.btnCancel, "Apply RegEx filter");
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnApply
             // 
@@ -92,7 +92,7 @@
             this.btnApply.TabIndex = 2;
             this.toolTip1.SetToolTip(this.btnApply, "Apply RegEx filter");
             this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            this.btnApply.Click += new System.EventHandler(this.BtnApply_Click);
             // 
             // RegexFilterControl
             // 

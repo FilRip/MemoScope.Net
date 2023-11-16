@@ -1,5 +1,6 @@
-﻿using Microsoft.Diagnostics.Runtime;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.Data
 {
@@ -17,19 +18,19 @@ namespace MemoScope.Core.Data
             Init(addresses);
         }
 
-        protected void Init(IAddressContainer addresses)
-        {
-            Addresses = addresses;
-        }
-
         public AddressList(ClrDump clrDump, ClrType clrType)
         {
             ClrDump = clrDump;
             ClrType = clrType;
         }
+
+        protected void Init(IAddressContainer addresses)
+        {
+            Addresses = addresses;
+        }
     }
 
-    public interface IAddressContainer 
+    public interface IAddressContainer
     {
         int Count { get; }
         ulong this[int index] { get; }

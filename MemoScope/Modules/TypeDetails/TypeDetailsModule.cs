@@ -1,10 +1,13 @@
-﻿using BrightIdeasSoftware;
-using MemoScope.Core;
-using MemoScope.Core.Helpers;
-using Microsoft.Diagnostics.Runtime;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using BrightIdeasSoftware;
+
+using MemoScope.Core;
 using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
+
+using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.TypeDetails
 {
@@ -25,11 +28,11 @@ namespace MemoScope.Modules.TypeDetails
 
             dlvFields.InitColumns<FieldInformation>();
             dlvFields.SetUpTypeColumn<FieldInformation>(this);
-            dlvFields.SetObjects(dumpType.Fields.Select(clrField => new FieldInformation(dumpType, clrField)));
+            dlvFields.SetObjects(dumpType.Fields.Select(clrField => new FieldInformation(clrField)));
 
             dlvMethods.InitColumns<MethodInformation>();
             dlvMethods.SetUpTypeColumn<MethodInformation>(this);
-            dlvMethods.SetObjects(dumpType.Methods.Select(clrMethod => new MethodInformation(dumpType, clrMethod)));
+            dlvMethods.SetObjects(dumpType.Methods.Select(clrMethod => new MethodInformation(clrMethod)));
 
             dtlvParentClasses.InitData<AbstractTypeInformation>();
             dtlvParentClasses.SetUpTypeColumn<AbstractTypeInformation>(this);

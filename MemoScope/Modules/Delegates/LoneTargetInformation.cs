@@ -1,38 +1,38 @@
-﻿using MemoScope.Core.Data;
-using BrightIdeasSoftware;
-using MemoScope.Core;
+﻿using BrightIdeasSoftware;
+
+using MemoScope.Core.Data;
+
 using Microsoft.Diagnostics.Runtime;
+
 using ClrObject = MemoScope.Core.Data.ClrObject;
 
 namespace MemoScope.Modules.Delegates
 {
     public class LoneTargetInformation : IAddressData, ITypeNameData
     {
-        private ClrDump clrDump;
-        private ClrMethod methInfo;
-        private ClrObject target;
-        ClrObject owner;
-        public LoneTargetInformation(ClrDump clrDump, ClrObject target, ClrMethod methInfo, ClrObject owner)
+        private readonly ClrMethod methInfo;
+        private readonly ClrObject target;
+        readonly ClrObject owner;
+        public LoneTargetInformation(ClrObject target, ClrMethod methInfo, ClrObject owner)
         {
-            this.clrDump = clrDump;
             this.target = target;
             this.methInfo = methInfo;
             this.owner = owner;
         }
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong Address => target.Address;
 
-        [OLVColumn]
+        [OLVColumn()]
         public string TypeName => target.Type.Name;
 
-        [OLVColumn]
+        [OLVColumn()]
         public string Method => methInfo?.GetFullSignature();
 
-        [OLVColumn]
+        [OLVColumn()]
         public ulong OwnerAddress => owner.Address;
 
-        [OLVColumn]
+        [OLVColumn()]
         public string OwnerType => owner.Type?.Name;
     }
 }

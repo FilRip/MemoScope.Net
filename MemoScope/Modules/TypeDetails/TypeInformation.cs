@@ -1,7 +1,8 @@
-﻿using MemoScope.Core.Data;
-using MemoScope.Core.Helpers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
+using MemoScope.Core.Data;
+using MemoScope.Core.Helpers;
 
 namespace MemoScope.Modules.TypeDetails
 {
@@ -18,9 +19,11 @@ namespace MemoScope.Modules.TypeDetails
             get
             {
                 var baseType = new TypeInformation(ClrDumpType.BaseType);
-                var interfs = ClrDumpType.Interfaces.Select( interf => new DummyTypeInformation(interf));
-                var l = new List<AbstractTypeInformation>();
-                l.Add(baseType);
+                var interfs = ClrDumpType.Interfaces.Select(interf => new DummyTypeInformation(interf));
+                var l = new List<AbstractTypeInformation>
+                {
+                    baseType
+                };
                 l.AddRange(interfs);
                 return l;
             }
