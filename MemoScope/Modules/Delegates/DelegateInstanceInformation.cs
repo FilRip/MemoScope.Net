@@ -8,22 +8,15 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.Delegates
 {
-    public class DelegateInstanceInformation : IAddressData, ITypeNameData
+    public class DelegateInstanceInformation(ulong address, ClrDumpType clrDumpType, long targetCount) : IAddressData, ITypeNameData
     {
-        ClrDumpType ClrDumpType { get; }
-
-        public DelegateInstanceInformation(ulong address, ClrDumpType clrDumpType, long targetCount)
-        {
-            Address = address;
-            ClrDumpType = clrDumpType;
-            Targets = targetCount;
-        }
+        ClrDumpType ClrDumpType { get; } = clrDumpType;
 
         [OLVColumn()]
-        public ulong Address { get; }
+        public ulong Address { get; } = address;
 
         [IntColumn()]
-        public long Targets { get; }
+        public long Targets { get; } = targetCount;
 
         [OLVColumn(Title = "Type")]
         public string TypeName => ClrDumpType.TypeName;

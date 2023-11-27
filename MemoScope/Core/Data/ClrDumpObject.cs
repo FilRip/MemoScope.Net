@@ -2,11 +2,11 @@
 
 namespace MemoScope.Core.Data
 {
-    public class ClrDumpObject : ClrDumpType
+    public class ClrDumpObject(ClrDump dump, ClrType type, ulong address, bool isInterior = false) : ClrDumpType(dump, type)
     {
-        public ulong Address { get; }
+        public ulong Address { get; } = address;
         public object Value => ClrDump.Eval(GetValue);
-        public bool IsInterior { get; private set; }
+        public bool IsInterior { get; private set; } = isInterior;
         public int ArrayLength => ClrDump.Eval(() => ClrType.GetArrayLength(Address));
 
         public ClrObject ClrObject => new(Address, ClrType, IsInterior);
@@ -23,11 +23,6 @@ namespace MemoScope.Core.Data
                 return null;
             }
 
-        }
-        public ClrDumpObject(ClrDump dump, ClrType type, ulong address, bool isInterior = false) : base(dump, type)
-        {
-            Address = address;
-            IsInterior = isInterior;
         }
 
         public ClrDumpObject(ClrDumpType clrDumpType, ulong address) : this(clrDumpType.ClrDump, clrDumpType.ClrType, address)

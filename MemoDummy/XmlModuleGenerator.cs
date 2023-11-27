@@ -26,7 +26,7 @@ namespace MemoDummy
 
         public override void Run()
         {
-            objects = new List<XmlSerializer>();
+            objects = [];
 
             while (objects.Count < Max && !stopRequested)
             {

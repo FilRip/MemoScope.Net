@@ -4,13 +4,9 @@ using System.Text;
 
 namespace MemoScope.Core.Dac
 {
-    public class DacFinder32 : AbstractDacFinder
+    public class DacFinder32(string searchPath) : AbstractDacFinder(searchPath)
     {
         private const string libDbghelpDll = "libs\\_x86\\dbghelp.dll";
-
-        public DacFinder32(string searchPath) : base(searchPath)
-        {
-        }
 
         [DllImport(libDbghelpDll, EntryPoint = "SymInitialize", SetLastError = true)]
         private static extern bool SymInitialize32(IntPtr hProcess, string symPath, bool fInvadeProcess);

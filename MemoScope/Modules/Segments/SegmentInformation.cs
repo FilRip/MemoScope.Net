@@ -6,14 +6,9 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.Segments
 {
-    public class SegmentInformation
+    public class SegmentInformation(ClrSegment segment)
     {
-        private readonly ClrSegment segment;
-
-        public SegmentInformation(ClrSegment segment)
-        {
-            this.segment = segment;
-        }
+        private readonly ClrSegment segment = segment;
 
         [AddressColumn()]
         public ulong Start => segment.Start;

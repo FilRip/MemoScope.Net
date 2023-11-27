@@ -6,14 +6,9 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.TypeDetails
 {
-    internal class TypeInformations
+    internal class TypeInformations(ClrDumpType dumpType)
     {
-        private readonly ClrDumpType dumpType;
-
-        public TypeInformations(ClrDumpType dumpType)
-        {
-            this.dumpType = dumpType;
-        }
+        private readonly ClrDumpType dumpType = dumpType;
         const string CAT_MAIN = "1- Main";
         const string CAT_FLAGS = "2- Flags";
         const string CAT_ARRAY = "3- Arrays";

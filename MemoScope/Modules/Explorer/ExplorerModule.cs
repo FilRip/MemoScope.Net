@@ -98,7 +98,7 @@ namespace MemoScope.Modules.Explorer
 
         private void OpenFilesFromData(IEnumerable<AbstractDumpExplorerData> datas)
         {
-            List<FileInfo> fileInfos = new();
+            List<FileInfo> fileInfos = [];
             foreach (var data in datas)
             {
                 var children = data.Children;

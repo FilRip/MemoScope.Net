@@ -8,7 +8,7 @@ namespace MemoScope.Modules.Process
 {
     public partial class ProcessInfoViewer : UserControl
     {
-        public List<ProcessInfoValue> ProcessInfoValues { get; } = new List<ProcessInfoValue>();
+        public List<ProcessInfoValue> ProcessInfoValues { get; } = [];
         private ProcessWrapper processWrapper;
 
         public void SetProcessWrapper(ProcessWrapper value)

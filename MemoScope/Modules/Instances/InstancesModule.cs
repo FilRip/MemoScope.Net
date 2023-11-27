@@ -28,7 +28,7 @@ namespace MemoScope.Modules.Instances
         private AddressList AddressList { get; set; }
         private List<Func<bool>> filters;
         private FieldAccessor myFieldAccessor;
-        readonly HashSet<ulong> filteredAddresses = new();
+        readonly HashSet<ulong> filteredAddresses = [];
 
         public static void Create(AddressList addresses, UIModule parent, Action<InstancesModule> postInit, string name = null)
         {
@@ -177,7 +177,7 @@ namespace MemoScope.Modules.Instances
             }
             dlvAdresses.AllColumns.Add(col);
 
-            List<string> fields = new();
+            List<string> fields = [];
             string fieldName = fieldNode.FieldName;
             do
             {
@@ -238,12 +238,12 @@ namespace MemoScope.Modules.Instances
         private void TspApplyfilter_Click(object sender, EventArgs e)
         {
             var triggers = codeTriggersControl.Triggers.Where(trig => trig.Active).ToArray();
-            TypeRegistry reg = new();
+            TypeRegistry reg = [];
             reg.RegisterType<DateTime>();
             reg.RegisterType<TimeSpan>();
             reg.RegisterType<Regex>();
             reg.RegisterSymbol("x", myFieldAccessor);
-            filters = new List<Func<bool>>();
+            filters = [];
             foreach (string code in triggers.Select(t => t.Code))
             {
                 try

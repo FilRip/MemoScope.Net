@@ -6,17 +6,11 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.Delegates
 {
-    public class DelegateTargetInformation : IAddressData, ITypeNameData
+    public class DelegateTargetInformation(ulong address, ClrDumpType clrDumpType) : IAddressData, ITypeNameData
     {
         private readonly ClrMethod methInfo;
 
-        ClrDumpType ClrDumpType { get; }
-
-        public DelegateTargetInformation(ulong address, ClrDumpType clrDumpType)
-        {
-            Address = address;
-            ClrDumpType = clrDumpType;
-        }
+        ClrDumpType ClrDumpType { get; } = clrDumpType;
 
         public DelegateTargetInformation(ulong address, ClrDumpType clrDumpType, ClrMethod methInfo) : this(address, clrDumpType)
         {
@@ -24,7 +18,7 @@ namespace MemoScope.Modules.Delegates
         }
 
         [OLVColumn()]
-        public ulong Address { get; }
+        public ulong Address { get; } = address;
 
         [OLVColumn(Title = "Type")]
         public string TypeName => ClrDumpType?.TypeName;

@@ -6,23 +6,15 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.ArrayInstances
 {
-    public class ArrayInstanceInformation : IAddressData
+    public class ArrayInstanceInformation(ulong address, int length, float? nullRatio, float? uniqueRatio) : IAddressData
     {
-        public ArrayInstanceInformation(ulong address, int length, float? nullRatio, float? uniqueRatio)
-        {
-            Address = address;
-            Length = length;
-            NullRatio = nullRatio;
-            UniqueRatio = uniqueRatio;
-        }
-
         [OLVColumn()]
-        public ulong Address { get; }
+        public ulong Address { get; } = address;
         [IntColumn()]
-        public int Length { get; }
+        public int Length { get; } = length;
         [PercentColumn]
-        public float? NullRatio { get; }
+        public float? NullRatio { get; } = nullRatio;
         [PercentColumn]
-        public float? UniqueRatio { get; }
+        public float? UniqueRatio { get; } = uniqueRatio;
     }
 }

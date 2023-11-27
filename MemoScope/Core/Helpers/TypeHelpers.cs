@@ -11,8 +11,8 @@ namespace MemoScope.Core.Helpers
     static public class TypeHelpers
     {
         private static readonly Regex fieldNameRegex = new("^<(.*)>k__BackingField$", RegexOptions.Compiled);
-        private static readonly Dictionary<string, string> aliasCache = new();
-        private static readonly Dictionary<string, Tuple<Color, Color>> colorCache = new();
+        private static readonly Dictionary<string, string> aliasCache = [];
+        private static readonly Dictionary<string, Tuple<Color, Color>> colorCache = [];
         private static readonly Tuple<Color, Color> defaultTuple = new(Color.Transparent, Color.Transparent);
 
         public static void ResetCaches()

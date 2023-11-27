@@ -16,9 +16,9 @@ namespace MemoDummy
 
         public override void Run()
         {
-            objectsList = new List<object>();
+            objectsList = [];
             objectsArray = new object[NbObjects];
-            objectsSet = new HashSet<object>();
+            objectsSet = [];
 
             for (int i = 0; i < NbObjects; i++)
             {

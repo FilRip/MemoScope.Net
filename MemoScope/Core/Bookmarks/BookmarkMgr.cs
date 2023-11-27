@@ -7,9 +7,10 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.Bookmarks
 {
-    public class BookmarkMgr
+#pragma warning disable S3604 // False positive, Member initializer values should not be redundant
+    public class BookmarkMgr(string dumpPath)
     {
-        private readonly string bookmarkPath;
+        private readonly string bookmarkPath = Path.ChangeExtension(dumpPath, "xml");
         private XmlSerializer xml;
         private XmlSerializer XML
         {
@@ -20,12 +21,7 @@ namespace MemoScope.Core.Bookmarks
             }
         }
 
-        private Dictionary<ulong, Bookmark> bookmarks = new();
-
-        public BookmarkMgr(string dumpPath)
-        {
-            bookmarkPath = Path.ChangeExtension(dumpPath, "xml");
-        }
+        private Dictionary<ulong, Bookmark> bookmarks = [];
 
         public List<Bookmark> GetBookmarks()
         {
@@ -83,4 +79,5 @@ namespace MemoScope.Core.Bookmarks
             XML.Serialize(reader, bookmarks.Values.ToList());
         }
     }
+#pragma warning restore S3604 // Member initializer values should not be redundant
 }

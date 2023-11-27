@@ -21,7 +21,7 @@ namespace MemoScope.Modules.DumpDiff
     {
         public enum SortMode { Value, AbsValue }
         private List<ClrDump> ClrDumps { get; set; }
-        readonly HashSet<string> typeNames = new();
+        readonly HashSet<string> typeNames = [];
 
         public DumpDiffModule()
         {
@@ -131,18 +131,11 @@ namespace MemoScope.Modules.DumpDiff
         }
     }
 
-    public class DumpDiffComparer : IComparer
+    public class DumpDiffComparer(OLVColumn column, SortOrder sortOrder, DumpDiffModule.SortMode sortMode) : IComparer
     {
-        readonly OLVColumn column;
-        readonly SortOrder sortOrder;
-        readonly DumpDiffModule.SortMode sortMode;
-
-        public DumpDiffComparer(OLVColumn column, SortOrder sortOrder, DumpDiffModule.SortMode sortMode)
-        {
-            this.column = column;
-            this.sortOrder = sortOrder;
-            this.sortMode = sortMode;
-        }
+        readonly OLVColumn column = column;
+        readonly SortOrder sortOrder = sortOrder;
+        readonly DumpDiffModule.SortMode sortMode = sortMode;
 
         public int Compare(object x, object y)
         {

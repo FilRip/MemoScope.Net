@@ -14,7 +14,7 @@ namespace MemoScope.Modules.Disposables
             CancellationTokenSource token = new();
             clrDump.MessageBus.BeginTask("Analyzing IDisposable types...", token);
 
-            List<DisposableTypeInformation> result = new();
+            List<DisposableTypeInformation> result = [];
 
             foreach (var type in clrDump.AllTypes())
             {

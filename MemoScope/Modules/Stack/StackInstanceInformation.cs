@@ -7,13 +7,9 @@ using Microsoft.Diagnostics.Runtime;
 namespace MemoScope.Modules.Stack
 {
 
-    public class StackInstanceInformation : IAddressData, ITypeNameData
+    public class StackInstanceInformation(ClrRoot clrRoot) : IAddressData, ITypeNameData
     {
-        ClrRoot ClrRoot { get; }
-        public StackInstanceInformation(ClrRoot clrRoot)
-        {
-            ClrRoot = clrRoot;
-        }
+        ClrRoot ClrRoot { get; } = clrRoot;
 
         [OLVColumn()]
         public ulong Address => ClrRoot.Object;

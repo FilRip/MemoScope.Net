@@ -6,14 +6,9 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.TypeDetails
 {
-    internal class MethodInformation : ITypeNameData
+    internal class MethodInformation(ClrMethod clrMethod) : ITypeNameData
     {
-        private readonly ClrMethod clrMethod;
-
-        public MethodInformation(ClrMethod clrMethod)
-        {
-            this.clrMethod = clrMethod;
-        }
+        private readonly ClrMethod clrMethod = clrMethod;
 
         [OLVColumn(Title = "Name", Width = 150)]
         public string Name => clrMethod.Name;

@@ -17,7 +17,7 @@ namespace MemoScope.Modules.Strings
             var stringType = clrDump.GetClrType(typeof(string).FullName);
             var stringInstances = clrDump.EnumerateInstances(stringType);
             int nbStrings = clrDump.CountInstances(stringType);
-            Dictionary<string, List<ulong>> result = new();
+            Dictionary<string, List<ulong>> result = [];
             CancellationTokenSource token = new();
             msgBus.BeginTask("Analyzing strings...", token);
             int n = 0;
@@ -36,7 +36,7 @@ namespace MemoScope.Modules.Strings
                     }
                     if (!result.TryGetValue(value, out List<ulong> addresses))
                     {
-                        addresses = new List<ulong>();
+                        addresses = [];
                         result[value] = addresses;
                     }
                     addresses.Add(address);

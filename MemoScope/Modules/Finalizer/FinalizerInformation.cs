@@ -11,14 +11,9 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.Finalizer
 {
-    public class FinalizerInformation : ITypeNameData
+    public class FinalizerInformation(ClrDump clrDump, ClrType type, List<ulong> addresses) : ITypeNameData
     {
-        public AddressList AddressList { get; }
-
-        public FinalizerInformation(ClrDump clrDump, ClrType type, List<ulong> addresses)
-        {
-            AddressList = new AddressList(clrDump, type, addresses);
-        }
+        public AddressList AddressList { get; } = new AddressList(clrDump, type, addresses);
 
         [OLVColumn()]
         public string TypeName => AddressList.ClrType.Name;

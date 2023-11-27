@@ -8,14 +8,9 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.Handles
 {
-    public class HandleInformation : ITypeNameData
+    public class HandleInformation(ClrHandle clrHandle) : ITypeNameData
     {
-        private readonly ClrHandle clrHandle;
-
-        public HandleInformation(ClrHandle clrHandle)
-        {
-            this.clrHandle = clrHandle;
-        }
+        private readonly ClrHandle clrHandle = clrHandle;
 
         [OLVColumn()]
         public ulong Object => clrHandle.Object;

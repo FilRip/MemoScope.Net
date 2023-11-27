@@ -79,7 +79,7 @@ namespace MemoScope.Modules.Explorer
 
         public static List<AbstractDumpExplorerData> GetItems(string mainDir)
         {
-            List<AbstractDumpExplorerData> items = new();
+            List<AbstractDumpExplorerData> items = [];
             if (!Directory.Exists(mainDir))
             {
                 return items;

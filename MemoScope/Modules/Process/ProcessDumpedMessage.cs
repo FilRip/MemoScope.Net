@@ -2,15 +2,9 @@
 
 namespace MemoScope.Modules.Process
 {
-    public class ProcessDumpedMessage : AbstractUIMessage
+    public class ProcessDumpedMessage(string dumpPath, int id) : AbstractUIMessage
     {
-        public string DumpPath { get; }
-        public int Id { get; }
-
-        public ProcessDumpedMessage(string dumpPath, int id)
-        {
-            this.DumpPath = dumpPath;
-            this.Id = id;
-        }
+        public string DumpPath { get; } = dumpPath;
+        public int Id { get; } = id;
     }
 }

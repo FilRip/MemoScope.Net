@@ -9,14 +9,9 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.TypeDetails
 {
-    public class FieldInformation : ITypeNameData
+    public class FieldInformation(ClrInstanceField clrField) : ITypeNameData
     {
-        private readonly ClrInstanceField clrField;
-
-        public FieldInformation(ClrInstanceField clrField)
-        {
-            this.clrField = clrField;
-        }
+        private readonly ClrInstanceField clrField = clrField;
 
         [OLVColumn(Title = "Name", Width = 150)]
         public string Name => clrField.RealName();

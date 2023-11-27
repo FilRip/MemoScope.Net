@@ -43,7 +43,7 @@ namespace MemoScope.Modules.RootPath
             };
             _ = FindShortestPath(currentPath, ref bestPath, clrDump);
 
-            List<RootPathInformation> path = new();
+            List<RootPathInformation> path = [];
             ulong prevAddress = address;
             if (bestPath != null)
             {

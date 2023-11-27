@@ -8,21 +8,16 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.Instances
 {
-    public class FieldAccessor
+    public class FieldAccessor(ClrDump clrDump, ClrType clrType)
     {
-        public ClrDump ClrDump { get; }
-        public ClrType ClrType { get; }
+        public ClrDump ClrDump { get; } = clrDump;
+        public ClrType ClrType { get; } = clrType;
         public ulong Address { get; set; }
 
-        public FieldAccessor(ClrDump clrDump, ClrType clrType)
-        {
-            ClrDump = clrDump;
-            ClrType = clrType;
-        }
         string lastArg = null;
         List<string> lastFields;
 
-        private readonly Dictionary<string, List<string>> cacheField = new();
+        private readonly Dictionary<string, List<string>> cacheField = [];
 
         private object Eval(string arg)
         {

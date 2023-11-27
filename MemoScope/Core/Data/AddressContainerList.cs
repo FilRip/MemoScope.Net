@@ -2,16 +2,11 @@
 
 namespace MemoScope.Core.Data
 {
-    internal class AddressContainerList : IAddressContainer
+    internal class AddressContainerList(List<ulong> addresses) : IAddressContainer
     {
-        private readonly List<ulong> addresses;
+        private readonly List<ulong> addresses = addresses;
 
         public ulong this[int index] => addresses[index];
         public int Count => addresses.Count;
-
-        public AddressContainerList(List<ulong> addresses)
-        {
-            this.addresses = addresses;
-        }
     }
 }

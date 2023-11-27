@@ -4,10 +4,10 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.Data
 {
-    public class ClrDumpType
+    public class ClrDumpType(ClrDump clrDump, ClrType clrType)
     {
-        public ClrDump ClrDump { get; }
-        public ClrType ClrType { get; }
+        public ClrDump ClrDump { get; } = clrDump;
+        public ClrType ClrType { get; } = clrType;
         public List<ulong> Instances => ClrDump.GetInstances(ClrType);
 
         public bool IsAbstract => ClrDump.Eval(() => ClrType.IsAbstract);
@@ -30,11 +30,6 @@ namespace MemoScope.Core.Data
 
         public IList<ClrInterface> Interfaces => ClrDump.Eval(() => ClrType.Interfaces);
 
-        public ClrDumpType(ClrDump clrDump, ClrType clrType)
-        {
-            ClrDump = clrDump;
-            ClrType = clrType;
-        }
         public ClrDumpType(ClrDump clrDump, string typeName) : this(clrDump, clrDump.GetClrType(typeName))
         {
         }

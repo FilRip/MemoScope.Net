@@ -150,7 +150,7 @@ namespace UnitTestProject
 
     public class MockSingleSubscriber : IMessageListener<StatusMsg>
     {
-        public List<StatusMsg> StatusMsgs { get; } = new List<StatusMsg>();
+        public List<StatusMsg> StatusMsgs { get; } = [];
 
         void IMessageListener<StatusMsg>.HandleMessage(StatusMsg message)
         {
@@ -160,7 +160,7 @@ namespace UnitTestProject
 
     public class MockDualSubscriber : MockSingleSubscriber, IMessageListener<ResetMsg>
     {
-        public List<ResetMsg> ResetMsgs { get; } = new List<ResetMsg>();
+        public List<ResetMsg> ResetMsgs { get; } = [];
 
         void IMessageListener<ResetMsg>.HandleMessage(ResetMsg message)
         {

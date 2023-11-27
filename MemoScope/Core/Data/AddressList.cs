@@ -4,11 +4,11 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.Data
 {
-    public class AddressList
+    public class AddressList(ClrDump clrDump, ClrType clrType)
     {
         public IAddressContainer Addresses { get; private set; }
-        public ClrDump ClrDump { get; }
-        public ClrType ClrType { get; }
+        public ClrDump ClrDump { get; } = clrDump;
+        public ClrType ClrType { get; } = clrType;
 
         public AddressList(ClrDump clrDump, ClrType clrType, List<ulong> addresseList) : this(clrDump, clrType, new AddressContainerList(addresseList))
         {
@@ -16,12 +16,6 @@ namespace MemoScope.Core.Data
         public AddressList(ClrDump clrDump, ClrType clrType, IAddressContainer addresses) : this(clrDump, clrType)
         {
             Init(addresses);
-        }
-
-        public AddressList(ClrDump clrDump, ClrType clrType)
-        {
-            ClrDump = clrDump;
-            ClrType = clrType;
         }
 
         protected void Init(IAddressContainer addresses)
