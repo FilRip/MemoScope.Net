@@ -4,16 +4,10 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.ThreadPool
 {
-    public class ThreadPoolInformation
+    public class ThreadPoolInformation(ClrDump clrDump, ClrThreadPool threadPool)
     {
-        public ClrDump ClrDump { get; }
-        public ClrThreadPool ThreadPool { get; }
-
-        public ThreadPoolInformation(ClrDump clrDump, ClrThreadPool threadPool)
-        {
-            ClrDump = clrDump;
-            ThreadPool = threadPool;
-        }
+        public ClrDump ClrDump { get; } = clrDump;
+        public ClrThreadPool ThreadPool { get; } = threadPool;
 
         public int CpuUtilization => ThreadPool.CpuUtilization;
         public int FreeCompletionPortCount => ThreadPool.FreeCompletionPortCount;

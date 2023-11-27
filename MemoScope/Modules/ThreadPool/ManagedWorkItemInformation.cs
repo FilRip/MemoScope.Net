@@ -6,14 +6,9 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.ThreadPool
 {
-    public class ManagedWorkItemInformation : ITypeNameData
+    public class ManagedWorkItemInformation(ManagedWorkItem workItem) : ITypeNameData
     {
-        private readonly ManagedWorkItem workItem;
-
-        public ManagedWorkItemInformation(ManagedWorkItem workItem)
-        {
-            this.workItem = workItem;
-        }
+        private readonly ManagedWorkItem workItem = workItem;
 
         [OLVColumn()]
         public ulong Object => workItem.Object;

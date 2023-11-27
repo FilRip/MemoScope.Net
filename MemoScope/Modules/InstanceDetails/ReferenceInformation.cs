@@ -10,12 +10,12 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.InstanceDetails
 {
-    public class ReferenceInformation : TreeNodeInformationAdapter<ReferenceInformation>, IAddressData, ITypeNameData
+    public class ReferenceInformation(ClrDump clrDump, ulong address) : TreeNodeInformationAdapter<ReferenceInformation>, IAddressData, ITypeNameData
     {
-        ClrDump ClrDump { get; }
+        ClrDump ClrDump { get; } = clrDump;
 
         [OLVColumn(Title = "Address")]
-        public ulong Address { get; }
+        public ulong Address { get; } = address;
 
         [OLVColumn()]
         public string FieldName { get; }
@@ -29,12 +29,6 @@ namespace MemoScope.Modules.InstanceDetails
         {
             FieldName = ClrDump.GetFieldNameReference(refAddress, address);
             FieldName = TypeHelpers.RealName(FieldName);
-        }
-
-        public ReferenceInformation(ClrDump clrDump, ulong address)
-        {
-            ClrDump = clrDump;
-            Address = address;
         }
 
         public override bool CanExpand => ClrDump.HasReferers(Address);

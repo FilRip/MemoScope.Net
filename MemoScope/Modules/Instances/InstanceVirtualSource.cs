@@ -11,17 +11,11 @@ namespace MemoScope.Modules.Instances
     // With the default datasource, I could not display more than 4 millions rows 
     // because of its index cache as this source is readonly and static (nothing is updated)
     // we don't need to update anything so we don't need a cache
-    public class InstanceVirtualSource : AbstractVirtualListDataSource
+    public class InstanceVirtualSource(VirtualObjectListView listView, AddressList addressList, HashSet<ulong> filteredAddresses) : AbstractVirtualListDataSource(listView)
     {
-        readonly AddressList addressList;
-        private readonly HashSet<ulong> filteredAddresses;
+        readonly AddressList addressList = addressList;
+        private readonly HashSet<ulong> filteredAddresses = filteredAddresses;
         ulong[] filtered;
-
-        public InstanceVirtualSource(VirtualObjectListView listView, AddressList addressList, HashSet<ulong> filteredAddresses) : base(listView)
-        {
-            this.addressList = addressList;
-            this.filteredAddresses = filteredAddresses;
-        }
 
         public override void ApplyFilters(IModelFilter modelFilter, IListFilter listFilter)
         {

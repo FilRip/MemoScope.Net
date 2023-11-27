@@ -8,24 +8,17 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.Delegates
 {
-    public class DelegateTypeInformation : ITypeNameData
+    public class DelegateTypeInformation(ClrType clrType, int count, long targetCount) : ITypeNameData
     {
-        public ClrType ClrType { get; }
-
-        public DelegateTypeInformation(ClrType clrType, int count, long targetCount)
-        {
-            ClrType = clrType;
-            Count = count;
-            Targets = targetCount;
-        }
+        public ClrType ClrType { get; } = clrType;
 
         [OLVColumn(Title = "Type")]
         public string TypeName => ClrType.Name;
 
         [IntColumn(Title = "Count")]
-        public int Count { get; }
+        public int Count { get; } = count;
 
         [IntColumn(Title = "Total Targets")]
-        public long Targets { get; }
+        public long Targets { get; } = targetCount;
     }
 }

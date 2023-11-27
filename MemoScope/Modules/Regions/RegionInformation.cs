@@ -6,14 +6,9 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.Regions
 {
-    public class RegionInformation
+    public class RegionInformation(ClrMemoryRegion region)
     {
-        private readonly ClrMemoryRegion region;
-
-        public RegionInformation(ClrMemoryRegion region)
-        {
-            this.region = region;
-        }
+        private readonly ClrMemoryRegion region = region;
 
         [AddressColumn()]
         public ulong Start => region.Address;

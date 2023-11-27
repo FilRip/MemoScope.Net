@@ -13,11 +13,11 @@ namespace MemoDummy
 
         public override void Run()
         {
-            objects = new List<object>
-            {
+            objects =
+            [
                 new FirstTestClass(),
                 new SecondTestClass()
-            };
+            ];
         }
     }
 

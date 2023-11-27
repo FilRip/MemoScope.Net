@@ -11,9 +11,10 @@ using WinFwk.UITools.Log;
 
 namespace MemoScope.Core.Cache
 {
-    public class ClrDumpCache : IDisposable
+#pragma warning disable S3604 // False positive, Member initializer values should not be redundant
+    public class ClrDumpCache(ClrDump clrDump) : IDisposable
     {
-        ClrDump ClrDump { get; }
+        ClrDump ClrDump { get; } = clrDump;
         public bool DataExists { get; private set; }
 
         private SQLiteConnection cxion;
@@ -38,12 +39,6 @@ namespace MemoScope.Core.Cache
         private SQLiteParameter paramInstanceAddress_InsertReference;
         private SQLiteCommand cmdCountReferences;
         private SQLiteParameter paramInstanceAddress_CountReferences;
-
-        public ClrDumpCache(ClrDump clrDump)
-        {
-            ClrDump = clrDump;
-        }
-
         long n = 0;
         DateTime startTime;
 
@@ -111,7 +106,7 @@ namespace MemoScope.Core.Cache
         private void StoreData(CancellationToken token)
         {
             BeginUpdate();
-            Dictionary<ClrType, ClrTypeStats> stats = new();
+            Dictionary<ClrType, ClrTypeStats> stats = [];
             foreach (var address in ClrDump.Heap.EnumerateObjectAddresses())
             {
                 ClrType type = ClrDump.Heap.GetObjectType(address);
@@ -425,4 +420,5 @@ namespace MemoScope.Core.Cache
         }
         #endregion
     }
+#pragma warning restore S3604 // False positive, Member initializer values should not be redundant
 }

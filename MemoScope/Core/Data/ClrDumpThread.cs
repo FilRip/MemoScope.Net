@@ -2,17 +2,10 @@
 
 namespace MemoScope.Core.Data
 {
-    public class ClrDumpThread
+    public class ClrDumpThread(ClrDump clrDump, ClrThread thread, string name)
     {
-        public ClrDumpThread(ClrDump clrDump, ClrThread thread, string name)
-        {
-            ClrDump = clrDump;
-            ClrThread = thread;
-            Name = name;
-        }
-
-        public ClrDump ClrDump { get; }
-        public ClrThread ClrThread { get; }
-        public string Name { get; }
+        public ClrDump ClrDump { get; } = clrDump;
+        public ClrThread ClrThread { get; } = thread;
+        public string Name { get; } = name;
     }
 }

@@ -25,7 +25,7 @@ namespace MemoDummy
 
         public override void Run()
         {
-            objects = new List<ComplexObject>();
+            objects = [];
 
             while (objects.Count < MaxObject && !stopRequested)
             {

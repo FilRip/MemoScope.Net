@@ -7,7 +7,7 @@ namespace MemoScope.Core
 {
     public class SingleThreadWorker : IDisposable
     {
-        private readonly BlockingCollection<SimpleTask> queue = new();
+        private readonly BlockingCollection<SimpleTask> queue = [];
         private bool stopRequested;
         public string Name { get; }
 

@@ -5,12 +5,12 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core
 {
-    public class ClrTypeError : ClrType
+    public class ClrTypeError(string typeName) : ClrType
     {
         protected override GCDesc GCDesc { get; }
         public override ulong MethodTable => 0;
         public override uint MetadataToken => 0;
-        public override string Name { get; }
+        public override string Name { get; } = $"Error({typeName})";
         public override ClrHeap Heap => null;
         public override IList<ClrInterface> Interfaces => new List<ClrInterface>();
         public override bool IsFinalizable => false;
@@ -26,11 +26,6 @@ namespace MemoScope.Core
         public override int BaseSize => 0;
         public override IEnumerable<ulong> EnumerateMethodTables() => new ulong[0];
         public override IList<ClrInstanceField> Fields => new List<ClrInstanceField>();
-
-        public ClrTypeError(string typeName)
-        {
-            Name = $"Error({typeName})";
-        }
 
         public override void EnumerateRefsOfObject(ulong objRef, Action<ulong, int> action)
         {

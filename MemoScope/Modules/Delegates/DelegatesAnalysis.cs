@@ -33,7 +33,7 @@ namespace MemoScope.Modules.Delegates
         {
             CancellationTokenSource token = new();
             clrDump.MessageBus.BeginTask("Analyzing delegate types...", token);
-            List<ClrType> delegates = new();
+            List<ClrType> delegates = [];
             var delegateType = clrDump.GetClrType(typeof(MulticastDelegate).FullName);
 
             foreach (var type in clrDump.AllTypes())
@@ -195,7 +195,7 @@ namespace MemoScope.Modules.Delegates
             CancellationTokenSource token = new();
             clrDump.MessageBus.BeginTask("Analyzing lone targets...", token);
 
-            Dictionary<ClrObject, ClrObject> loneTargetAddresses = new();
+            Dictionary<ClrObject, ClrObject> loneTargetAddresses = [];
             // For each instance of every delegate types 
             // let's find all the target objects
             // and select those with only referenced once
@@ -231,13 +231,13 @@ namespace MemoScope.Modules.Delegates
                 }
             }
 
-            List<LoneTargetInformation> loneTargets = new();
+            List<LoneTargetInformation> loneTargets = [];
 
             // foreach lone target, in its reference tree, we try to find the first 
             // object that is not a delegate type or an array of object (ie invocationList)
             var delegateType = clrDump.GetClrType(typeof(MulticastDelegate).FullName);
             var arrayObjType = clrDump.GetClrType(typeof(object[]).FullName);
-            HashSet<ulong> visited = new();
+            HashSet<ulong> visited = [];
             foreach (var kvp in loneTargetAddresses)
             {
                 var loneTarget = kvp.Key;

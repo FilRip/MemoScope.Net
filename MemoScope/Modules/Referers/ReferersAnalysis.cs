@@ -57,7 +57,7 @@ namespace MemoScope.Modules.Referers
                     }
                     if (!dicoByRefererType.TryGetValue(type, out Dictionary<string, ReferersInformation> dicoRefInfoByFieldName))
                     {
-                        dicoRefInfoByFieldName = new Dictionary<string, ReferersInformation>();
+                        dicoRefInfoByFieldName = [];
                         dicoByRefererType[type] = dicoRefInfoByFieldName;
                     }
 

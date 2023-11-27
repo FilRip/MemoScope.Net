@@ -18,7 +18,7 @@ namespace UnitTestProject
         public void SetUp()
         {
             clrDump = new MockClrDump();
-            currentPath = new List<ulong>();
+            currentPath = [];
             shortestPath = null;
         }
 
@@ -26,7 +26,7 @@ namespace UnitTestProject
         public void RootPathAnalysisTest_1()
         {
             clrDump.Add(1, 2, 3);
-            ulong[] shortestPathl = new ulong[] { 1, 2 };
+            ulong[] shortestPathl = [1, 2];
             Run(1, shortestPathl);
         }
 
@@ -45,7 +45,7 @@ namespace UnitTestProject
             clrDump.Add(2, 4);
             clrDump.Add(4, 5);
 
-            ulong[] shortestPathl = new ulong[] { 1, 3 };
+            ulong[] shortestPathl = [1, 3];
             Run(1, shortestPathl);
         }
 
@@ -70,7 +70,7 @@ namespace UnitTestProject
             clrDump.Add(4, 5);
             clrDump.Add(7, 8);
 
-            ulong[] shortestPathl = new ulong[] { 1, 7, 8 };
+            ulong[] shortestPathl = [1, 7, 8];
             Run(1, shortestPathl);
         }
 
@@ -95,7 +95,7 @@ namespace UnitTestProject
             clrDump.Add(3, 6);
             clrDump.Add(4, 5);
 
-            ulong[] shortestPathl = new ulong[] { 1, 7, 8 };
+            ulong[] shortestPathl = [1, 7, 8];
             Run(1, shortestPathl);
         }
 
@@ -125,7 +125,7 @@ namespace UnitTestProject
             clrDump.Add(2, 2);
             clrDump.Add(2, 3);
 
-            ulong[] shortestPathl = new ulong[] { 1, 2, 3 };
+            ulong[] shortestPathl = [1, 2, 3];
             Run(1, shortestPathl);
         }
 
@@ -144,7 +144,7 @@ namespace UnitTestProject
             clrDump.Add(2, 3);
             clrDump.Add(3, 4);
 
-            ulong[] shortestPathl = new ulong[] { 1, 3, 4 };
+            ulong[] shortestPathl = [1, 3, 4];
             Run(1, shortestPathl);
         }
 
@@ -163,7 +163,7 @@ namespace UnitTestProject
         {
             this.referers[address] = referers;
         }
-        readonly Dictionary<ulong, ulong[]> referers = new();
+        readonly Dictionary<ulong, ulong[]> referers = [];
         public IEnumerable<ulong> EnumerateReferers(ulong address)
         {
             if (referers.TryGetValue(address, out ulong[] refs))

@@ -26,10 +26,10 @@ namespace MemoScope.Modules.BlockingObjects
 
             if (blockingObject.HasSingleOwner && blockingObject.Owner != null)
             {
-                OwnersId = new HashSet<int>
-                {
+                OwnersId =
+                [
                     blockingObject.Owner.ManagedThreadId
-                };
+                ];
             }
             else
             {
@@ -41,7 +41,7 @@ namespace MemoScope.Modules.BlockingObjects
             }
             else
             {
-                WaitersId = new HashSet<int>();
+                WaitersId = [];
             }
         }
 

@@ -23,7 +23,7 @@ namespace MemoScope.Core.ProcessInfo
 
         public ClrDumpInfo()
         {
-            Bookmarks = new List<Bookmark>();
+            Bookmarks = [];
         }
 
         public ClrDumpInfo(string dumpPath) : this()

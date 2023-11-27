@@ -6,14 +6,9 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.Arrays
 {
-    public class ArraysInformation : ITypeNameData
+    public class ArraysInformation(ClrDumpType arrayType) : ITypeNameData
     {
-        public ClrDumpType ClrDumpType { get; }
-        public ArraysInformation(ClrDumpType arrayType)
-        {
-            ClrDumpType = arrayType;
-            TypeName = arrayType.ClrType.Name;
-        }
+        public ClrDumpType ClrDumpType { get; } = arrayType;
 
         public ArraysInformation(ClrDumpType arrayType, ulong nbInstances, ulong totalLength, ulong maxLength, ulong totalSize) : this(arrayType)
         {
@@ -24,7 +19,7 @@ namespace MemoScope.Modules.Arrays
         }
 
         [OLVColumn()]
-        public string TypeName { get; }
+        public string TypeName { get; } = arrayType.ClrType.Name;
         [IntColumn()]
         public ulong NbInstances { get; }
         [IntColumn()]

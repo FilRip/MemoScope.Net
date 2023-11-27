@@ -397,7 +397,7 @@ namespace MemoScope.Core
             var priorityField = threadType.GetFieldByName("m_Priority");
             var idField = threadType.GetFieldByName("m_ManagedThreadId");
 
-            threadProperties = new Dictionary<int, ThreadProperty>();
+            threadProperties = [];
             foreach (ulong threadAddress in threadsInstances)
             {
                 string name = (string)GetFieldValue(threadAddress, threadType, nameField);
@@ -488,7 +488,7 @@ namespace MemoScope.Core
 
         public List<BlockingObject> GetBlockingObjects()
         {
-            List<BlockingObject> blockingObjects = new();
+            List<BlockingObject> blockingObjects = [];
             CancellationTokenSource source = new();
             var token = source.Token;
             MessageBus.BeginTask("Looking for blocking objects...", source);
@@ -522,7 +522,7 @@ namespace MemoScope.Core
 
         public List<ClrRoot> GetClrRoots()
         {
-            List<ClrRoot> clrRoots = new();
+            List<ClrRoot> clrRoots = [];
             CancellationTokenSource source = new();
             var token = source.Token;
             MessageBus.BeginTask("Looking for ClrRoots...", source);
@@ -584,15 +584,12 @@ namespace MemoScope.Core
         public int ManagedId { get; set; }
     }
 
-    public sealed class FieldInfo : IEquatable<FieldInfo>, IEqualityComparer<FieldInfo>
+#pragma warning disable S3604 // False positive, Member initializer values should not be redundant
+    public sealed class FieldInfo(string name, ClrType fieldType) : IEquatable<FieldInfo>, IEqualityComparer<FieldInfo>
     {
-        public string Name { get; }
-        public ClrType FieldType { get; }
-        public FieldInfo(string name, ClrType fieldType)
-        {
-            Name = name;
-            FieldType = fieldType;
-        }
+        public string Name { get; } = name;
+        public ClrType FieldType { get; } = fieldType;
+
         public bool Equals(FieldInfo fieldInfo)
         {
             return fieldInfo.Name == Name && fieldInfo.FieldType.Name == FieldType.Name;
@@ -620,4 +617,5 @@ namespace MemoScope.Core
             return obj.GetHashCode();
         }
     }
+#pragma warning restore S3604 // False positive, Member initializer values should not be redundant
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MemoScope.Modules.Process
 {
-    public sealed class ProcessWrapper : IEquatable<ProcessWrapper>, IEqualityComparer<ProcessWrapper>
+    public sealed class ProcessWrapper(System.Diagnostics.Process process) : IEquatable<ProcessWrapper>, IEqualityComparer<ProcessWrapper>
     {
         public long VirtualMemory => Process.VirtualMemorySize64;
         public long PeakVirtualMemory => Process.PeakVirtualMemorySize64;
@@ -21,12 +21,7 @@ namespace MemoScope.Modules.Process
         public DateTime StartTime => Process.StartTime;
         public TimeSpan UserProcessorTime => Process.UserProcessorTime;
 
-        public System.Diagnostics.Process Process { get; }
-
-        public ProcessWrapper(System.Diagnostics.Process process)
-        {
-            Process = process;
-        }
+        public System.Diagnostics.Process Process { get; } = process;
 
         public bool Equals(ProcessWrapper other)
         {

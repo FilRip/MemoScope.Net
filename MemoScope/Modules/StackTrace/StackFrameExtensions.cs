@@ -9,7 +9,7 @@ namespace MemoScope.Modules.StackTrace
 {
     static class StackFrameExtensions
     {
-        static readonly Dictionary<PdbInfo, PdbReader> s_pdbReaders = new();
+        static readonly Dictionary<PdbInfo, PdbReader> s_pdbReaders = [];
         public static FileAndLineNumber FileAndLineNumber(this ClrStackFrame frame)
         {
             PdbReader reader = GetReaderForFrame(frame);

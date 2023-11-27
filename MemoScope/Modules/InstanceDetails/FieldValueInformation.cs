@@ -14,16 +14,10 @@ using ClrObject = MemoScope.Core.Data.ClrObject;
 
 namespace MemoScope.Modules.InstanceDetails
 {
-    internal class FieldValueInformation : TreeNodeInformationAdapter<FieldValueInformation>, IAddressData, ITypeNameData
+    internal class FieldValueInformation(string name, ClrDumpObject clrDumpObject) : TreeNodeInformationAdapter<FieldValueInformation>, IAddressData, ITypeNameData
     {
-        private readonly ClrDumpObject clrDumpObject;
-        private readonly string name;
-
-        public FieldValueInformation(string name, ClrDumpObject clrDumpObject)
-        {
-            this.name = name;
-            this.clrDumpObject = clrDumpObject;
-        }
+        private readonly ClrDumpObject clrDumpObject = clrDumpObject;
+        private readonly string name = name;
 
         [OLVColumn(Title = "Field Name")]
         public string Name => name;

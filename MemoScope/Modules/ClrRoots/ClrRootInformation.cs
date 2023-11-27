@@ -8,13 +8,9 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.ClrRoots
 {
-    public class ClrRootsInformation : IAddressData, ITypeNameData
+    public class ClrRootsInformation(ClrRoot clrRoot) : IAddressData, ITypeNameData
     {
-        ClrRoot ClrRoot { get; }
-        public ClrRootsInformation(ClrRoot clrRoot)
-        {
-            ClrRoot = clrRoot;
-        }
+        ClrRoot ClrRoot { get; } = clrRoot;
 
         [AddressColumn()]
         public ulong Address => ClrRoot.Address;

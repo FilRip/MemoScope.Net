@@ -8,11 +8,11 @@ using WinFwk.UITools;
 
 namespace MemoScope.Core
 {
-    public class ClrTypeStats : ITypeNameData
+    public class ClrTypeStats(int id, ClrType type) : ITypeNameData
     {
-        public int Id { get; }
-        public ClrType Type { get; }
-        public ulong MethodTable { get; }
+        public int Id { get; } = id;
+        public ClrType Type { get; } = type;
+        public ulong MethodTable { get; } = type.MethodTable;
 
         [OLVColumn(Title = "Type Name", Width = 500)]
         public string TypeName { get; }
@@ -22,13 +22,6 @@ namespace MemoScope.Core
 
         [IntColumn(Title = "Total Size")]
         public ulong TotalSize { get; private set; }
-
-        public ClrTypeStats(int id, ClrType type)
-        {
-            Id = id;
-            MethodTable = type.MethodTable;
-            Type = type;
-        }
 
         public ClrTypeStats(int id, ClrType type, long nbInstances, ulong totalSize) : this(id, type)
         {

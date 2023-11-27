@@ -12,7 +12,7 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.Referers
 {
-    public class ReferersInformation : TreeNodeInformationAdapter<ReferersInformation>, ITypeNameData
+    public class ReferersInformation(ClrDump clrDump, ClrType clrType, string fieldName, MessageBus messageBus, int parentCount) : TreeNodeInformationAdapter<ReferersInformation>, ITypeNameData
     {
         [OLVColumn()]
         public string TypeName => ClrType.Name;
@@ -27,27 +27,16 @@ namespace MemoScope.Modules.Referers
         public double ReferencesPercent => References.Count != 0 ? (double)References.Count / parentCount : 0;
 
         [OLVColumn()]
-        public string FieldName { get; }
+        public string FieldName { get; } = fieldName;
 
-        public HashSet<ulong> Instances { get; }
-        public HashSet<ulong> References { get; }
+        public HashSet<ulong> Instances { get; } = [];
+        public HashSet<ulong> References { get; } = [];
 
-        public ClrType ClrType { get; }
-        ClrDump ClrDump { get; }
-        MessageBus MessageBus { get; }
+        public ClrType ClrType { get; } = clrType;
+        ClrDump ClrDump { get; } = clrDump;
+        MessageBus MessageBus { get; } = messageBus;
 
-        private readonly int parentCount;
-
-        public ReferersInformation(ClrDump clrDump, ClrType clrType, string fieldName, MessageBus messageBus, int parentCount)
-        {
-            ClrDump = clrDump;
-            ClrType = clrType;
-            FieldName = fieldName;
-            MessageBus = messageBus;
-            Instances = new HashSet<ulong>();
-            References = new HashSet<ulong>();
-            this.parentCount = parentCount;
-        }
+        private readonly int parentCount = parentCount;
 
         public ReferersInformation(ClrDump clrDump, ClrType clrType, MessageBus messageBus, IAddressContainer addresses) : this(clrDump, clrType, null, messageBus, 0)
         {

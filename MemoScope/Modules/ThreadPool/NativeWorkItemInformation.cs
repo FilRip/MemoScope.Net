@@ -4,14 +4,9 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Modules.ThreadPool
 {
-    public class NativeWorkItemInformation
+    public class NativeWorkItemInformation(NativeWorkItem workItem)
     {
-        private readonly NativeWorkItem workItem;
-
-        public NativeWorkItemInformation(NativeWorkItem workItem)
-        {
-            this.workItem = workItem;
-        }
+        private readonly NativeWorkItem workItem = workItem;
 
         [OLVColumn()]
         public WorkItemKind Kind => workItem.Kind;

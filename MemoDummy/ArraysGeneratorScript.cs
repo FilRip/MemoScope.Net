@@ -19,7 +19,7 @@ namespace MemoDummy
 
         public override void Run()
         {
-            List<object> objects = new();
+            List<object> objects = [];
 
             for (int i = 0; i < Count; i++)
             {

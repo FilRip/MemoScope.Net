@@ -42,13 +42,13 @@ namespace UnitTestProject
         [Test()]
         public void TypeAliasTest()
         {
-            List<TypeAlias> typeAliases = new()
-            {
+            List<TypeAlias> typeAliases =
+            [
                 new TypeAlias { OldTypeName = "System.Int16", NewTypeName = "int" },
                 new TypeAlias { OldTypeName = "System.Boolean", NewTypeName = "bool" },
                 new TypeAlias { OldTypeName = "System.Object", NewTypeName = "object" },
                 new TypeAlias { OldTypeName = "System.Collections.Generic", NewTypeName = "sys.col.gen" }
-            };
+            ];
 
             Dictionary<string, string> fields = new()
             {

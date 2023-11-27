@@ -36,7 +36,7 @@ namespace MemoScope.Modules.ThreadException
 
         public override void Init()
         {
-            Exceptions = new List<ClrExceptionInformation>();
+            Exceptions = [];
             ClrException exception = ClrDump.Eval(() => ClrThread.CurrentException);
             while (exception != null)
             {

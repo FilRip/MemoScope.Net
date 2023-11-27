@@ -7,11 +7,11 @@ namespace MemoScope.Core.Data
     // This code was extracted from https://github.com/JeffCyr/ClrMD.Extensions
     // Thanks a lot to Jeff Cyr !
     // TODO: remove this code when ClrMd merges 'clrobject' branches into master and releases a new version.
-    public struct ClrObject
+    public struct ClrObject(ulong address, ClrType type, bool isInterior = false)
     {
-        public ulong Address { get; }
-        public ClrType Type { get; }
-        public bool IsInterior { get; }
+        public ulong Address { get; } = address;
+        public ClrType Type { get; } = type;
+        public bool IsInterior { get; } = isInterior;
 
         public ClrHeap Heap => Type.Heap;
         public bool IsNull => Address == 0;
@@ -29,13 +29,6 @@ namespace MemoScope.Core.Data
         public ClrObject this[int arrayIndex] => GetInnerObject(Type.GetArrayElementAddress(Address, arrayIndex), Type.ComponentType);
         public bool HasSimpleValue => SimpleValueHelper.IsSimpleValue(Type);
         public object SimpleValue => SimpleValueHelper.GetSimpleValue(this);
-
-        public ClrObject(ulong address, ClrType type, bool isInterior = false)
-        {
-            Address = address;
-            Type = type;
-            IsInterior = isInterior;
-        }
 
         public ClrInstanceField GetField(string fieldName)
         {

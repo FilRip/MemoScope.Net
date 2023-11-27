@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MemoScope.Core.Dac
 {
-    public class DacFinder64 : AbstractDacFinder
+    public class DacFinder64(string searchPath) : AbstractDacFinder(searchPath)
     {
         private const string libDbghelpDll = "libs\\_x64\\dbghelp.dll";
 
@@ -16,11 +16,6 @@ namespace MemoScope.Core.Dac
 
         [DllImport(libDbghelpDll, EntryPoint = "SymFindFileInPath", SetLastError = true)]
         private static extern bool SymFindFileInPath64(IntPtr hProcess, string searchPath, string filename, uint id, uint two, uint three, uint flags, StringBuilder filePath, IntPtr callback, IntPtr context);
-
-
-        public DacFinder64(string searchPath) : base(searchPath)
-        {
-        }
 
         protected override bool SymCleanup(IntPtr hProcess)
         {

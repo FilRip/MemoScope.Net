@@ -22,7 +22,7 @@ namespace MemoScope.Modules.ArrayInstances
             {
                 var tmp = new List<ArrayInstanceInformation>();
                 var count = arrayAddressList.Addresses.Count;
-                HashSet<object> addresses = new();
+                HashSet<object> addresses = [];
 
                 for (int i = 0; i < count; i++)
                 {

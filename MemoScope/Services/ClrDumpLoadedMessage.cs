@@ -4,13 +4,8 @@ using WinFwk.UIMessages;
 
 namespace MemoScope.Services
 {
-    public class ClrDumpLoadedMessage : AbstractUIMessage
+    public class ClrDumpLoadedMessage(ClrDump clrDump) : AbstractUIMessage
     {
-        public ClrDump ClrDump { get; }
-
-        public ClrDumpLoadedMessage(ClrDump clrDump)
-        {
-            ClrDump = clrDump;
-        }
+        public ClrDump ClrDump { get; } = clrDump;
     }
 }

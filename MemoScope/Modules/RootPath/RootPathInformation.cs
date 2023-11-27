@@ -6,7 +6,7 @@ using WinFwk.UITools;
 
 namespace MemoScope.Modules.RootPath
 {
-    public class RootPathInformation : ITypeNameData, IAddressData
+    public class RootPathInformation(ClrDumpObject clrDumpObject, string fieldName) : ITypeNameData, IAddressData
     {
         [AddressColumn()]
         public ulong Address => ClrDumpObject.Address;
@@ -15,13 +15,8 @@ namespace MemoScope.Modules.RootPath
         public string TypeName => ClrDumpObject.TypeName;
 
         [OLVColumn()]
-        public string FieldName { get; }
+        public string FieldName { get; } = fieldName;
 
-        ClrDumpObject ClrDumpObject { get; }
-        public RootPathInformation(ClrDumpObject clrDumpObject, string fieldName)
-        {
-            ClrDumpObject = clrDumpObject;
-            FieldName = fieldName;
-        }
+        ClrDumpObject ClrDumpObject { get; } = clrDumpObject;
     }
 }

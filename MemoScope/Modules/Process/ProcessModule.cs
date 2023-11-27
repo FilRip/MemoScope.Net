@@ -349,7 +349,7 @@ namespace MemoScope.Modules.Process
                 MessageBus.SendMessage(new DumpRequest(proc));
             }
 
-            TypeRegistry reg = new();
+            TypeRegistry reg = [];
             reg.RegisterType<DateTime>();
             reg.RegisterType<TimeSpan>();
             reg.RegisterType<Regex>();

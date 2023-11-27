@@ -24,16 +24,16 @@ namespace MemoScope
         public bool Visible { get; set; } = true;
 
         [Category("Display")]
-        public List<TypeAlias> TypeAliases { get; set; } = new List<TypeAlias>();
+        public List<TypeAlias> TypeAliases { get; set; } = [];
 
         [Category("Process Dump")]
         public string LastProcessName { get; set; }
 
         [Category("Process Dump")]
-        public List<CodeTrigger> ProcessTriggers { get; set; } = new List<CodeTrigger>();
+        public List<CodeTrigger> ProcessTriggers { get; set; } = [];
 
         [Category("Instances")]
-        public List<CodeTrigger> InstanceFilters { get; set; } = new List<CodeTrigger>();
+        public List<CodeTrigger> InstanceFilters { get; set; } = [];
 
         public void Save()
         {
