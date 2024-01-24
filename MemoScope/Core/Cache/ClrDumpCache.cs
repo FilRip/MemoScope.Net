@@ -11,7 +11,6 @@ using WinFwk.UITools.Log;
 
 namespace MemoScope.Core.Cache
 {
-#pragma warning disable S3604 // False positive, Member initializer values should not be redundant
     public class ClrDumpCache(ClrDump clrDump) : IDisposable
     {
         ClrDump ClrDump { get; } = clrDump;
@@ -420,5 +419,4 @@ namespace MemoScope.Core.Cache
         }
         #endregion
     }
-#pragma warning restore S3604 // False positive, Member initializer values should not be redundant
 }

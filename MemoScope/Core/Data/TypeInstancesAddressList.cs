@@ -19,7 +19,6 @@ namespace MemoScope.Core.Data
         }
     }
 
-#pragma warning disable S3604 // False positive, Member initializer values should not be redundant
     public class TypeAddressContainer(ClrDump clrDump, ClrType clrType) : IAddressContainer
     {
         readonly AddressContainerList addressList = new(clrDump.GetInstances(clrType));
@@ -27,5 +26,4 @@ namespace MemoScope.Core.Data
         public ulong this[int index] => addressList[index];
         public int Count => addressList.Count;
     }
-#pragma warning restore S3604 // Member initializer values should not be redundant
 }

@@ -57,13 +57,6 @@ namespace MemoDummy
         }
     }
 
-    class InternalData
-    {
-        public string Desc;
-        public bool IsNeg;
-        public double X { get; set; }
-        public double Y { get; set; }
-    }
     public abstract class AnAbstractType
     {
         public abstract double AbstractDoubleProperty { get; }
