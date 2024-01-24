@@ -7,7 +7,6 @@ using Microsoft.Diagnostics.Runtime;
 
 namespace MemoScope.Core.Bookmarks
 {
-#pragma warning disable S3604 // False positive, Member initializer values should not be redundant
     public class BookmarkMgr(string dumpPath)
     {
         private readonly string bookmarkPath = Path.ChangeExtension(dumpPath, "xml");
@@ -79,5 +78,4 @@ namespace MemoScope.Core.Bookmarks
             XML.Serialize(reader, bookmarks.Values.ToList());
         }
     }
-#pragma warning restore S3604 // Member initializer values should not be redundant
 }

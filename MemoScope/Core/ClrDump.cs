@@ -584,7 +584,6 @@ namespace MemoScope.Core
         public int ManagedId { get; set; }
     }
 
-#pragma warning disable S3604 // False positive, Member initializer values should not be redundant
     public sealed class FieldInfo(string name, ClrType fieldType) : IEquatable<FieldInfo>, IEqualityComparer<FieldInfo>
     {
         public string Name { get; } = name;
@@ -617,5 +616,4 @@ namespace MemoScope.Core
             return obj.GetHashCode();
         }
     }
-#pragma warning restore S3604 // False positive, Member initializer values should not be redundant
 }
