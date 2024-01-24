@@ -1,5 +1,10 @@
 FilRip : Fork of https://github.com/fremag/MemoScope.Net/
-Updated to last Net Framework, some bugs/crash fixes and support DarkMode
+
+Updated to last Net Framework, some bugs/crash fixes and support Dark mode
+
+--------------------------------------------------------------------------
+
+
 
 # MemoScope.Net [![Build](https://ci.appveyor.com/api/projects/status/rri98ga4qy0v4384?svg=true)](https://ci.appveyor.com/project/fremag/memoscope-net) [![Code Climate](https://codeclimate.com/github/fremag/MemoScope.Net/badges/gpa.svg)](https://codeclimate.com/github/fremag/MemoScope.Net) [![Issue Count](https://codeclimate.com/github/fremag/MemoScope.Net/badges/issue_count.svg)](https://codeclimate.com/github/fremag/MemoScope.Net)![Download](https://img.shields.io/github/downloads/fremag/MemoScope.Net/total.svg)
 
