@@ -12,7 +12,9 @@ namespace MemoScope.Core
         public override uint MetadataToken => 0;
         public override string Name { get; } = $"Error({typeName})";
         public override ClrHeap Heap => null;
+#pragma warning disable IDE0028 // Simplifier l'initialisation des collections
         public override IList<ClrInterface> Interfaces => new List<ClrInterface>();
+#pragma warning restore IDE0028 // Simplifier l'initialisation des collections
         public override bool IsFinalizable => false;
         public override bool IsPublic => false;
         public override bool IsPrivate => false;
@@ -24,8 +26,12 @@ namespace MemoScope.Core
         public override ClrType BaseType => null;
         public override int ElementSize => 0;
         public override int BaseSize => 0;
+#pragma warning disable IDE0300 // Simplifier l'initialisation des collections
         public override IEnumerable<ulong> EnumerateMethodTables() => new ulong[0];
+#pragma warning restore IDE0300 // Simplifier l'initialisation des collections
+#pragma warning disable IDE0028 // Simplifier l'initialisation des collections
         public override IList<ClrInstanceField> Fields => new List<ClrInstanceField>();
+#pragma warning restore IDE0028 // Simplifier l'initialisation des collections
 
         public override void EnumerateRefsOfObject(ulong objRef, Action<ulong, int> action)
         {

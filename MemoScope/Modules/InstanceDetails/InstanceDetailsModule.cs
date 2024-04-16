@@ -85,6 +85,8 @@ namespace MemoScope.Modules.InstanceDetails
                 Summary = ClrDumpObject.ClrType == null ? "Unkown" : ClrDumpObject.ClrType.Name;
             }
         }
+#pragma warning disable IDE0300 // Simplifier l'initialisation des collections
         public override IEnumerable<ObjectListView> ListViews => new ObjectListView[] { dtlvFieldsValues, dtlvReferences };
+#pragma warning restore IDE0300 // Simplifier l'initialisation des collections
     }
 }

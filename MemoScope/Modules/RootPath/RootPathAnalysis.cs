@@ -106,13 +106,11 @@ namespace MemoScope.Modules.RootPath
             foreach (var u in ulongEnum)
             {
                 s.Append(u.ToString("X") + ", ");
-#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
                 if (++n % 128 == 0)
                 {
                     s.Append("..., ");
                     break;
                 }
-#pragma warning restore S2583 // Conditionally executed code should be reachable
             }
             return s.ToString().Substring(0, s.Length - 2) + "]";
         }

@@ -93,7 +93,9 @@ namespace MemoScope.Modules.Explorer
             {
                 return;
             }
-            OpenFilesFromData(new[] { data });
+#pragma warning disable IDE0028 // Simplifier l'initialisation des collections
+            OpenFilesFromData(new List<AbstractDumpExplorerData>() { data });
+#pragma warning restore IDE0028 // Simplifier l'initialisation des collections
         }
 
         private void OpenFilesFromData(IEnumerable<AbstractDumpExplorerData> datas)

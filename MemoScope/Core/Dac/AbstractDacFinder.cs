@@ -9,7 +9,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace MemoScope.Core.Dac
 {
-    public abstract class AbstractDacFinder : IDisposable
+    public abstract class AbstractDacFinder(string localCache) : IDisposable
     {
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern LibrarySafeHandle LoadLibrary(string name);
@@ -18,19 +18,13 @@ namespace MemoScope.Core.Dac
         internal static extern bool FreeLibrary(IntPtr hModule);
 
         protected LibrarySafeHandle dbgHelpLib;
-        protected Process process;
-        protected readonly string searchPath;
+        protected Process process = Process.GetCurrentProcess();
+        protected readonly string searchPath = $"SRV*{localCache}*http://msdl.microsoft.com/download/symbols";
 
         protected abstract bool SymCleanup(IntPtr hProcess);
         protected abstract bool SymInitialize(IntPtr hProcess, string symPath, bool fInvadeProcess);
         protected abstract void InitDbgHelpModule();
         protected abstract bool SymFindFileInPath(IntPtr hProcess, string searchPath, string filename, uint id, uint two, uint three, uint flags, StringBuilder filePath, IntPtr callback, IntPtr context);
-
-        protected AbstractDacFinder(string localCache)
-        {
-            searchPath = $"SRV*{localCache}*http://msdl.microsoft.com/download/symbols";
-            process = Process.GetCurrentProcess();
-        }
 
         public void Init()
         {

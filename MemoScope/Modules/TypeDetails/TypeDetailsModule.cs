@@ -51,6 +51,8 @@ namespace MemoScope.Modules.TypeDetails
             Summary = type.Name;
         }
 
+#pragma warning disable IDE0300 // Simplifier l'initialisation des collections
         public override IEnumerable<ObjectListView> ListViews => new ObjectListView[] { dlvFields, dlvMethods, dtlvParentClasses, };
+#pragma warning restore IDE0300 // Simplifier l'initialisation des collections
     }
 }

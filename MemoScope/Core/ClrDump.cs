@@ -501,12 +501,10 @@ namespace MemoScope.Core
                     break;
                 }
                 currentN++;
-#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
                 if (currentN % 512 == 0)
                 {
                     MessageBus.Status($"Looking for blocking objects: {blockingObjects.Count:###,###,###,##0}");
                 }
-#pragma warning restore S2583 // Conditionally executed code should be reachable
                 blockingObjects.Add(obj);
             }
             if (token.IsCancellationRequested)
@@ -535,12 +533,10 @@ namespace MemoScope.Core
                     break;
                 }
                 currentN++;
-#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
                 if (currentN % 512 == 0)
                 {
                     MessageBus.Status($"Looking for ClrRoots: {clrRoots.Count:###,###,###,##0}");
                 }
-#pragma warning restore S2583 // Conditionally executed code should be reachable
                 clrRoots.Add(obj);
             }
             if (token.IsCancellationRequested)

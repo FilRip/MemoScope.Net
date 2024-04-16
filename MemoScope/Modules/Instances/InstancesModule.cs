@@ -347,7 +347,9 @@ namespace MemoScope.Modules.Instances
             Status("Filter removed.");
         }
 
+#pragma warning disable IDE0300 // Simplifier l'initialisation des collections
         public override IEnumerable<ObjectListView> ListViews => new ObjectListView[] { dlvAdresses };
+#pragma warning restore IDE0300 // Simplifier l'initialisation des collections
 
     }
 }

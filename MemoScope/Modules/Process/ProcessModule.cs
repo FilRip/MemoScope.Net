@@ -197,7 +197,9 @@ namespace MemoScope.Modules.Process
                     MessageBus.SendMessage(new ProcessDumpedMessage(dumpPath, proc.Process.Id));
                     if (cbLoadAfterDump.Checked)
                     {
+#pragma warning disable IDE0300 // Simplifier l'initialisation des collections
                         IEnumerable<FileInfo> fileInfos = new[] { new FileInfo(dumpPath) };
+#pragma warning restore IDE0300 // Simplifier l'initialisation des collections
                         MessageBus.SendMessage(new OpenDumpRequest(fileInfos));
                     }
                 }

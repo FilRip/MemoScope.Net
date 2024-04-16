@@ -170,7 +170,9 @@ namespace UnitTestProject
             {
                 return refs;
             }
+#pragma warning disable IDE0300 // Simplifier l'initialisation des collections
             return new ulong[0];
+#pragma warning restore IDE0300 // Simplifier l'initialisation des collections
         }
 
         public bool HasReferers(ulong address)

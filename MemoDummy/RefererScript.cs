@@ -23,7 +23,6 @@ namespace MemoDummy
             for (int i = 0; i < NbObjects; i++)
             {
                 var o = new ComplexObject();
-#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
                 switch (i % 3)
                 {
                     case 0:
@@ -36,7 +35,6 @@ namespace MemoDummy
                         objectsSet.Add(o);
                         break;
                 }
-#pragma warning restore S2583 // Conditionally executed code should be reachable
             }
         }
     }

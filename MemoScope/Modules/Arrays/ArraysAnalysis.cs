@@ -43,7 +43,6 @@ namespace MemoScope.Modules.Arrays
                         maxLength = Math.Max(maxLength, length);
                         totalSize += type.GetSize(address);
                         totalLength += length;
-#pragma warning disable S2583 // False positive, Conditionally executed code should be reachable
                         if (nbInstances % 512 == 0)
                         {
                             msgBus.Status($"Analyzing array: #{nbInstances:###,###,###,##0} for type: {typeName}");
@@ -52,7 +51,6 @@ namespace MemoScope.Modules.Arrays
                                 return;
                             }
                         }
-#pragma warning restore S2583 // Conditionally executed code should be reachable
                     }
                     arrays.Add(new ArraysInformation(new ClrDumpType(clrDump, type), nbInstances, totalLength, maxLength, totalSize));
                 }
