@@ -32,7 +32,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dlvProcessInfoValues = new WinFwk.UITools.DefaultListView();
+            this.dlvProcessInfoValues = new Controls.MyDefaultListView();
             this.colName = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.colValue = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -143,7 +143,7 @@
 
         #endregion
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private WinFwk.UITools.DefaultListView dlvProcessInfoValues;
+        private Controls.MyDefaultListView dlvProcessInfoValues;
         private BrightIdeasSoftware.OLVColumn colName;
         private BrightIdeasSoftware.OLVColumn colValue;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;

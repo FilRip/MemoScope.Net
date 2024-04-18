@@ -10,3 +10,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0250:Rendre le struct 'readonly'")]
 [assembly: SuppressMessage("Major Code Smell", "S1168:Empty arrays and collections should be returned instead of null")]
 [assembly: SuppressMessage("Style", "IDE0305:Simplifier l'initialisation des collections")]
+[assembly: SuppressMessage("Critical Code Smell", "S2346:Flags enumerations zero-value members should be named \"None\"")]

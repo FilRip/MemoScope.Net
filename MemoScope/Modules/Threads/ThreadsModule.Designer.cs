@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dlvThreads = new WinFwk.UITools.DefaultListView();
+            this.dlvThreads = new Controls.MyDefaultListView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.stackTraceModule = new MemoScope.Modules.StackTrace.StackTraceModule();
@@ -179,7 +179,7 @@
         #endregion
 #pragma warning restore CS0618 // Le type ou le membre est obsolète
 
-        private WinFwk.UITools.DefaultListView dlvThreads;
+        private Controls.MyDefaultListView dlvThreads;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private StackTrace.StackTraceModule stackTraceModule;

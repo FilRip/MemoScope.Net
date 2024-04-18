@@ -31,7 +31,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dlvTriggers = new WinFwk.UITools.DefaultListView();
+            this.dlvTriggers = new Controls.MyDefaultListView();
             this.tbCode = new ScintillaNET.Scintilla();
             this.lblCode = new System.Windows.Forms.Label();
             this.tbGroup = new System.Windows.Forms.TextBox();
@@ -269,7 +269,7 @@
 #pragma warning restore CS0618 // Le type ou le membre est obsolète
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private WinFwk.UITools.DefaultListView dlvTriggers;
+        private Controls.MyDefaultListView dlvTriggers;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripButton tsbNewTrigger;

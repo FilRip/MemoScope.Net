@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dlvBookmarks = new WinFwk.UITools.DefaultListView();
+            this.dlvBookmarks = new Controls.MyDefaultListView();
             ((System.ComponentModel.ISupportInitialize)(this.dlvBookmarks)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,6 +60,6 @@
 
         #endregion
 
-        private WinFwk.UITools.DefaultListView dlvBookmarks;
+        private Controls.MyDefaultListView dlvBookmarks;
     }
 }

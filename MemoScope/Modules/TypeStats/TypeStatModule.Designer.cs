@@ -30,7 +30,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dlvTypeStats = new WinFwk.UITools.DefaultListView();
+            this.dlvTypeStats = new Controls.MyDefaultListView();
             this.regexFilterControl = new MemoScope.Tools.RegexFilter.RegexFilterControl();
             this.lblDumpPath = new System.Windows.Forms.Label();
             this.tbDumpPath = new System.Windows.Forms.TextBox();
@@ -103,7 +103,7 @@
         #endregion
 #pragma warning restore CS0618 // Le type ou le membre est obsolète
 
-        private WinFwk.UITools.DefaultListView dlvTypeStats;
+        private Controls.MyDefaultListView dlvTypeStats;
         private MemoScope.Tools.RegexFilter.RegexFilterControl regexFilterControl;
         private System.Windows.Forms.Label lblDumpPath;
         private System.Windows.Forms.TextBox tbDumpPath;

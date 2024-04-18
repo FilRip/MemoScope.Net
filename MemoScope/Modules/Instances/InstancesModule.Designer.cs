@@ -30,7 +30,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dlvAdresses = new WinFwk.UITools.DefaultListView();
+            this.dlvAdresses = new Controls.MyDefaultListView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gbFields = new System.Windows.Forms.GroupBox();
             this.dtlvFields = new WinFwk.UITools.DefaultTreeListView();
@@ -253,7 +253,7 @@
         #endregion
 #pragma warning restore CS0618 // Le type ou le membre est obsolète
 
-        private WinFwk.UITools.DefaultListView dlvAdresses;
+        private Controls.MyDefaultListView dlvAdresses;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox gbFields;
         private WinFwk.UITools.DefaultTreeListView dtlvFields;

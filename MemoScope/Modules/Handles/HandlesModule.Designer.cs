@@ -29,7 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dlvHandles = new WinFwk.UITools.DefaultListView();
+            this.dlvHandles = new Controls.MyDefaultListView();
             ((System.ComponentModel.ISupportInitialize)(this.dlvHandles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,6 +64,6 @@
         #endregion
 #pragma warning restore CS0618 // Le type ou le membre est obsolète
 
-        private WinFwk.UITools.DefaultListView dlvHandles;
+        private Controls.MyDefaultListView dlvHandles;
     }
 }

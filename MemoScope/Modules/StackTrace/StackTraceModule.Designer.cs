@@ -30,7 +30,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dlvStackFrames = new WinFwk.UITools.DefaultListView();
+            this.dlvStackFrames = new Controls.MyDefaultListView();
             this.regexFilterControl1 = new MemoScope.Tools.RegexFilter.RegexFilterControl();
             ((System.ComponentModel.ISupportInitialize)(this.dlvStackFrames)).BeginInit();
             this.SuspendLayout();
@@ -76,7 +76,7 @@
         #endregion
 #pragma warning restore CS0618 // Le type ou le membre est obsolète
 
-        private WinFwk.UITools.DefaultListView dlvStackFrames;
+        private Controls.MyDefaultListView dlvStackFrames;
         private Tools.RegexFilter.RegexFilterControl regexFilterControl1;
     }
 }

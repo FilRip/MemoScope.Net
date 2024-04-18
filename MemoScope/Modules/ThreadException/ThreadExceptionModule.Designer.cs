@@ -33,9 +33,9 @@
             this.tbExceptionType = new System.Windows.Forms.TextBox();
             this.tbMessage = new System.Windows.Forms.TextBox();
             this.lblMessage = new System.Windows.Forms.Label();
-            this.dlvStackTrace = new WinFwk.UITools.DefaultListView();
+            this.dlvStackTrace = new Controls.MyDefaultListView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dlvExceptions = new WinFwk.UITools.DefaultListView();
+            this.dlvExceptions = new Controls.MyDefaultListView();
             ((System.ComponentModel.ISupportInitialize)(this.dlvStackTrace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -168,8 +168,8 @@
         private System.Windows.Forms.TextBox tbExceptionType;
         private System.Windows.Forms.TextBox tbMessage;
         private System.Windows.Forms.Label lblMessage;
-        private WinFwk.UITools.DefaultListView dlvStackTrace;
+        private Controls.MyDefaultListView dlvStackTrace;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private WinFwk.UITools.DefaultListView dlvExceptions;
+        private Controls.MyDefaultListView dlvExceptions;
     }
 }

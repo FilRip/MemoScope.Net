@@ -32,8 +32,8 @@
             this.pgThreadPool = new System.Windows.Forms.PropertyGrid();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.dlvNativeWorkItem = new WinFwk.UITools.DefaultListView();
-            this.dlvManagedWorkItem = new WinFwk.UITools.DefaultListView();
+            this.dlvNativeWorkItem = new Controls.MyDefaultListView();
+            this.dlvManagedWorkItem = new Controls.MyDefaultListView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -150,7 +150,7 @@
         private System.Windows.Forms.PropertyGrid pgThreadPool;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private WinFwk.UITools.DefaultListView dlvNativeWorkItem;
-        private WinFwk.UITools.DefaultListView dlvManagedWorkItem;
+        private Controls.MyDefaultListView dlvNativeWorkItem;
+        private Controls.MyDefaultListView dlvManagedWorkItem;
     }
 }

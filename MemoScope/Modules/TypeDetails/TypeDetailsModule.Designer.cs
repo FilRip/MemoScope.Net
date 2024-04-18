@@ -34,9 +34,9 @@
             this.gbTypeInformation = new System.Windows.Forms.GroupBox();
             this.pgTypeInfo = new System.Windows.Forms.PropertyGrid();
             this.gbFiledProperties = new System.Windows.Forms.GroupBox();
-            this.dlvFields = new WinFwk.UITools.DefaultListView();
+            this.dlvFields = new Controls.MyDefaultListView();
             this.gbMethods = new System.Windows.Forms.GroupBox();
-            this.dlvMethods = new WinFwk.UITools.DefaultListView();
+            this.dlvMethods = new Controls.MyDefaultListView();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.gbInterfaces = new System.Windows.Forms.GroupBox();
             this.dtlvParentClasses = new WinFwk.UITools.DefaultTreeListView();
@@ -254,8 +254,8 @@
         private System.Windows.Forms.PropertyGrid pgTypeInfo;
         private System.Windows.Forms.GroupBox gbFiledProperties;
         private System.Windows.Forms.GroupBox gbMethods;
-        private WinFwk.UITools.DefaultListView dlvFields;
-        private WinFwk.UITools.DefaultListView dlvMethods;
+        private Controls.MyDefaultListView dlvFields;
+        private Controls.MyDefaultListView dlvMethods;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.GroupBox gbInterfaces;
