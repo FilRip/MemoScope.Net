@@ -4,16 +4,22 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Channels.Ipc;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+
+using EasyHook;
 
 using ExpressionEvaluator;
 
 using MemoScope.Core.ProcessInfo;
+using MemoScope.Helpers;
 using MemoScope.Modules.Explorer;
 using MemoScope.Tools.CodeTriggers;
 
 using MemoScopeApi;
+
+using MemoScopeInject;
 
 using Microsoft.Diagnostics.Runtime;
 using Microsoft.Diagnostics.Runtime.Interop;
@@ -391,6 +397,23 @@ namespace MemoScope.Modules.Process
         public void HandleMessage(UISettingsChangedMessage message)
         {
             tbRootDir.Text = MemoScopeSettings.Instance.RootDir;
+        }
+
+        private void BtnInjectProcess_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process targetProcess = System.Diagnostics.Process.GetProcessById(proc.Process.Id);
+            string channelName = null;
+            IpcServerChannel channel = null;
+            if (targetProcess.Modules.OfType<ProcessModule>().Any(m => m.Name.StartsWith("EasyHook")))
+            {
+                channel = EasyHookKeeper.GetInstance().GetProcessChannel(proc.Process.Id);
+            }
+            if (channel == null)
+            {
+                channel = RemoteHooking.IpcCreateServer<InterfaceExchange>(ref channelName, System.Runtime.Remoting.WellKnownObjectMode.Singleton);
+                RemoteHooking.Inject(proc.Process.Id, InjectionOptions.Default | InjectionOptions.SameAppDoman, typeof(MonoScopeInjection).Assembly.Location, typeof(MonoScopeInjection).Assembly.Location, channelName);
+                EasyHookKeeper.GetInstance().SetProcessChannel(proc.Process.Id, channel);
+            }
         }
     }
 }

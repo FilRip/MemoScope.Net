@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
+using MemoScope.Forms;
+
 using WinFwk.UITools.Settings;
 
 namespace MemoScope

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -108,6 +108,7 @@
       <HintPath>..\packages\System.Data.SQLite.Linq.1.0.118.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
@@ -146,7 +147,14 @@
     <Compile Include="Core\IClrDump.cs" />
     <Compile Include="Core\ProcessInfo\ProcessInfo.cs" />
     <Compile Include="Core\ProcessInfo\ClrDumpInfo.cs" />
+    <Compile Include="Forms\ScriptEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ScriptEditorForm.Designer.cs">
+      <DependentUpon>ScriptEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\EasyHookKeeper.cs" />
     <Compile Include="Helpers\WindowsSettings.cs" />
     <Compile Include="Modules\ArrayInstances\ArrayInstanceAnalysis.cs" />
     <Compile Include="Modules\ArrayInstances\ArrayInstancesCommand.cs" />
@@ -392,10 +400,10 @@
     <Compile Include="Core\Helpers\ObjectListViewHelpers.cs" />
     <Compile Include="Core\Helpers\TypeAlias.cs" />
     <Compile Include="Core\Helpers\TypeHelpers.cs" />
-    <Compile Include="MemoScopeForm.cs">
+    <Compile Include="Forms\MemoScopeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MemoScopeForm.Designer.cs">
+    <Compile Include="Forms\MemoScopeForm.Designer.cs">
       <DependentUpon>MemoScopeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MemoScopeSettings.cs" />
@@ -504,7 +512,7 @@
     <Compile Include="Tools\RegexFilter\RegexFilterControl.Designer.cs">
       <DependentUpon>RegexFilterControl.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="MemoScopeForm.resx">
+    <EmbeddedResource Include="Forms\MemoScopeForm.resx">
       <DependentUpon>MemoScopeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\About\AboutModule.resx">
@@ -637,9 +645,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EasyHook\EasyHook.csproj">
+      <Project>{ab53862b-3b5c-4efc-9787-1f01199ebfbf}</Project>
+      <Name>EasyHook</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EasyLoad\EasyLoad.csproj">
+      <Project>{a563904a-09f4-40ab-ae16-9ec9b488eae5}</Project>
+      <Name>EasyLoad</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MemoScopeApi\MemoScopeApi.csproj">
       <Project>{8363c100-7197-474e-a951-1402ab9e4d03}</Project>
       <Name>MemoScopeApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MemoScopeInject\MemoScopeInject.csproj">
+      <Project>{f625bfc5-2ddc-4680-870a-94fbedbab7c7}</Project>
+      <Name>MemoScopeInject</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

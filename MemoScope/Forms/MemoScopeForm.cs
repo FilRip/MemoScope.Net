@@ -18,7 +18,7 @@ using WinFwk.UIModules;
 using WinFwk.UIServices;
 using WinFwk.UITools.Settings;
 
-namespace MemoScope
+namespace MemoScope.Forms
 {
     public partial class MemoScopeForm : UIModuleForm, IMessageListener<ClrDumpLoadedMessage>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MemoScope
+namespace MemoScope.Forms
 {
     partial class MemoScopeForm
     {
