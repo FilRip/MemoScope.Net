@@ -217,6 +217,8 @@ namespace MemoScope.Core.Helpers
                     dumpModule.MessageBus.SendMessage(new SelectedClrDumpObjectMessage(clrDumpObject));
                 }
             };
+            if (listView.ContextMenuStrip.Items.OfType<ToolStripMenuItem>().Any(mi => mi.Text == "Copy Address"))
+                return;
             ToolStripMenuItem menuItem = new("Copy Address");
             listView.ContextMenuStrip.Items.Add(menuItem);
             menuItem.Click += (o, e) =>
@@ -264,6 +266,8 @@ namespace MemoScope.Core.Helpers
                 }
             };
             listView.AllColumns.Add(col);
+            if (listView.ContextMenuStrip.Items.OfType<ToolStripMenuItem>().Any(mi => mi.Text == "Copy Value"))
+                return;
             var menuItem = new ToolStripMenuItem("Copy Value");
             listView.ContextMenuStrip.Items.Add(menuItem);
             menuItem.Click += (o, e) =>
@@ -373,6 +377,7 @@ namespace MemoScope.Core.Helpers
                 {
                     Image = command.Icon
                 };
+                listView.ContextMenuStrip.Items.Remove(listView.ContextMenuStrip.Items.OfType<ToolStripMenuItem>().FirstOrDefault(mi => mi.Text == menuItem.Text));
                 listView.ContextMenuStrip.Items.Add(menuItem);
                 menuItem.Click += (o, e) => OnMenuItemClick(command);
             }
@@ -397,6 +402,8 @@ namespace MemoScope.Core.Helpers
 
         public static void AddMenuSeparator(this ObjectListView listView)
         {
+            if (listView.Items.Count == 0 || listView.Items[listView.Items.Count - 1].Text == "-")
+                return;
             listView.ContextMenuStrip?.Items.Add("-");
         }
 
