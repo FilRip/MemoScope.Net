@@ -10,7 +10,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.ClrRoots
 {
-    public partial class ClrRootsModule : UIClrDumpModule, UIDataProvider<ClrDumpType>
+    public partial class ClrRootsModule : UIClrDumpModule, IUIDataProvider<ClrDumpType>
     {
         private List<ClrRootsInformation> ClrRootsQueue;
 
@@ -49,7 +49,7 @@ namespace MemoScope.Modules.ClrRoots
             dlvClrRoots.ShowGroups = true;
         }
 
-        ClrDumpType UIDataProvider<ClrDumpType>.Data
+        ClrDumpType IUIDataProvider<ClrDumpType>.Data
         {
             get
             {

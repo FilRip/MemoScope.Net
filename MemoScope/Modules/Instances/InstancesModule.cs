@@ -22,7 +22,7 @@ using WinFwk.UIModules;
 
 namespace MemoScope.Modules.Instances
 {
-    public partial class InstancesModule : UIClrDumpModule, UIDataProvider<ClrDumpType>, UIDataProvider<ClrDumpObject>, IModelFilter
+    public partial class InstancesModule : UIClrDumpModule, IUIDataProvider<ClrDumpType>, IUIDataProvider<ClrDumpObject>, IModelFilter
     {
         private List<FieldInfo> fieldInfos;
         private AddressList AddressList { get; set; }
@@ -214,7 +214,7 @@ namespace MemoScope.Modules.Instances
             RefreshInstanceCounter();
         }
 
-        ClrDumpType UIDataProvider<ClrDumpType>.Data
+        ClrDumpType IUIDataProvider<ClrDumpType>.Data
         {
             get
             {
@@ -222,7 +222,7 @@ namespace MemoScope.Modules.Instances
             }
         }
 
-        ClrDumpObject UIDataProvider<ClrDumpObject>.Data
+        ClrDumpObject IUIDataProvider<ClrDumpObject>.Data
         {
             get
             {

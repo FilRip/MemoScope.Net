@@ -12,7 +12,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Strings
 {
-    public partial class StringsModule : UIClrDumpModule, UIDataProvider<AddressList>
+    public partial class StringsModule : UIClrDumpModule, IUIDataProvider<AddressList>
     {
         private List<StringInformation> Strings { get; set; }
 

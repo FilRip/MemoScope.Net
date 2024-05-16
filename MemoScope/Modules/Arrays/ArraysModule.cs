@@ -11,7 +11,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Arrays
 {
-    public partial class ArraysModule : UIClrDumpModule, UIDataProvider<ArraysAddressList>
+    public partial class ArraysModule : UIClrDumpModule, IUIDataProvider<ArraysAddressList>
     {
         private List<ArraysInformation> Arrays { get; set; }
 

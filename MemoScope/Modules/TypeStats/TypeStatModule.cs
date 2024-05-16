@@ -14,9 +14,9 @@ using WinFwk.UICommands;
 namespace MemoScope.Modules.TypeStats
 {
     public partial class TypeStatModule : UIClrDumpModule,
-        UIDataProvider<ClrDumpType>,
-        UIDataProvider<AddressList>,
-        UIDataProvider<ArraysAddressList>
+        IUIDataProvider<ClrDumpType>,
+        IUIDataProvider<AddressList>,
+        IUIDataProvider<ArraysAddressList>
     {
         private List<ClrTypeStats> typeStats;
         public TypeStatModule()
@@ -63,7 +63,7 @@ namespace MemoScope.Modules.TypeStats
             dlvTypeStats.SetTypeNameFilter<ClrTypeStats>(regexFilterControl);
         }
 
-        ClrDumpType UIDataProvider<ClrDumpType>.Data
+        ClrDumpType IUIDataProvider<ClrDumpType>.Data
         {
             get
             {
@@ -75,11 +75,11 @@ namespace MemoScope.Modules.TypeStats
             }
         }
 
-        AddressList UIDataProvider<AddressList>.Data
+        AddressList IUIDataProvider<AddressList>.Data
         {
             get
             {
-                var dumpType = ((UIDataProvider<ClrDumpType>)this).Data;
+                var dumpType = ((IUIDataProvider<ClrDumpType>)this).Data;
                 if (dumpType == null)
                 {
                     return null;
@@ -90,11 +90,11 @@ namespace MemoScope.Modules.TypeStats
             }
         }
 
-        ArraysAddressList UIDataProvider<ArraysAddressList>.Data
+        ArraysAddressList IUIDataProvider<ArraysAddressList>.Data
         {
             get
             {
-                var dumpType = ((UIDataProvider<ClrDumpType>)this).Data;
+                var dumpType = ((IUIDataProvider<ClrDumpType>)this).Data;
                 if (dumpType == null)
                 {
                     return null;
@@ -114,7 +114,7 @@ namespace MemoScope.Modules.TypeStats
             {
                 return;
             }
-            var clrDumpType = ((UIDataProvider<ClrDumpType>)this).Data;
+            var clrDumpType = ((IUIDataProvider<ClrDumpType>)this).Data;
             if (clrDumpType != null)
             {
                 TypeInstancesModule.Create(clrDumpType, this, mod => RequestDockModule(mod));

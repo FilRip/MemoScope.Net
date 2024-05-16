@@ -9,7 +9,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Finalizer
 {
-    public partial class FinalizerModule : UIClrDumpModule, UIDataProvider<AddressList>, UIDataProvider<ClrDumpType>
+    public partial class FinalizerModule : UIClrDumpModule, IUIDataProvider<AddressList>, IUIDataProvider<ClrDumpType>
     {
         private List<FinalizerInformation> FinalizerQueue;
 
@@ -26,7 +26,7 @@ namespace MemoScope.Modules.Finalizer
 
             dlvFinalizer.InitColumns<FinalizerInformation>();
             dlvFinalizer.SetUpTypeColumn(this);
-            dlvFinalizer.RegisterDataProvider(() => ((UIDataProvider<AddressList>)this).Data, this, "Finalizer");
+            dlvFinalizer.RegisterDataProvider(() => ((IUIDataProvider<AddressList>)this).Data, this, "Finalizer");
         }
 
         public override void Init()
@@ -43,7 +43,7 @@ namespace MemoScope.Modules.Finalizer
             dlvFinalizer.Objects = FinalizerQueue;
         }
 
-        AddressList UIDataProvider<AddressList>.Data
+        AddressList IUIDataProvider<AddressList>.Data
         {
             get
             {
@@ -55,7 +55,7 @@ namespace MemoScope.Modules.Finalizer
                 return null;
             }
         }
-        ClrDumpType UIDataProvider<ClrDumpType>.Data
+        ClrDumpType IUIDataProvider<ClrDumpType>.Data
         {
             get
             {

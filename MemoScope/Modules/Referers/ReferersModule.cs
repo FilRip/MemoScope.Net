@@ -9,7 +9,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Referers
 {
-    public partial class ReferersModule : UIClrDumpModule, UIDataProvider<AddressList>
+    public partial class ReferersModule : UIClrDumpModule, IUIDataProvider<AddressList>
     {
         private ReferersInformation Referers { get; set; }
 

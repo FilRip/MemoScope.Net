@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0\build\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.Analyzers.3.0.0\build\Microsoft.CodeAnalysis.Analyzers.props')" />
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -124,9 +125,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=3.0.6.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
       <HintPath>..\packages\DockPanelSuite.3.0.6\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-    </Reference>
-    <Reference Include="WinFwk, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\fremag.WinFwk.1.0.7\lib\net461\WinFwk.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -645,6 +643,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\EasyHookEnhanced\EasyHookSvc\EasyHookSvc.csproj">
+      <Project>{b9a68e47-237f-4045-a371-d5cceb896f7f}</Project>
+      <Name>EasyHookSvc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EasyHook\EasyHook.csproj">
       <Project>{ab53862b-3b5c-4efc-9787-1f01199ebfbf}</Project>
       <Name>EasyHook</Name>
@@ -660,6 +662,10 @@
     <ProjectReference Include="..\MemoScopeInject\MemoScopeInject.csproj">
       <Project>{f625bfc5-2ddc-4680-870a-94fbedbab7c7}</Project>
       <Name>MemoScopeInject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WinFwk\WinFwk.csproj">
+      <Project>{b421f218-4883-4ff6-a186-719dd0a30a1e}</Project>
+      <Name>WinFwk</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

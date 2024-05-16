@@ -12,7 +12,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Threads
 {
-    public partial class ThreadsModule : UIClrDumpModule, UIDataProvider<ClrDumpThread>
+    public partial class ThreadsModule : UIClrDumpModule, IUIDataProvider<ClrDumpThread>
     {
         private List<ThreadInformation> Threads;
 

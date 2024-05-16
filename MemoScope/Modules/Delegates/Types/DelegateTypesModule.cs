@@ -10,7 +10,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Delegates.Types
 {
-    public partial class DelegateTypesModule : UIClrDumpModule, UIDataProvider<ClrDumpType>
+    public partial class DelegateTypesModule : UIClrDumpModule, IUIDataProvider<ClrDumpType>
     {
         List<DelegateTypeInformation> delegateInformations;
 

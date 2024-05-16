@@ -9,7 +9,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Delegates.Instances
 {
-    public partial class DelegateInstancesModule : UIClrDumpModule, UIDataProvider<ClrDumpObject>
+    public partial class DelegateInstancesModule : UIClrDumpModule, IUIDataProvider<ClrDumpObject>
     {
         List<DelegateInstanceInformation> delegateInstanceInformations;
         ClrDumpType clrDumpType;

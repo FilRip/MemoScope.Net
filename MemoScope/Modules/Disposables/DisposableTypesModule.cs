@@ -10,7 +10,7 @@ using WinFwk.UICommands;
 
 namespace MemoScope.Modules.Disposables
 {
-    public partial class DisposableTypesModule : UIClrDumpModule, UIDataProvider<ClrDumpType>
+    public partial class DisposableTypesModule : UIClrDumpModule, IUIDataProvider<ClrDumpType>
     {
         List<DisposableTypeInformation> disposableInformations;
 

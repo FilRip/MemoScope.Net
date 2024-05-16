@@ -8,7 +8,7 @@ using WinFwk.UITools.Workplace;
 
 namespace MemoScope.Modules.Workplace
 {
-    public class MemoScopeWorkplace : WorkplaceModule, UIDataProvider<List<ClrDump>>
+    public class MemoScopeWorkplace : WorkplaceModule, IUIDataProvider<List<ClrDump>>
     {
         public List<ClrDump> Data
         {

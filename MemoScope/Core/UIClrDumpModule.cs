@@ -11,7 +11,7 @@ using WinFwk.UITools.Commands;
 namespace MemoScope.Core
 {
     public partial class UIClrDumpModule : UIModule,
-        UIDataProvider<ClrDump>,
+        IUIDataProvider<ClrDump>,
         IDataExportable
     {
         public ClrDump ClrDump { get; protected set; }
@@ -21,7 +21,7 @@ namespace MemoScope.Core
             InitializeComponent();
         }
 
-        ClrDump UIDataProvider<ClrDump>.Data => ClrDump;
+        ClrDump IUIDataProvider<ClrDump>.Data => ClrDump;
 
         public virtual IEnumerable<ObjectListView> ListViews => Controls.OfType<ObjectListView>();
 
