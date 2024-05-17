@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using BrightIdeasSoftware;
 
 using MemoScope.Core.Data;
+using MemoScope.Helpers;
 using MemoScope.Modules.InstanceDetails;
 using MemoScope.Tools.RegexFilter;
 
@@ -220,6 +221,11 @@ namespace MemoScope.Core.Helpers
             if (listView.ContextMenuStrip.Items.OfType<ToolStripMenuItem>().Any(mi => mi.Text == "Copy Address"))
                 return;
             ToolStripMenuItem menuItem = new("Copy Address");
+            if (WindowsSettings.IsDarkMode)
+            {
+                menuItem.BackColor = Color.Black;
+                menuItem.ForeColor = Color.White;
+            }
             listView.ContextMenuStrip.Items.Add(menuItem);
             menuItem.Click += (o, e) =>
             {
@@ -269,6 +275,11 @@ namespace MemoScope.Core.Helpers
             if (listView.ContextMenuStrip.Items.OfType<ToolStripMenuItem>().Any(mi => mi.Text == "Copy Value"))
                 return;
             var menuItem = new ToolStripMenuItem("Copy Value");
+            if (WindowsSettings.IsDarkMode)
+            {
+                menuItem.BackColor = Color.Black;
+                menuItem.ForeColor = Color.White;
+            }
             listView.ContextMenuStrip.Items.Add(menuItem);
             menuItem.Click += (o, e) =>
             {
@@ -375,8 +386,13 @@ namespace MemoScope.Core.Helpers
                 }
                 var menuItem = new ToolStripMenuItem(menuItemText)
                 {
-                    Image = command.Icon
+                    Image = command.Icon,
                 };
+                if (WindowsSettings.IsDarkMode)
+                {
+                    menuItem.BackColor = Color.Black;
+                    menuItem.ForeColor = Color.White;
+                }
                 listView.ContextMenuStrip.Items.Remove(listView.ContextMenuStrip.Items.OfType<ToolStripMenuItem>().FirstOrDefault(mi => mi.Text == menuItem.Text));
                 listView.ContextMenuStrip.Items.Add(menuItem);
                 menuItem.Click += (o, e) => OnMenuItemClick(command);

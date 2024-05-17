@@ -13,8 +13,6 @@ namespace WinFwk.UITools.Settings
         VS2005,
         VS2012Blue,
         VS2012Dark,
-        //        VS2012Light,
-        //        VS2013Blue,
         VS2013Dark,
         VS2013Light,
         VS2015Blue,

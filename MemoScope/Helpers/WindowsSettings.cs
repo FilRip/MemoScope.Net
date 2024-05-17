@@ -10,6 +10,8 @@ public static class WindowsSettings
     private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
     private const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
 
+    internal static bool IsDarkMode { get; private set; }
+
     [DllImport("dwmapi.dll")]
     internal static extern bool DwmSetWindowAttribute(IntPtr hwnd, int attribut, ref int attrValeur, int attrSize);
 
@@ -33,7 +35,8 @@ public static class WindowsSettings
             if (reg != null)
             {
                 int lightMode = int.Parse(reg.GetValue("AppsUseLightTheme").ToString());
-                return (lightMode == 0);
+                IsDarkMode = (lightMode == 0);
+                return IsDarkMode;
             }
         }
         catch (Exception) { /* Ignore errors */ }

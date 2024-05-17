@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 
 using BrightIdeasSoftware;
+
+using WinFwk.UITools.Settings;
 
 namespace WinFwk.UITools
 {
@@ -13,7 +14,11 @@ namespace WinFwk.UITools
             this.Init();
 
             this.ContextMenuStrip = new ContextMenuStrip();
-            ToolStripMenuItem menuItem = new("Copy Selected rows");
+            ToolStripMenuItem menuItem = new("Copy Selected rows")
+            {
+                BackColor = UISettings.Instance.BackgroundColor,
+                ForeColor = UISettings.Instance.ForegroundColor,
+            };
             ContextMenuStrip.Items.Add(menuItem);
             menuItem.Click += (o, e) =>
             {
