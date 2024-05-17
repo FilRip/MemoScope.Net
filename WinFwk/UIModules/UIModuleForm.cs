@@ -274,7 +274,6 @@ namespace WinFwk.UIModules
                 case Themes.VS2015Light:
                     mainPanel.Theme = new VS2015LightTheme();
                     break;
-
             }
         }
 

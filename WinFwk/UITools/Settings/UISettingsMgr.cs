@@ -85,7 +85,7 @@ namespace WinFwk.UITools.Settings
             {
                 Directory.CreateDirectory(logPath);
             }
-            LogManager.EnableLogging();
+            LogManager.ResumeLogging();
             LogManager.GetLogger(typeof(UISettingsMgr<>).Name).Info("Init Logs");
         }
     }
