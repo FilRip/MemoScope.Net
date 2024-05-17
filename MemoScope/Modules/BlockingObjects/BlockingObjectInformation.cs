@@ -15,10 +15,13 @@ namespace MemoScope.Modules.BlockingObjects
     public class BlockingObjectInformation : IAddressData, ITypeNameData
     {
         public ClrDump ClrDump { get; }
+#pragma warning disable CS0612 // Le type ou le membre est obsolète
         public BlockingObject BlockingObject { get; }
+#pragma warning restore CS0612 // Le type ou le membre est obsolète
         public HashSet<int> OwnersId { get; }
         public HashSet<int> WaitersId { get; }
 
+#pragma warning disable CS0612 // Le type ou le membre est obsolète
         public BlockingObjectInformation(ClrDump clrDump, BlockingObject blockingObject)
         {
             ClrDump = clrDump;
@@ -44,6 +47,7 @@ namespace MemoScope.Modules.BlockingObjects
                 WaitersId = [];
             }
         }
+#pragma warning restore CS0612 // Le type ou le membre est obsolète
 
         [OLVColumn()]
         public ulong Address => BlockingObject.Object;

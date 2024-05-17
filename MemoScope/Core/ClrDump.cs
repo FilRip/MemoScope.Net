@@ -486,6 +486,7 @@ namespace MemoScope.Core
             return fieldName;
         }
 
+#pragma warning disable CS0612 // Le type ou le membre est obsolète
         public List<BlockingObject> GetBlockingObjects()
         {
             List<BlockingObject> blockingObjects = [];
@@ -517,6 +518,7 @@ namespace MemoScope.Core
             }
             return blockingObjects;
         }
+#pragma warning restore CS0612 // Le type ou le membre est obsolète
 
         public List<ClrRoot> GetClrRoots()
         {
