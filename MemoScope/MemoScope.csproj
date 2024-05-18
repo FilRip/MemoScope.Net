@@ -643,7 +643,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\EasyHookEnhanced\EasyHookSvc\EasyHookSvc.csproj">
+    <ProjectReference Include="..\EasyHookSvc\EasyHookSvc.csproj">
       <Project>{b9a68e47-237f-4045-a371-d5cceb896f7f}</Project>
       <Name>EasyHookSvc</Name>
     </ProjectReference>

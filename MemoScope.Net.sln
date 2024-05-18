@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyLoad", "EasyLoad\EasyLo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoScopeInject", "MemoScopeInject\MemoScopeInject.csproj", "{F625BFC5-2DDC-4680-870A-94FBEDBAB7C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyHookSvc", "..\EasyHookEnhanced\EasyHookSvc\EasyHookSvc.csproj", "{B9A68E47-237F-4045-A371-D5CCEB896F7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyHookSvc", "EasyHookSvc\EasyHookSvc.csproj", "{B9A68E47-237F-4045-A371-D5CCEB896F7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFwk", "WinFwk\WinFwk.csproj", "{B421F218-4883-4FF6-A186-719DD0A30A1E}"
 EndProject
